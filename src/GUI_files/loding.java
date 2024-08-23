@@ -210,17 +210,23 @@ public class loding extends javax.swing.JFrame {
                                Process process = Runtime.getRuntime().exec("\\xampp\\mysql\\bin\\mysqld.exe");
                           }catch(Exception e)
                           {
-                               JOptionPane.showMessageDialog(s,"DATABASE NOT FOUND\n"+e,"Database Error",2);
                                s.msg.setText("DATABASE NOT FOUND");
+                               JOptionPane.showMessageDialog(s,"DATABASE NOT FOUND\n"+e,"Database Error",2);
                                System.exit(0);
                           }
                        }
                        if (i==20){
-                           s.con= new ConnectDB().Connect();
+                           
                            s.msg.setText("CONNECTING TO DATABASE");
+                         
                        }
                        
                        if (i==40){
+                           s.con= new ConnectDB().Connect();
+                           if(s.con==null){
+                                JOptionPane.showMessageDialog(s,"DATABASE NOT Connected","Database Error",2);
+                                System.exit(0);
+                           }
                            s.msg.setText("DATABASE CONNECTED");
                        }
                        if (i>70){

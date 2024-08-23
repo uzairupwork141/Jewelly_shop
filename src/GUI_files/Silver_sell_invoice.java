@@ -12,17 +12,28 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import static java.lang.String.format;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -439,7 +450,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
             String smanid =SALESMAN_ID.getText();
             String date=currentdate();
             
-            str=con.prepareStatement("INSERT INTO `sell_silver` (`SID`, `NAME`, `PHONE`, `CNIC`, `WEIGHT`, `PURE_WEIGHT`, `PRICE`, `MZDORI`, `TOTAL_PRICE`, `RECIVED`, `REMANING`, `DATE`,SALESMANID ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            str=con.prepareStatement("INSERT INTO `sell_silver` (`SID`, `NAME`, `PHONE`, `CNIC`, `TOTAL_WEIGHT`, `PURE_WEIGHT`, `SUB_PRICE`, `MZDORI`, `TOTAL_PRICE`, `RECIVED`, `REMANING`, `DATE`,SALESMANID ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             str.setString(1, ID);
             str.setString(2, name);
             str.setString(3, phone);
@@ -599,9 +610,9 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
             customer_name.setText(rs.getString("NAME"));
             customer_phone.setText(rs.getString("PHONE"));
             customer_cnic.setText(rs.getString("CNIC"));
-            total_wazan.setText(rs.getString("WEIGHT"));
+            total_wazan.setText(rs.getString("TOTAL_WEIGHT"));
             total_pasa.setText(rs.getString("PURE_WEIGHT"));
-            rakam.setText(rs.getString("PRICE"));
+            rakam.setText(rs.getString("SUB_PRICE"));
             mzdory.setText(rs.getString("MZDORI"));
             total_rakam.setText(rs.getString("TOTAL_PRICE"));
             total_wasul.setText(rs.getString("RECIVED"));
@@ -660,7 +671,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     
     
     public void updateToMainTbl (String id) throws SQLException{
-        str= con.prepareStatement("UPDATE `sell_silver` SET `NAME`=?,`PHONE`=?,`CNIC`=?,`WEIGHT`=?,`PURE_WEIGHT`=?,`PRICE`=?,`MZDORI`=?,`TOTAL_PRICE`=?,`RECIVED`=?,`REMANING`=? , `SALESMANID`=? WHERE SID="+id);
+        str= con.prepareStatement("UPDATE `sell_silver` SET `NAME`=?,`PHONE`=?,`CNIC`=?,`TOTAL_WEIGHT`=?,`PURE_WEIGHT`=?,`SUB_PRICE`=?,`MZDORI`=?,`TOTAL_PRICE`=?,`RECIVED`=?,`REMANING`=? , `SALESMANID`=? WHERE SID="+id);
         str.setString(1, customer_name.getText());
         str.setString(2, customer_phone.getText());
         str.setString(3, customer_cnic.getText());
@@ -2208,8 +2219,22 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 update();
 
             }
-
-            print();
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/SellSilver.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in); 
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            para.put("SHOP_NAME", "YASIR GOLD");
+            
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+           
+                JasperViewer.viewReport(j, false);
+            
+//            print();
             
             
         }catch(Exception ex){

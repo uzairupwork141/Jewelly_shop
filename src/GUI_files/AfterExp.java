@@ -107,16 +107,16 @@ public class AfterExp extends javax.swing.JFrame {
 
         urdlbl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         urdlbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        urdlbl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        urdlbl.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(urdlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 490, 40));
 
         englbl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         englbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        englbl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        englbl.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(englbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 40));
 
         kyetxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        kyetxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        kyetxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(kyetxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 420, 40));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -131,7 +131,7 @@ public class AfterExp extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("REGISTRATION KEY");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 420, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 330));

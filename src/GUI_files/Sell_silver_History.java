@@ -91,7 +91,7 @@ public class Sell_silver_History extends javax.swing.JFrame {
                 String name = rs.getString("NAME");
                 String phone = rs.getString("PHONE");
                 String cnic = rs.getString("CNIC");
-                String weight = rs.getString("WEIGHT");
+                String weight = rs.getString("TOTAL_WEIGHT");
                 String tol_price = rs.getString("TOTAL_PRICE");
                 
                 String [] row = {ID,name,phone,cnic,weight,tol_price};
@@ -130,7 +130,7 @@ public class Sell_silver_History extends javax.swing.JFrame {
                 String name = rs.getString("NAME");
                 String phone = rs.getString("PHONE");
                 String cnic = rs.getString("CNIC");
-                String weight = rs.getString("WEIGHT");
+                String weight = rs.getString("TOTAL_WEIGHT");
                 String tol_price = rs.getString("TOTAL_PRICE");
                 
                 String [] row = {ID,name,phone,cnic,weight,tol_price};
@@ -161,9 +161,9 @@ public class Sell_silver_History extends javax.swing.JFrame {
             customer_name.setText(rs.getString("NAME"));
             customer_phone.setText(rs.getString("PHONE"));
             customer_cnic.setText(rs.getString("CNIC"));
-            total_weight.setText(rs.getString("WEIGHT"));
+            total_weight.setText(rs.getString("TOTAL_WEIGHT"));
             total_pasa.setText(rs.getString("PURE_WEIGHT"));
-            price.setText(rs.getString("PRICE"));
+            price.setText(rs.getString("TOTAL_PRICE"));
             total_mazdori.setText(rs.getString("MZDORI"));
             total_price.setText(rs.getString("TOTAL_PRICE"));
             total_recived.setText(rs.getString("RECIVED"));
@@ -485,60 +485,60 @@ public class Sell_silver_History extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 530, 520));
 
         jPanel2.setBackground(new java.awt.Color(224, 224, 224));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         DATElbl.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         DATElbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        DATElbl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        DATElbl.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(DATElbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 40));
 
         IDtxt.setEditable(false);
         IDtxt.setBackground(new java.awt.Color(204, 255, 255));
         IDtxt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         IDtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        IDtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        IDtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 120, -1));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("NAME");
-        jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 50, 20));
 
         customer_name.setEditable(false);
         customer_name.setBackground(new java.awt.Color(204, 255, 255));
         customer_name.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         customer_name.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        customer_name.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        customer_name.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(customer_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 190, -1));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PHONE");
-        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 50, 20));
 
         customer_phone.setEditable(false);
         customer_phone.setBackground(new java.awt.Color(204, 255, 255));
         customer_phone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         customer_phone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        customer_phone.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        customer_phone.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(customer_phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 120, -1));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("CNIC");
-        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 50, 20));
 
         customer_cnic.setEditable(false);
         customer_cnic.setBackground(new java.awt.Color(204, 255, 255));
         customer_cnic.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         customer_cnic.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        customer_cnic.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        customer_cnic.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(customer_cnic, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 190, -1));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("ID");
-        jLabel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 50, 20));
 
         Table2.setBackground(new java.awt.Color(204, 255, 255));
@@ -568,86 +568,86 @@ public class Sell_silver_History extends javax.swing.JFrame {
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("WEIGHT");
-        jLabel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 80, 30));
 
         total_weight.setEditable(false);
         total_weight.setBackground(new java.awt.Color(204, 255, 255));
         total_weight.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_weight.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        total_weight.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        total_weight.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(total_weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 110, 30));
 
         total_pasa.setEditable(false);
         total_pasa.setBackground(new java.awt.Color(204, 255, 255));
         total_pasa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_pasa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        total_pasa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        total_pasa.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(total_pasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 110, 30));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("PASA");
-        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 80, 30));
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("PRICE");
-        jLabel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 80, 30));
 
         price.setEditable(false);
         price.setBackground(new java.awt.Color(204, 255, 255));
         price.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         price.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        price.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        price.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 110, 30));
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("MZDORI");
-        jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 80, 30));
 
         total_mazdori.setEditable(false);
         total_mazdori.setBackground(new java.awt.Color(204, 255, 255));
         total_mazdori.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_mazdori.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        total_mazdori.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        total_mazdori.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(total_mazdori, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 110, 30));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("TOTAL");
-        jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 380, 80, 40));
 
         total_price.setEditable(false);
         total_price.setBackground(new java.awt.Color(204, 255, 255));
         total_price.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         total_price.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        total_price.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        total_price.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(total_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 130, 40));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("RECIVED");
-        jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 80, 30));
 
         total_recived.setEditable(false);
         total_recived.setBackground(new java.awt.Color(204, 255, 255));
         total_recived.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_recived.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        total_recived.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        total_recived.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(total_recived, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, 130, 30));
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("REMAINING");
-        jLabel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 80, 30));
 
         total_remaining.setEditable(false);
         total_remaining.setBackground(new java.awt.Color(204, 255, 255));
         total_remaining.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_remaining.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        total_remaining.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        total_remaining.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(total_remaining, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, 130, 30));
 
         jLabel15.setBackground(new java.awt.Color(204, 255, 204));
@@ -676,14 +676,14 @@ public class Sell_silver_History extends javax.swing.JFrame {
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("SALESMAN NAME");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 240, -1));
 
         salesmantxt.setEditable(false);
         salesmantxt.setBackground(new java.awt.Color(204, 255, 255));
         salesmantxt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         salesmantxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        salesmantxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        salesmantxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(salesmantxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 240, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 440, 520));
@@ -693,7 +693,7 @@ public class Sell_silver_History extends javax.swing.JFrame {
         PrintArea.setColumns(20);
         PrintArea.setFont(new java.awt.Font("Segoe UI", 0, 9)); // NOI18N
         PrintArea.setRows(5);
-        PrintArea.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        PrintArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane2.setViewportView(PrintArea);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 50, 230, 520));
@@ -701,25 +701,25 @@ public class Sell_silver_History extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("PRINT");
-        jLabel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 10, 230, 30));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("VIEW FULL DETAILS");
-        jLabel19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 440, 30));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setText("Search By");
-        jLabel20.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 30));
 
         searchby_cb.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         searchby_cb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "NAME", "PHONE", "CNIC", "WEIGHT", "TOTAL_PRICE" }));
         jPanel1.add(searchby_cb, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 120, 30));
 
-        search_txt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        search_txt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(search_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 160, 30));
 
         jLabel18.setBackground(new java.awt.Color(255, 204, 204));

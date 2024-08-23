@@ -106,55 +106,51 @@ public class Account_info extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("SECURITY CODE");
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 170, 30));
 
         IDtxt.setEditable(false);
         IDtxt.setBackground(new java.awt.Color(255, 204, 204));
         IDtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         IDtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        IDtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        IDtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 340, 30));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("NAME");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 170, 30));
 
         NAMEtxt.setEditable(false);
         NAMEtxt.setBackground(new java.awt.Color(204, 255, 255));
         NAMEtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         NAMEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NAMEtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        NAMEtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(NAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 340, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("USERNAME");
-        jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 170, 30));
 
         USERNAMEtxt.setEditable(false);
         USERNAMEtxt.setBackground(new java.awt.Color(204, 255, 255));
         USERNAMEtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         USERNAMEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        USERNAMEtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        USERNAMEtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(USERNAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 340, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("PASSWORD");
-        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 170, 30));
 
         CODEtxt.setEditable(false);
         CODEtxt.setBackground(new java.awt.Color(204, 255, 255));
         CODEtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         CODEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        CODEtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        CODEtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         CODEtxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CODEtxtActionPerformed(evt);
@@ -171,7 +167,7 @@ public class Account_info extends javax.swing.JFrame {
         PASSWORDtxt.setBackground(new java.awt.Color(204, 255, 255));
         PASSWORDtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         PASSWORDtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        PASSWORDtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        PASSWORDtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         PASSWORDtxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PASSWORDtxtActionPerformed(evt);
@@ -233,7 +229,6 @@ public class Account_info extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("ID");
-        jLabel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 30));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 600, 230));
@@ -242,7 +237,7 @@ public class Account_info extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-admin-64.png"))); // NOI18N
         jLabel2.setText("USER INFORMATION");
-        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 80));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 620, 360));
