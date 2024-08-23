@@ -126,20 +126,20 @@ public class loding extends javax.swing.JFrame {
         lodingbar.setBackground(new java.awt.Color(204, 255, 255));
         lodingbar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lodingbar.setForeground(new java.awt.Color(51, 51, 255));
-        lodingbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lodingbar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lodingbar.setFocusable(false);
         jPanel1.add(lodingbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 550, 20));
 
         lodevalue.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lodevalue.setForeground(new java.awt.Color(255, 0, 102));
         lodevalue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lodevalue.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lodevalue.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(lodevalue, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 400, 50, 30));
 
         msg.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         msg.setForeground(new java.awt.Color(0, 51, 255));
         msg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        msg.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        msg.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 500, 30));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
@@ -150,13 +150,13 @@ public class loding extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PLEASE WAIT.....");
-        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 230, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Jewelery Shop Management System");
-        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 550, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 462));

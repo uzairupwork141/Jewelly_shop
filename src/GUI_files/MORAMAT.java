@@ -518,29 +518,28 @@ public class MORAMAT extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "INFO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Arabic Typesetting", 0, 36))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("NAME");
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 80, 40));
 
         NAME.setBackground(new java.awt.Color(204, 255, 255));
         NAME.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         NAME.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NAME.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        NAME.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.add(NAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 180, 40));
 
         PHONE.setBackground(new java.awt.Color(204, 255, 255));
         PHONE.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         PHONE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        PHONE.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        PHONE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         PHONE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PHONEActionPerformed(evt);
@@ -554,16 +553,15 @@ public class MORAMAT extends javax.swing.JFrame {
         jPanel4.add(PHONE, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 40));
 
         jLabel2.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("PHONE");
-        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 80, 40));
 
         ID1.setEditable(false);
         ID1.setBackground(new java.awt.Color(255, 204, 204));
         ID1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         ID1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ID1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        ID1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         ID1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ID1ActionPerformed(evt);
@@ -572,15 +570,13 @@ public class MORAMAT extends javax.swing.JFrame {
         jPanel4.add(ID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 180, 30));
 
         jLabel3.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("ID");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 80, 30));
 
         jLabel4.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("RETURN DATE");
-        jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 260, 30));
 
         RDATE.setBackground(new java.awt.Color(204, 255, 255));
@@ -592,7 +588,7 @@ public class MORAMAT extends javax.swing.JFrame {
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 300, 390));
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
@@ -612,7 +608,7 @@ public class MORAMAT extends javax.swing.JFrame {
         item_weight.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         item_weight.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         item_weight.setToolTipText("");
-        item_weight.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        item_weight.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         item_weight.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         item_weight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -624,13 +620,11 @@ public class MORAMAT extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText(" WEIGHT");
-        jLabel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 90, 40));
 
         jLabel5.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("G");
-        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 30, 40));
 
         jButton5.setBackground(new java.awt.Color(204, 255, 204));
@@ -706,13 +700,12 @@ public class MORAMAT extends javax.swing.JFrame {
         TWEIGHT.setBackground(new java.awt.Color(255, 204, 204));
         TWEIGHT.setFont(new java.awt.Font("Arabic Typesetting", 1, 24)); // NOI18N
         TWEIGHT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TWEIGHT.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        TWEIGHT.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.add(TWEIGHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 260, 40));
 
         jLabel6.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("TOTAL WEIGHT(G)");
-        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 250, 40));
 
         jButton7.setBackground(new java.awt.Color(255, 204, 204));
@@ -753,12 +746,12 @@ public class MORAMAT extends javax.swing.JFrame {
 
         search.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 160, 30));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("ID");
-        jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 50, 30));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -772,7 +765,8 @@ public class MORAMAT extends javax.swing.JFrame {
 
         DATE.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         DATE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        DATE.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        DATE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DATE.setOpaque(true);
         jPanel3.add(DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, 270, 30));
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -805,8 +799,8 @@ public class MORAMAT extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("MORAMAT ENTRY SYSTEM");
-        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1100, -1));
+        jLabel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1100, 50));
 
         jTextArea1.setEditable(false);
         jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -818,7 +812,7 @@ public class MORAMAT extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Arabic Typesetting", 0, 24)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("PRINT");
-        jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 10, 220, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1340, 610));

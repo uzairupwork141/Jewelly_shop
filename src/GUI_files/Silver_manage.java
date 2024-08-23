@@ -600,27 +600,27 @@ public class Silver_manage extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "SILVER", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 36), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "SILVER", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 36), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(239, 237, 237));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         serch.setBackground(new java.awt.Color(204, 255, 255));
         serch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         serch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        serch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        serch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         serch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serchActionPerformed(evt);
             }
         });
-        jPanel3.add(serch, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 190, 30));
+        jPanel3.add(serch, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 190, 30));
 
         jButton7.setBackground(new java.awt.Color(153, 255, 51));
         jButton7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -630,35 +630,35 @@ public class Silver_manage extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 60, 30));
+        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 60, 30));
 
         jLabel30.setBackground(new java.awt.Color(255, 255, 255));
         jLabel30.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("حوالہ نمبر دے کر ر ریکارڈز چیک کرے");
-        jLabel30.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 330, 30));
+        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 280, 30));
 
         jLabel31.setBackground(new java.awt.Color(255, 255, 255));
         jLabel31.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("حوالہ نمبر");
-        jLabel31.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 80, 30));
+        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 80, 30));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 80));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 630, 70));
 
         pasa.setEditable(false);
         pasa.setBackground(new java.awt.Color(255, 204, 204));
         pasa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         pasa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        pasa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(pasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 460, 240, 30));
+        pasa.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(pasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 240, 30));
 
         phone.setBackground(new java.awt.Color(204, 255, 255));
         phone.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         phone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        phone.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        phone.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         phone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 phoneKeyPressed(evt);
@@ -667,12 +667,12 @@ public class Silver_manage extends javax.swing.JFrame {
                 phoneKeyTyped(evt);
             }
         });
-        jPanel2.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 240, 30));
+        jPanel2.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 240, 30));
 
         cnic.setBackground(new java.awt.Color(204, 255, 255));
         cnic.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cnic.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cnic.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        cnic.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cnic.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cnicKeyPressed(evt);
@@ -681,12 +681,12 @@ public class Silver_manage extends javax.swing.JFrame {
                 cnicKeyTyped(evt);
             }
         });
-        jPanel2.add(cnic, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 240, 30));
+        jPanel2.add(cnic, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 240, 30));
 
         RATE.setBackground(new java.awt.Color(204, 255, 255));
         RATE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         RATE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        RATE.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        RATE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         RATE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RATEActionPerformed(evt);
@@ -703,21 +703,21 @@ public class Silver_manage extends javax.swing.JFrame {
                 RATEKeyTyped(evt);
             }
         });
-        jPanel2.add(RATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 240, 30));
+        jPanel2.add(RATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 240, 30));
 
         GRATE.setEditable(false);
         GRATE.setBackground(new java.awt.Color(255, 204, 204));
         GRATE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         GRATE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         GRATE.setText("0.00\n");
-        GRATE.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(GRATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 240, 30));
+        GRATE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(GRATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 240, 30));
 
         wazan.setBackground(new java.awt.Color(204, 255, 255));
         wazan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         wazan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         wazan.setText("0.00");
-        wazan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        wazan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         wazan.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 wazanFocusGained(evt);
@@ -742,13 +742,13 @@ public class Silver_manage extends javax.swing.JFrame {
                 wazanKeyTyped(evt);
             }
         });
-        jPanel2.add(wazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 240, 50));
+        jPanel2.add(wazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 240, 50));
 
         nag.setBackground(new java.awt.Color(204, 255, 255));
         nag.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         nag.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nag.setText("0.00");
-        nag.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        nag.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         nag.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 nagFocusGained(evt);
@@ -778,20 +778,20 @@ public class Silver_manage extends javax.swing.JFrame {
                 nagKeyTyped(evt);
             }
         });
-        jPanel2.add(nag, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 240, 30));
+        jPanel2.add(nag, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 240, 30));
 
         twazan.setEditable(false);
         twazan.setBackground(new java.awt.Color(255, 204, 204));
         twazan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         twazan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        twazan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(twazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 240, 30));
+        twazan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(twazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 240, 30));
 
         karat.setBackground(new java.awt.Color(204, 255, 255));
         karat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         karat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         karat.setText("0.00");
-        karat.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        karat.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         karat.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 karatFocusGained(evt);
@@ -816,12 +816,12 @@ public class Silver_manage extends javax.swing.JFrame {
                 karatKeyTyped(evt);
             }
         });
-        jPanel2.add(karat, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 400, 240, 30));
+        jPanel2.add(karat, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 240, 30));
 
         name.setBackground(new java.awt.Color(204, 255, 255));
         name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         name.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        name.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        name.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameActionPerformed(evt);
@@ -832,122 +832,122 @@ public class Silver_manage extends javax.swing.JFrame {
                 nameKeyPressed(evt);
             }
         });
-        jPanel2.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 240, 30));
+        jPanel2.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 240, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("کاٹ");
-        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, 120, 30));
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 120, 30));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("موبائل فون");
-        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 120, 30));
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 120, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("شناختی کارڈ");
-        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 120, 30));
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 120, 30));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("نگ");
-        jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, 120, 30));
+        jLabel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 120, 30));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("صافی وزن");
-        jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 120, 30));
+        jLabel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 120, 30));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("کیرات");
-        jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 120, 30));
+        jLabel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, 120, 30));
 
         kat.setEditable(false);
         kat.setBackground(new java.awt.Color(255, 204, 204));
         kat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         kat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        kat.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(kat, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 240, 30));
+        kat.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(kat, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 240, 30));
 
         jLabel15.setBackground(new java.awt.Color(255, 255, 255));
         jLabel15.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("نام");
-        jLabel15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 120, 30));
+        jLabel15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 120, 30));
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("ریٹ");
-        jLabel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, 120, 30));
+        jLabel16.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 120, 30));
 
         jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("فی گرام ریٹ");
-        jLabel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 120, 30));
+        jLabel17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 270, 120, 30));
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("پاسہ");
-        jLabel19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 120, 30));
+        jLabel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 470, 120, 30));
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Arabic Typesetting", 1, 24)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("رقم");
-        jLabel21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 490, 120, 50));
+        jLabel21.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 500, 120, 50));
 
         rakam.setEditable(false);
         rakam.setBackground(new java.awt.Color(204, 255, 204));
         rakam.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         rakam.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        rakam.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(rakam, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 490, 240, 50));
+        rakam.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(rakam, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 500, 240, 50));
 
         d.setEditable(false);
         d.setBackground(new java.awt.Color(255, 204, 204));
         d.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         d.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        d.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(d, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 240, 30));
+        d.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(d, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 240, 30));
 
         IDtxt.setEditable(false);
         IDtxt.setBackground(new java.awt.Color(255, 204, 204));
         IDtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         IDtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        IDtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 240, 30));
+        IDtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 240, 30));
 
         jLabel28.setBackground(new java.awt.Color(255, 255, 255));
         jLabel28.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setText("تاریخ");
-        jLabel28.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 120, 30));
+        jLabel28.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 120, 30));
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton2.setBackground(new java.awt.Color(102, 255, 102));
@@ -1027,21 +1027,21 @@ public class Silver_manage extends javax.swing.JFrame {
         });
         jPanel9.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 210, 70));
 
-        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 630, 90));
+        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, 630, 90));
 
         jLabel37.setBackground(new java.awt.Color(255, 255, 255));
         jLabel37.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("حوالہ نمبر");
-        jLabel37.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 120, 30));
+        jLabel37.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 120, 30));
 
         jLabel20.setBackground(new java.awt.Color(255, 255, 255));
         jLabel20.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("وزن");
-        jLabel20.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 120, 50));
+        jLabel20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 120, 50));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 650, 650));
 
@@ -1049,19 +1049,24 @@ public class Silver_manage extends javax.swing.JFrame {
 
         jTextArea11.setEditable(false);
         jTextArea11.setBackground(new java.awt.Color(204, 255, 255));
-        jTextArea11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jTextArea11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTextArea11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jScrollPane1.setViewportView(jTextArea11);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 260, 550));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 270, 550));
 
         jCheckBox1.setBackground(new java.awt.Color(204, 204, 204));
         jCheckBox1.setText("Print Logo");
-        jCheckBox1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jCheckBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jCheckBox1.setBorderPainted(true);
         jCheckBox1.setBorderPaintedFlat(true);
         jCheckBox1.setOpaque(true);
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 260, 30));
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 270, 30));
 
         jButton13.setBackground(new java.awt.Color(255, 255, 0));
         jButton13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1620,6 +1625,10 @@ public class Silver_manage extends javax.swing.JFrame {
         // TODO add your handling code here:
         checkKarat(karat);
     }//GEN-LAST:event_karatKeyPressed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments

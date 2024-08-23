@@ -41,6 +41,7 @@ public class LOGIN extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -66,8 +67,8 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(243, 239, 239,220));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -79,27 +80,27 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("USERNAME");
-        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel2.setOpaque(true);
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 100, 40));
 
         usernametxt.setBackground(new java.awt.Color(204, 255, 255));
         usernametxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         usernametxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernametxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        usernametxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(usernametxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 250, 40));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("PASSWORD");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel3.setOpaque(true);
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 100, 40));
 
         passwordtxt.setBackground(new java.awt.Color(204, 255, 255));
         passwordtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         passwordtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        passwordtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        passwordtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(passwordtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 250, 40));
 
         jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
@@ -136,7 +137,7 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("forget Password");
-        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel9.setOpaque(true);
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -152,7 +153,9 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 120, 20));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/pngwing.com.png"))); // NOI18N
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 260, 230));
+        jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 250, 240));
 
         jLabel5.setFont(new java.awt.Font("Eras Medium ITC", 1, 14)); // NOI18N
         jLabel5.setText("whatsapp  # 03476442712 ");
@@ -334,6 +337,7 @@ public class LOGIN extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
