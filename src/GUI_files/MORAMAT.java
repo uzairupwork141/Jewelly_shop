@@ -267,15 +267,15 @@ public class MORAMAT extends javax.swing.JFrame {
             DefaultTableModel df=(DefaultTableModel)jTable1.getModel();
             float sum = 0;
             int prow=df.getRowCount();
+            
             if(prow==0){
-                TWEIGHT.setText(""+sum);
+                TWEIGHT.setText(""+String.format("%.3f",sum ));
                 return;
             }
             for (int i = 0; i < prow; i++)
             {
                 sum = sum + Float.parseFloat(df.getValueAt(i, 1).toString()); 
-                TWEIGHT.setText(""+sum);
-                
+                TWEIGHT.setText(""+String.format("%.3f",sum ));
             } 
             
         }catch(Exception ex){
