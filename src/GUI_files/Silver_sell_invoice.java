@@ -5,6 +5,7 @@
 package GUI_files;
 
 import CODE_files.ConnectDB;
+import CODE_files.GetShopInfo;
 import CODE_files.OnlyNumbers;
 import CODE_files.usermodel;
 
@@ -2220,6 +2221,9 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 update();
 
             }
+            
+            String []arr=new GetShopInfo().getData();
+            
             File currentDir = new File(".");
 	    String basePath = currentDir.getCanonicalPath();
 	    // Define file path
@@ -2229,17 +2233,18 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
             JasperReport jr = JasperCompileManager.compileReport(jd);
             HashMap para = new HashMap();
             para.put("ID", IDtxt.getText());
-            para.put("SHOP_NAME", "YASIR GOLD");
+            para.put("SHOP_NAME",arr[1]);
+            para.put("PHONE",arr[2]);
+            para.put("ADDRESS",arr[3]);
             
             JasperPrint j = JasperFillManager.fillReport(jr, para,con);
-           
-                JasperViewer.viewReport(j, false);
+            JasperViewer.viewReport(j, false);
             
 //            print();
             
             
         }catch(Exception ex){
-            System.out.println("error "+ex);
+            System.out.println("Something went wrong error");
         }
         
             

@@ -128,6 +128,7 @@ public class moramathistory extends javax.swing.JFrame {
                     v2.add(String.valueOf(rs.getInt("ID")));
                     v2.add(rs.getString("NAME"));
                     v2.add(rs.getString("PHONE"));
+                    v2.add(rs.getString("TOTAL_WEIGHT"));
                     v2.add(rs.getString("RDATE"));
                     v2.add(rs.getString("DATE"));
                     v2.add(rs.getString("STATUS"));
@@ -167,11 +168,12 @@ public class moramathistory extends javax.swing.JFrame {
                 String ID = rs.getString("ID");
                 String name = rs.getString("NAME");
                 String phone = rs.getString("PHONE");
+                String weight = rs.getString("TOTAL_WEIGHT");
                 String rdate = rs.getString("RDATE");
                 String date = rs.getString("DATE");
                 String STATUS = rs.getString("STATUS");
                 
-                String [] row = {ID,name,phone,rdate,date,STATUS};
+                String [] row = {ID,name,phone,weight,rdate,date,STATUS};
                
                 df.addRow(row);
                 
@@ -229,11 +231,11 @@ public class moramathistory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NAME ", "PHONE", "RETURN DATE", "DATE", "STATUS"
+                "ID", "NAME ", "PHONE", "WEIGHT", "RETURN DATE", "DATE", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -273,7 +275,7 @@ public class moramathistory extends javax.swing.JFrame {
                 searchtxtKeyReleased(evt);
             }
         });
-        jPanel1.add(searchtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 130, 30));
+        jPanel1.add(searchtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 130, 30));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel3.setText("Search by ID");
@@ -286,7 +288,7 @@ public class moramathistory extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 60, 30));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 60, 30));
 
         jButton5.setBackground(new java.awt.Color(255, 51, 51));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -348,13 +350,13 @@ public class moramathistory extends javax.swing.JFrame {
         });
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 570, 130, 60));
 
-        SearchCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "NAME", "PHONE", "RDATE", "DATE", "STATUS" }));
+        SearchCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "NAME", "PHONE", "TOTAL_WEIGHT", "RDATE", "DATE", "STATUS" }));
         SearchCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchCBActionPerformed(evt);
             }
         });
-        jPanel1.add(SearchCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 120, 30));
+        jPanel1.add(SearchCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 150, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1260, 640));
 

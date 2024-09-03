@@ -172,10 +172,11 @@ public class Sell_gold_History extends javax.swing.JFrame {
             total_weight.setText(rs.getString("TOTAL_WAZAN"));
             total_nag.setText(rs.getString("TOTAL_NAG"));
             total_safiwazan.setText(rs.getString("SAFIWAZAN"));
-            price.setText(rs.getString("PRICE"));
+            price.setText(rs.getString("GOLD_PRICE"));
             total_mazdori.setText(rs.getString("MAZDORI"));
             total_price.setText(rs.getString("TOTAL_PRICE"));
             total_recived.setText(rs.getString("TOTAL_RECIVED"));
+            rghayat.setText(rs.getString("RGHAYT"));
             total_remaining.setText(rs.getString("TOTAL_REMAINING"));
             salesmantxt.setText(getSalesManName(rs.getString("SALESMANID")));
             
@@ -419,6 +420,8 @@ public class Sell_gold_History extends javax.swing.JFrame {
         KARAT = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         salesmantxt = new javax.swing.JTextField();
+        rghayat = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         PrintArea = new javax.swing.JTextArea();
         jLabel17 = new javax.swing.JLabel();
@@ -648,19 +651,19 @@ public class Sell_gold_History extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("MAZDORI");
         jLabel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 80, 40));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 80, 30));
 
         total_mazdori.setEditable(false);
         total_mazdori.setBackground(new java.awt.Color(204, 255, 255));
         total_mazdori.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_mazdori.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         total_mazdori.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(total_mazdori, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 140, 40));
+        jPanel2.add(total_mazdori, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 140, 30));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("TOTAL");
         jLabel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 430, 80, 50));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 80, 40));
 
         total_price.setEditable(false);
         total_price.setBackground(new java.awt.Color(0, 0, 0));
@@ -668,31 +671,31 @@ public class Sell_gold_History extends javax.swing.JFrame {
         total_price.setForeground(new java.awt.Color(255, 255, 255));
         total_price.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         total_price.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(total_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 140, 50));
+        jPanel2.add(total_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 140, 40));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("RECIVED");
         jLabel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, 80, 40));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, 80, 30));
 
         total_recived.setEditable(false);
         total_recived.setBackground(new java.awt.Color(204, 255, 255));
         total_recived.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_recived.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         total_recived.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(total_recived, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 480, 140, 40));
+        jPanel2.add(total_recived, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, 140, 30));
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("REMAINING");
         jLabel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 520, 80, 40));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 520, 80, 30));
 
         total_remaining.setEditable(false);
         total_remaining.setBackground(new java.awt.Color(204, 255, 255));
         total_remaining.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         total_remaining.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         total_remaining.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(total_remaining, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 520, 140, 40));
+        jPanel2.add(total_remaining, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 520, 140, 30));
 
         jLabel15.setBackground(new java.awt.Color(204, 255, 204));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -765,6 +768,18 @@ public class Sell_gold_History extends javax.swing.JFrame {
         salesmantxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         salesmantxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(salesmantxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 240, -1));
+
+        rghayat.setEditable(false);
+        rghayat.setBackground(new java.awt.Color(204, 255, 255));
+        rghayat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        rghayat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        rghayat.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(rghayat, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, 140, 30));
+
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("RELIEF");
+        jLabel25.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 80, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 440, 590));
 
@@ -1042,6 +1057,7 @@ public class Sell_gold_History extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1056,6 +1072,7 @@ public class Sell_gold_History extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField price;
+    private javax.swing.JTextField rghayat;
     private javax.swing.JTextField salesmantxt;
     private javax.swing.JTextField search_txt;
     private javax.swing.JComboBox<String> searchby_cb;

@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 
-public class OnlyNumbers {
+public class OnlyNumbers{
     
     
     
@@ -20,6 +20,7 @@ public class OnlyNumbers {
         }
         
     }
-   
+    
+       
     
 }

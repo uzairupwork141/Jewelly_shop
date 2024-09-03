@@ -117,7 +117,7 @@ public class AfterExp extends javax.swing.JFrame {
 
         kyetxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         kyetxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(kyetxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 420, 40));
+        jPanel1.add(kyetxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 420, 40));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setText("ACTIVATE");
@@ -126,7 +126,7 @@ public class AfterExp extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 420, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 420, 40));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

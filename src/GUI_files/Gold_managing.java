@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import static java.lang.String.format;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,6 +25,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintService;
@@ -32,6 +35,13 @@ import javax.print.attribute.standard.MediaSize;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 /**
@@ -1424,12 +1434,31 @@ public class Gold_managing extends javax.swing.JFrame {
            }else if(jButton2.getText().equals("update")){
             update(IDtxt.getText());
            } 
-            First_panal_print();
+//            First_panal_print();
+        
             
         } catch (Exception ex) {
             Logger.getLogger(Gold_managing.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         } 
        
+        try{
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/ReturnGold.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            JasperViewer.viewReport(j, false);
+            
+        }catch(Exception ex){
+            Logger.getLogger(Gold_managing.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
         
     }//GEN-LAST:event_jButton3ActionPerformed

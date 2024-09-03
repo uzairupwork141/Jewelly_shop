@@ -263,6 +263,7 @@ public class loding extends javax.swing.JFrame {
                        s.lodingbar.setValue(i);
                        
                    }
+                   
             }catch(Exception e){
                    JOptionPane.showMessageDialog(s, e);
             }

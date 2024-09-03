@@ -5,8 +5,12 @@
 package GUI_files;
 
 import CODE_files.ConnectDB;
+import CODE_files.GetShopInfo;
 import CODE_files.OnlyNumbers;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintService;
@@ -23,6 +28,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -135,48 +147,48 @@ public class MORAMAT extends javax.swing.JFrame {
      
      
      
-     public void print(){
-            DefaultTableModel df=(DefaultTableModel)jTable1.getModel(); 
-            String Rdate=((JTextField)RDATE.getDateEditor().getUiComponent()).getText();
-            jTextArea1.setText(null);
-            jTextArea1.setText(jTextArea1.getText()+"       YASIR JEWELERY SHOP\n");
-            jTextArea1.setText(jTextArea1.getText()+"_________________________________\n");
-              
-            jTextArea1.setText(jTextArea1.getText()+"\n Receipet no#   "+ID1.getText()+"\n "
-                                                   +DATE.getText()+"\n");
-            jTextArea1.setText(jTextArea1.getText()+" NAME         :- "+NAME.getText()+""
-                                                 +"\n PHONEno   :- "+PHONE.getText()+"\n");
-            jTextArea1.setText(jTextArea1.getText()+"\n___________MORAMMAT___________\n");
-            jTextArea1.setText(jTextArea1.getText()+" items\t | weight\n");
-            jTextArea1.setText(jTextArea1.getText()+"------------------------------------------------------\n"); 
-            for (int i=0;i<df.getRowCount();i++){
-                String item=df.getValueAt(i, 0).toString();
-                String wazan=df.getValueAt(i, 1).toString();
-                String discription=df.getValueAt(i, 2).toString();
-                jTextArea1.setText(jTextArea1.getText()+" ( "+item+" )\t | "+wazan+"_G \n"
-                                                       +" ( "+discription+" )");
-                jTextArea1.setText(jTextArea1.getText()+"\n------------------------------------------------------\n"); 
-            }
-            jTextArea1.setText(jTextArea1.getText()+"_________________________________\n");
-            
-            jTextArea1.setText(jTextArea1.getText()+"\n TOTAL WEIGHT :- "+TWEIGHT.getText()+"_G");
-            jTextArea1.setText(jTextArea1.getText()+"\n_________________________________\n");
-            jTextArea1.setText(jTextArea1.getText()+"\n RETURN DATE :-  "+Rdate+"");
-            jTextArea1.setText(jTextArea1.getText()+"\n_________________________________\n");  
-            jTextArea1.setText(jTextArea1.getText()+"\nNOTE:- No morammat will "
-                                                   +"\n            be returned"
-                                                   +"\n            without this recipt"
-                                                   +"\n            Thank You");  
-                                                        
-            
-         try{
-           
-             jTextArea1.print();
-              
-         }catch(Exception e){
-             JOptionPane.showMessageDialog(this,e);
-         }
-     }
+//     public void print(){
+//            DefaultTableModel df=(DefaultTableModel)jTable1.getModel(); 
+//            String Rdate=((JTextField)RDATE.getDateEditor().getUiComponent()).getText();
+//            jTextArea1.setText(null);
+//            jTextArea1.setText(jTextArea1.getText()+"       YASIR JEWELERY SHOP\n");
+//            jTextArea1.setText(jTextArea1.getText()+"_________________________________\n");
+//              
+//            jTextArea1.setText(jTextArea1.getText()+"\n Receipet no#   "+ID1.getText()+"\n "
+//                                                   +DATE.getText()+"\n");
+//            jTextArea1.setText(jTextArea1.getText()+" NAME         :- "+NAME.getText()+""
+//                                                 +"\n PHONEno   :- "+PHONE.getText()+"\n");
+//            jTextArea1.setText(jTextArea1.getText()+"\n___________MORAMMAT___________\n");
+//            jTextArea1.setText(jTextArea1.getText()+" items\t | weight\n");
+//            jTextArea1.setText(jTextArea1.getText()+"------------------------------------------------------\n"); 
+//            for (int i=0;i<df.getRowCount();i++){
+//                String item=df.getValueAt(i, 0).toString();
+//                String wazan=df.getValueAt(i, 1).toString();
+//                String discription=df.getValueAt(i, 2).toString();
+//                jTextArea1.setText(jTextArea1.getText()+" ( "+item+" )\t | "+wazan+"_G \n"
+//                                                       +" ( "+discription+" )");
+//                jTextArea1.setText(jTextArea1.getText()+"\n------------------------------------------------------\n"); 
+//            }
+//            jTextArea1.setText(jTextArea1.getText()+"_________________________________\n");
+//            
+//            jTextArea1.setText(jTextArea1.getText()+"\n TOTAL WEIGHT :- "+TWEIGHT.getText()+"_G");
+//            jTextArea1.setText(jTextArea1.getText()+"\n_________________________________\n");
+//            jTextArea1.setText(jTextArea1.getText()+"\n RETURN DATE :-  "+Rdate+"");
+//            jTextArea1.setText(jTextArea1.getText()+"\n_________________________________\n");  
+//            jTextArea1.setText(jTextArea1.getText()+"\nNOTE:- No morammat will "
+//                                                   +"\n            be returned"
+//                                                   +"\n            without this recipt"
+//                                                   +"\n            Thank You");  
+//                                                        
+//            
+//         try{
+//           
+//             jTextArea1.print();
+//              
+//         }catch(Exception e){
+//             JOptionPane.showMessageDialog(this,e);
+//         }
+//     }
       
      
      
@@ -191,16 +203,17 @@ public class MORAMAT extends javax.swing.JFrame {
     public void submit(){
         try{
             String Rdate=((JTextField)RDATE.getDateEditor().getUiComponent()).getText();
-            str=con.prepareStatement("INSERT INTO `moramat`(`ID`,`Name`,`PHONE`,`RDATE`,`DATE`)VALUES(?,?,?,?,?)");
+            str=con.prepareStatement("INSERT INTO `moramat`(`ID`,`Name`,`PHONE`,`TOTAL_WEIGHT`,`RDATE`,`DATE`)VALUES(?,?,?,?,?,?)");
             str.setString(1, ID1.getText());
             str.setString(2, NAME.getText());
             str.setString(3, PHONE.getText());
-            str.setString(4, Rdate);
-            str.setString(5, DATE.getText());
+            str.setString(4, TWEIGHT.getText());
+            str.setString(5, Rdate);
+            str.setString(6, DATE.getText());
             str.executeUpdate();
             submitdetail();
             JOptionPane.showMessageDialog(this,"DATA SAVED","SUCCESS",1);
-            refresh();
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(this,e,"Submit functin\nDB  ERROR",3);
         }
@@ -424,14 +437,15 @@ public class MORAMAT extends javax.swing.JFrame {
     
     public void updateToMainTbl (String id) throws SQLException{
         String Rdate=((JTextField)RDATE.getDateEditor().getUiComponent()).getText();
-        str= con.prepareStatement("UPDATE `moramat` SET `NAME`=?,`PHONE`=?,`RDATE`=? WHERE ID="+id);
+        str= con.prepareStatement("UPDATE `moramat` SET `NAME`=?,`PHONE`=?,`TOTAL_WEIGHT`=?,`RDATE`=? WHERE ID="+id);
         str.setString(1, NAME.getText());
         str.setString(2, PHONE.getText());
-        str.setString(3, Rdate);
+        str.setString(3, TWEIGHT.getText());
+        str.setString(4, Rdate);
         str.executeUpdate();
         updateSubTable(id);
         JOptionPane.showMessageDialog(this, "UPDATED","update",1);
-        refresh();
+        
         
     }
     
@@ -466,6 +480,8 @@ public class MORAMAT extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jLabel17 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -477,6 +493,7 @@ public class MORAMAT extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         RDATE = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         select_item = new javax.swing.JComboBox<>();
@@ -493,21 +510,26 @@ public class MORAMAT extends javax.swing.JFrame {
         TWEIGHT = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         submitBtn = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         search = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         DATE = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextPane();
-        jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+
+        jRadioButton1.setText("jRadioButton1");
+
+        jLabel17.setFont(new java.awt.Font("Arabic Typesetting", 0, 24)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("PRINT");
+        jLabel17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -528,13 +550,13 @@ public class MORAMAT extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("NAME");
-        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 80, 40));
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 80, 40));
 
         NAME.setBackground(new java.awt.Color(204, 255, 255));
         NAME.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         NAME.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NAME.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel4.add(NAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 180, 40));
+        jPanel4.add(NAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 180, 40));
 
         PHONE.setBackground(new java.awt.Color(204, 255, 255));
         PHONE.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
@@ -550,12 +572,12 @@ public class MORAMAT extends javax.swing.JFrame {
                 PHONEKeyTyped(evt);
             }
         });
-        jPanel4.add(PHONE, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 180, 40));
+        jPanel4.add(PHONE, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 180, 40));
 
         jLabel2.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("PHONE");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 80, 40));
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 80, 40));
 
         ID1.setEditable(false);
         ID1.setBackground(new java.awt.Color(255, 204, 204));
@@ -567,32 +589,38 @@ public class MORAMAT extends javax.swing.JFrame {
                 ID1ActionPerformed(evt);
             }
         });
-        jPanel4.add(ID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 180, 30));
+        jPanel4.add(ID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 180, 40));
 
         jLabel3.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("ID");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 80, 30));
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 80, 30));
 
         jLabel4.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("RETURN DATE");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 260, 30));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 260, 30));
 
         RDATE.setBackground(new java.awt.Color(204, 255, 255));
         RDATE.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         RDATE.setDateFormatString("dd/MM/yyyy");
         RDATE.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jPanel4.add(RDATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 260, 40));
+        jPanel4.add(RDATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 260, 40));
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 300, 390));
+        jLabel11.setFont(new java.awt.Font("Arabic Typesetting", 0, 24)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Customer Info");
+        jLabel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 280, 50));
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 300, 480));
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         select_item.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
@@ -636,10 +664,11 @@ public class MORAMAT extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 260, 40));
+        jPanel6.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 70, 260, 40));
 
+        discription.setEditable(true);
         discription.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
-        discription.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select", "صفائ+ مرمت", "ڈانڈي مرمت + صفاي", "نگ تبديل کرنا", "ڈانڈي کنڈے مرمت ", "ڈانڈي کنڈے تبديل ", "موتي لگانا", "پتري لگانا", "کنڈے تبديل", "کنڈے مرمت", "براے ناپ درست کرنا", "براے چين مرمت", "براے چين تبديل", "براے صفائ " }));
+        discription.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select", "صفائی+ مرمت", "ڈانڈی مرمت+صفائی", "نگ تبديل کرنا", "ڈانڈی کنڈے مرمت ", "ڈانڈی کنڈے تبديل ", "موتی لگانا", "پتری لگانا", "کنڈے تبديل", "کنڈے مرمت", "براے ناپ درست کرنا", "براے چين مرمت", "براے چين تبديل", "براے صفائی " }));
         discription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 discriptionActionPerformed(evt);
@@ -656,7 +685,7 @@ public class MORAMAT extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 130, 40));
+        jPanel6.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 200, 40));
 
         jLabel8.setText("TO DO :");
         jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, -1, 20));
@@ -664,7 +693,7 @@ public class MORAMAT extends javax.swing.JFrame {
         jLabel14.setText("SELECT ITEM");
         jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
 
-        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 760, 130));
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 760, 120));
 
         jTable1.setBackground(new java.awt.Color(204, 255, 255));
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -694,19 +723,20 @@ public class MORAMAT extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 760, 200));
+        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 760, 290));
 
         TWEIGHT.setEditable(false);
         TWEIGHT.setBackground(new java.awt.Color(255, 204, 204));
         TWEIGHT.setFont(new java.awt.Font("Arabic Typesetting", 1, 24)); // NOI18N
         TWEIGHT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TWEIGHT.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel5.add(TWEIGHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 260, 40));
+        jPanel5.add(TWEIGHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 260, 40));
 
         jLabel6.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("TOTAL WEIGHT(G)");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 250, 40));
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 250, 40));
 
         jButton7.setBackground(new java.awt.Color(255, 204, 204));
         jButton7.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -717,12 +747,33 @@ public class MORAMAT extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 350, 130, 30));
+        jPanel5.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 430, 130, 40));
 
-        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 780, 390));
+        jButton2.setBackground(new java.awt.Color(204, 255, 204));
+        jButton2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-64.png"))); // NOI18N
+        jButton2.setText("PRINT");
+        jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 290, 190, 80));
+
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-database-syncing-complete-local-drive-and-connected-with-other-pc-48.png"))); // NOI18N
+        jButton3.setText("HISTORY");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 190, 190, 80));
 
         submitBtn.setBackground(new java.awt.Color(204, 255, 204));
         submitBtn.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        submitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-submit-48.png"))); // NOI18N
         submitBtn.setText("SUBMIT");
         submitBtn.setBorder(null);
         submitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -730,7 +781,7 @@ public class MORAMAT extends javax.swing.JFrame {
                 submitBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(submitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 140, 50));
+        jPanel5.add(submitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, 190, 160));
 
         jButton4.setBackground(new java.awt.Color(255, 204, 204));
         jButton4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -742,7 +793,9 @@ public class MORAMAT extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 140, 50));
+        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 390, 190, 80));
+
+        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 1000, 480));
 
         search.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -767,62 +820,29 @@ public class MORAMAT extends javax.swing.JFrame {
         DATE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         DATE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         DATE.setOpaque(true);
-        jPanel3.add(DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, 270, 30));
+        jPanel3.add(DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 30, 210, 30));
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-database-syncing-complete-local-drive-and-connected-with-other-pc-48.png"))); // NOI18N
-        jButton3.setText("HISTORY");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 465, 170, -1));
+        jLabel15.setText("Search By ID");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, 20));
 
-        jLabel15.setText("CURRENT DATE");
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 110, 20));
+        jLabel16.setText("CURRENT DATE");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 10, 100, 20));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 1100, 530));
-
-        jButton2.setBackground(new java.awt.Color(204, 255, 204));
-        jButton2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-64.png"))); // NOI18N
-        jButton2.setText("PRINT");
-        jButton2.setBorder(null);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 530, 220, 70));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 1320, 560));
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("MORAMAT ENTRY SYSTEM");
+        jLabel9.setText("MORAMMAT ENTRY SYSTEM");
         jLabel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1100, 50));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1320, 50));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextArea1.setFont(new java.awt.Font("Arial", 0, 9)); // NOI18N
-        jScrollPane5.setViewportView(jTextArea1);
-
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 70, 220, 460));
-
-        jLabel11.setFont(new java.awt.Font("Arabic Typesetting", 0, 24)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("PRINT");
-        jLabel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 10, 220, 50));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1340, 610));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1340, 640));
 
         jLabel10.setBackground(new java.awt.Color(255, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 51));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("X");
-        jLabel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel10.setOpaque(true);
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -879,11 +899,13 @@ public class MORAMAT extends javax.swing.JFrame {
         }
         if(submitBtn.getText().equals("SUBMIT")){
             submit();
+            refresh();
             return;
         }
         if(submitBtn.getText().equals("UPDATE")){
             try {
                 updateToMainTbl(ID1.getText());
+                refresh();
             } catch (SQLException ex) {
                 Logger.getLogger(MORAMAT.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -903,10 +925,48 @@ public class MORAMAT extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         if (NAME.getText().equals("")|| TWEIGHT.getText().equals("") || jTable1.getRowCount()==0){
-             JOptionPane.showMessageDialog(this, "IMCOMPLETE ENTERY \nCan't Proceed with Null PRINTING","NULL ENTERY",2);
-        }else {
-         print();   
+//         if (NAME.getText().equals("")|| TWEIGHT.getText().equals("") || jTable1.getRowCount()==0){
+//             JOptionPane.showMessageDialog(this, "IMCOMPLETE ENTERY \nCan't Proceed with Null PRINTING","NULL ENTERY",2);
+//        }else {
+//         print();   
+//        }
+
+        if (NAME.getText().equals("")||PHONE.getText().equals("")||jTable1.getRowCount()==0){
+            JOptionPane.showMessageDialog(this, "IMCOMPLETE ENTERY MISSING\nCan't Proceed with Null Enteries","NULL ENTERY",2);
+            return;
+        }
+        
+        if(submitBtn.getText().equals("UPDATE")){
+            try {
+                updateToMainTbl(ID1.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(MORAMAT.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if(submitBtn.getText().equals("SUBMIT")){
+            submit();
+            submitBtn.setText("UPDATE");
+        }
+        
+        String [] arr  = new GetShopInfo().getData();
+        try{
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/moramat.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", ID1.getText());
+            para.put("SHOP_NAME", arr[1]);
+            para.put("PHONE", arr[2]);
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            JasperViewer.viewReport(j, false);
+            
+        }catch(Exception ex){
+            
         }
            
         
@@ -1061,6 +1121,8 @@ public class MORAMAT extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1074,10 +1136,9 @@ public class MORAMAT extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextPane jTextArea1;
     private javax.swing.JTextField search;
     private javax.swing.JComboBox<String> select_item;
     private javax.swing.JButton submitBtn;
