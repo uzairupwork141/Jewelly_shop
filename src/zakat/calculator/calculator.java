@@ -4,18 +4,32 @@
  */
 package zakat.calculator;
 
+import CODE_files.ConnectDB;
+import GUI_files.Gold_managing;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import static java.lang.String.format;
+import java.sql.Connection;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintService;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -26,9 +40,11 @@ public class calculator extends javax.swing.JFrame {
     /**
      * Creates new form calculator
      */
+    Connection con;
     public calculator() {
         initComponents();
         cbox();
+        con= new ConnectDB(). Connect();
     }
 
     
@@ -116,36 +132,36 @@ public class calculator extends javax.swing.JFrame {
      
      
      
-     public void printit(){
-        try {
-            String printerName="RONGTA 58mm Series Printer";
-            printerName =printerName.toLowerCase() ;
-
-            PrintService service = null;
-        
-            PrintService[] services = PrinterJob.lookupPrintServices();
-
-        
-            for (int index = 0; service == null && index < services.length; index++) {
-
-                if (services[index].getName().toLowerCase().indexOf(printerName) >= 0)
-                {
-                    service = services[index];         
-                }
-            }
-            HashPrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-            attr.add(new MediaPrintableArea(0f, 0f,72f, 72f, MediaPrintableArea.MM)); 
-            
-//            logo.print(null, null, false, service, attr, false);
-           
-            jTextArea11.print(null, null, true, service, attr, false);
-            
-           
-        } catch (PrinterException ex) {
-            System.out.println(""+ex);
-        }
-    }
-    
+//     public void printit(){
+//        try {
+//            String printerName="RONGTA 58mm Series Printer";
+//            printerName =printerName.toLowerCase() ;
+//
+//            PrintService service = null;
+//        
+//            PrintService[] services = PrinterJob.lookupPrintServices();
+//
+//        
+//            for (int index = 0; service == null && index < services.length; index++) {
+//
+//                if (services[index].getName().toLowerCase().indexOf(printerName) >= 0)
+//                {
+//                    service = services[index];         
+//                }
+//            }
+//            HashPrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
+//            attr.add(new MediaPrintableArea(0f, 0f,72f, 72f, MediaPrintableArea.MM)); 
+//            
+////            logo.print(null, null, false, service, attr, false);
+//           
+//            jTextArea11.print(null, null, true, service, attr, false);
+//            
+//           
+//        } catch (PrinterException ex) {
+//            System.out.println(""+ex);
+//        }
+//    }
+//    
      
      
      
@@ -154,43 +170,43 @@ public class calculator extends javax.swing.JFrame {
      
      
      
-     public void third_panal_print() throws PrinterException{
-         
-         float zk = Float.parseFloat(z.getText());
-         
-        if (cb1.getSelectedItem()=="<NONE>"){
-            JOptionPane.showMessageDialog(this,"PLEASE ENTER SOME VALUE\nFor ZAKAT CALCULATION");
-        }else if (cb1.getSelectedItem()=="GOLD_SILVER"){
-            float pg=(float) (Float.parseFloat(r.getText())/12.150);
-            
-            jTextArea11.setText("");
-            jTextArea11.setText("Date:"+currentdate());
-            jTextArea11.setText(jTextArea11.getText()+"\n-------------------------------------\n");  
-            jTextArea11.setText(jTextArea11.getText()+"Name\t= "+n.getText()+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"         ----ZAKAT----\n");
-            jTextArea11.setText(jTextArea11.getText()+"WAZAN\t= "+w.getText()+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"RATE\t= "+r.getText()+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"P/G RATE\t= "+format("%.3f",pg)+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"ZAKAT\t= "+format("%.0f",zk)+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"-------------------------------------\n"); 
-            
-            printit();
-       
-           
-        }else if (cb1.getSelectedItem()=="CASH"){
-            jTextArea11.setText("");
-            jTextArea11.setText("Date:"+currentdate());
-            jTextArea11.setText(jTextArea11.getText()+"\n-------------------------------------\n");  
-            jTextArea11.setText(jTextArea11.getText()+"Name       = "+n.getText()+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"-------------------------------------\n");
-
-            jTextArea11.setText(jTextArea11.getText()+"\nNET WORTH   = "+tp.getText()+"\n\n");
-            jTextArea11.setText(jTextArea11.getText()+"---------------ZAKAT--------------\n");
-            jTextArea11.setText(jTextArea11.getText()+"ZAKAT       = "+format("%.0f",zk)+"\n");
-            jTextArea11.setText(jTextArea11.getText()+"-------------------------------------\n"); 
-           printit();
-        }
-     }
+//     public void third_panal_print() throws PrinterException{
+//         
+//         float zk = Float.parseFloat(z.getText());
+//         
+//        if (cb1.getSelectedItem()=="<NONE>"){
+//            JOptionPane.showMessageDialog(this,"PLEASE ENTER SOME VALUE\nFor ZAKAT CALCULATION");
+//        }else if (cb1.getSelectedItem()=="GOLD_SILVER"){
+//            float pg=(float) (Float.parseFloat(r.getText())/12.150);
+//            
+//            jTextArea11.setText("");
+//            jTextArea11.setText("Date:"+currentdate());
+//            jTextArea11.setText(jTextArea11.getText()+"\n-------------------------------------\n");  
+//            jTextArea11.setText(jTextArea11.getText()+"Name\t= "+n.getText()+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"         ----ZAKAT----\n");
+//            jTextArea11.setText(jTextArea11.getText()+"WAZAN\t= "+w.getText()+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"RATE\t= "+r.getText()+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"P/G RATE\t= "+format("%.3f",pg)+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"ZAKAT\t= "+format("%.0f",zk)+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"-------------------------------------\n"); 
+//            
+//            printit();
+//       
+//           
+//        }else if (cb1.getSelectedItem()=="CASH"){
+//            jTextArea11.setText("");
+//            jTextArea11.setText("Date:"+currentdate());
+//            jTextArea11.setText(jTextArea11.getText()+"\n-------------------------------------\n");  
+//            jTextArea11.setText(jTextArea11.getText()+"Name       = "+n.getText()+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"-------------------------------------\n");
+//
+//            jTextArea11.setText(jTextArea11.getText()+"\nNET WORTH   = "+tp.getText()+"\n\n");
+//            jTextArea11.setText(jTextArea11.getText()+"---------------ZAKAT--------------\n");
+//            jTextArea11.setText(jTextArea11.getText()+"ZAKAT       = "+format("%.0f",zk)+"\n");
+//            jTextArea11.setText(jTextArea11.getText()+"-------------------------------------\n"); 
+//           printit();
+//        }
+//     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -217,8 +233,6 @@ public class calculator extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea11 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -361,17 +375,7 @@ public class calculator extends javax.swing.JFrame {
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 570));
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        jTextArea11.setEditable(false);
-        jTextArea11.setBackground(new java.awt.Color(204, 255, 255));
-        jTextArea11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jTextArea11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jScrollPane1.setViewportView(jTextArea11);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 270, 570));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 570));
 
         pack();
         setLocationRelativeTo(null);
@@ -415,8 +419,8 @@ public class calculator extends javax.swing.JFrame {
         float pgr=(float) (R/12.150);
         float TP=pgr*W;
         float Z=TP/40;
-        tp.setText(""+TP);
-        z.setText(""+Z);
+        tp.setText(String.format("%.0f",TP));
+        z.setText(String.format("%.0f", Z));
 
     }//GEN-LAST:event_rKeyReleased
 
@@ -428,20 +432,45 @@ public class calculator extends javax.swing.JFrame {
 
         float TP= Float.parseFloat(tp.getText());
         float Z=TP/40;
-        z.setText(""+Z);
+        z.setText(String.format("%.0f", Z));
 
         // TODO add your handling code here:
     }//GEN-LAST:event_tpKeyReleased
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        try {
-            // TODO add your handling code here:
+//        try {
+//            // TODO add your handling code here:
+//
+//            third_panal_print();
+//        } catch (PrinterException ex) {
+//            Logger.getLogger(calculator.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
-            third_panal_print();
-        } catch (PrinterException ex) {
-            Logger.getLogger(calculator.class.getName()).log(Level.SEVERE, null, ex);
+            if(cb1.getSelectedItem().toString().equals("<NONE>")){
+                return;
+            }
+
+         try{
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/ZakatReport.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("NAME", n.getText());
+            para.put("WAZAN", w.getText());
+            para.put("RATE", r.getText());
+            para.put("RAKAM", tp.getText());
+            para.put("ZAKAT", z.getText());
+            
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            JasperViewer.viewReport(j, false);
+            
+        }catch(Exception ex){
+            Logger.getLogger(Gold_managing.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
@@ -492,8 +521,6 @@ public class calculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextArea11;
     private javax.swing.JTextField n;
     private javax.swing.JTextField r;
     private javax.swing.JTextField tp;

@@ -113,6 +113,11 @@ public class Gold_managing extends javax.swing.JFrame {
     
     
     
+    public double CalPer(double tol,double kat){
+        double per =(kat/tol)*100;
+        return per;
+    }
+    
     
     
     
@@ -1442,6 +1447,9 @@ public class Gold_managing extends javax.swing.JFrame {
             return;
         } 
        
+        
+        
+        
         try{
             File currentDir = new File(".");
 	    String basePath = currentDir.getCanonicalPath();
@@ -1451,8 +1459,13 @@ public class Gold_managing extends javax.swing.JFrame {
             JasperDesign jd = JRXmlLoader.load(in);
             JasperReport jr = JasperCompileManager.compileReport(jd);
             HashMap para = new HashMap();
-            para.put("ID", IDtxt.getText());
             
+            double tol=Double.parseDouble(twazan.getText());
+            double kaat=Double.parseDouble(kat.getText());
+            double per = CalPer(tol, kaat);
+            
+            para.put("ID", IDtxt.getText());
+            para.put("PER", String.format("%.1f", per)+"%");
             JasperPrint j = JasperFillManager.fillReport(jr, para,con);
             JasperViewer.viewReport(j, false);
             

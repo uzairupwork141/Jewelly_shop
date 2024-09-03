@@ -219,14 +219,14 @@ FROM sell_silver JOIN sell_invoice_details ON sell_silver.SID = sell_invoice_det
 				<textFieldExpression><![CDATA[$F{SID}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="6" y="13" width="42" height="14" uuid="289a2723-ac37-4329-849f-91a77031a56b"/>
+				<reportElement x="6" y="12" width="42" height="15" uuid="289a2723-ac37-4329-849f-91a77031a56b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ INVOICE]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy __ h:mm a">
-				<reportElement x="100" y="13" width="75" height="14" uuid="4e7beb2b-9fc3-44f4-9459-0326f3d6d42a"/>
+				<reportElement x="100" y="12" width="75" height="15" uuid="4e7beb2b-9fc3-44f4-9459-0326f3d6d42a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true"/>
 				</textElement>

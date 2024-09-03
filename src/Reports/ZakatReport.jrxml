@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="200" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="190" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" uuid="1214e8e4-5bb8-4f86-8562-07dcc6fe5a06">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NAME" class="java.lang.String"/>
+	<parameter name="WAZAN" class="java.lang.String"/>
+	<parameter name="RATE" class="java.lang.String"/>
+	<parameter name="RAKAM" class="java.lang.String"/>
+	<parameter name="ZAKAT" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="190" height="56" uuid="2cab912e-2d39-4a0e-a243-bf4c1eeda07d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="20" width="190" height="18" uuid="09f2cc8c-7821-458e-9ea2-d8dbd3bed14d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ZAKAT CALCULATION]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="0" y="36" width="190" height="20" uuid="5286748d-3497-4c5f-b28e-afced10baffa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="152" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="190" height="130" uuid="f6475051-f84b-42f3-899c-47d9874ce7d4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="49" y="86" width="130" height="37" uuid="3cbd9444-5829-418b-a63f-f9146b5a737a"/>
+			</rectangle>
+			<textField>
+				<reportElement x="49" y="0" width="130" height="25" uuid="4a7216f2-abca-4947-b75c-4874e648f96d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="26" width="130" height="19" uuid="d4a2a881-097d-4b71-be57-753c8fa2f91a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{WAZAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="46" width="130" height="19" uuid="58d00cc3-d2a0-4d39-a766-01db394804d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="66" width="130" height="19" uuid="11c46207-cde8-4797-b129-9bde143cfddb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RAKAM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="86" width="130" height="37" uuid="a4cda473-4842-4d98-898d-25abf9cda715"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ZAKAT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="49" height="25" uuid="b358a27c-5659-4bcc-83dd-1b26ac64e73d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[ NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="49" height="19" uuid="2f122038-fafd-4fad-b796-cdea864d4107"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[ WEIGHT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="46" width="49" height="19" uuid="5dd4759b-4c5b-4d3d-bdc5-3a1c8c175942"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[ RATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="49" height="18" uuid="1374bc08-4bbe-4a3e-aff4-74ed7712910b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[ TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="86" width="49" height="37" uuid="259c3a5a-e5b9-4e9c-9468-0ff7217f85b3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ ZAKAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="130" width="190" height="18" uuid="184194b8-fc4e-4565-819b-14bf0f5ead92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[software By m-uzair ____ Cell:03476442712]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+</jasperReport>

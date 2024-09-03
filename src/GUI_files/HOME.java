@@ -247,8 +247,8 @@ public class HOME extends javax.swing.JFrame {
             }
         });
         pane11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 270, 60));
-        pane11.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 10));
-        pane11.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 290, 10));
+        pane11.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 270, 10));
+        pane11.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 270, 10));
 
         bgpanal1.add(pane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 290, 590));
 
@@ -371,9 +371,9 @@ public class HOME extends javax.swing.JFrame {
                 jLabel10MouseExited(evt);
             }
         });
-        pane12.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 290, 160, 40));
+        pane12.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 160, 40));
 
-        bgpanal1.add(pane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 810, 340));
+        bgpanal1.add(pane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 810, 290));
 
         getContentPane().add(bgpanal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 650));
 

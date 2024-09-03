@@ -6,6 +6,7 @@
 	<parameter name="ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
+	<parameter name="PER" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select* from perchases where ID=$P{ID}]]>
 	</queryString>
@@ -58,7 +59,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="317" splitType="Stretch">
+		<band height="339" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="27" width="53" height="20" uuid="719a02a0-ab39-47e0-8dad-d2cec1978405"/>
 			</rectangle>
@@ -209,16 +210,16 @@
 				<reportElement x="0" y="207" width="53" height="20" uuid="45f3a233-e840-4c45-ba3d-a9d5286c23bf"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="247" width="53" height="20" uuid="d654176c-4101-407a-be99-4028b3c107f2"/>
+				<reportElement x="0" y="267" width="53" height="20" uuid="d654176c-4101-407a-be99-4028b3c107f2"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="227" width="53" height="20" uuid="de61284d-ab69-4a0d-90f3-dbb2b7ec9286"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="267" width="53" height="20" uuid="5afe019f-b3d8-4282-b996-7579b58a4377"/>
+				<reportElement x="0" y="287" width="53" height="20" uuid="5afe019f-b3d8-4282-b996-7579b58a4377"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="267" width="53" height="20" uuid="1d96202a-71dc-4230-8101-73a5205f70a8"/>
+				<reportElement x="0" y="287" width="53" height="20" uuid="1d96202a-71dc-4230-8101-73a5205f70a8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -231,17 +232,17 @@
 				<reportElement x="53" y="207" width="127" height="20" uuid="d678fd26-9169-4b67-bbaf-47443090f47d"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="53" y="267" width="127" height="20" uuid="99b46b3c-bd3f-4abd-93ec-cbf4a569ca0c"/>
+				<reportElement x="53" y="287" width="127" height="20" uuid="99b46b3c-bd3f-4abd-93ec-cbf4a569ca0c"/>
 			</rectangle>
 			<textField>
-				<reportElement x="53" y="267" width="127" height="20" uuid="fd9f39f6-a161-43a1-8374-3962fe326fc9"/>
+				<reportElement x="53" y="287" width="127" height="20" uuid="fd9f39f6-a161-43a1-8374-3962fe326fc9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RAKAM}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="53" y="247" width="127" height="20" uuid="5418706a-c326-467a-ac5c-36d56128846c"/>
+				<reportElement x="53" y="267" width="127" height="20" uuid="5418706a-c326-467a-ac5c-36d56128846c"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="187" width="53" height="20" uuid="eedc3f97-0b7e-4d55-b414-f2b6f2d786c2"/>
@@ -272,14 +273,14 @@
 				<textFieldExpression><![CDATA[$F{SAFIWAZAN}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="247" width="53" height="20" uuid="a2545a1b-03b2-4356-9f40-5ba8b0734bcd"/>
+				<reportElement x="0" y="267" width="53" height="20" uuid="a2545a1b-03b2-4356-9f40-5ba8b0734bcd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PURE GOLD]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="53" y="247" width="127" height="20" uuid="1e95e58e-80de-4e6e-8843-1bbc39ba2a38"/>
+				<reportElement x="53" y="267" width="127" height="20" uuid="1e95e58e-80de-4e6e-8843-1bbc39ba2a38"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -300,24 +301,24 @@
 				<textFieldExpression><![CDATA[$F{KAAT}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="0" y="287" width="180" height="29" uuid="c38fdabd-96ca-44cd-9df7-a85b27701e17"/>
+				<reportElement x="0" y="307" width="180" height="29" uuid="c38fdabd-96ca-44cd-9df7-a85b27701e17"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="306" width="180" height="10" uuid="30da3c65-7ed4-4584-8f2e-64b559845b3f"/>
+				<reportElement x="0" y="326" width="180" height="10" uuid="30da3c65-7ed4-4584-8f2e-64b559845b3f"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[software by M.UZAIR | cell :03476442712]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="287" width="180" height="10" uuid="203fd620-4018-47a5-8d69-b9d0e9ee730c"/>
+				<reportElement x="0" y="307" width="180" height="10" uuid="203fd620-4018-47a5-8d69-b9d0e9ee730c"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Thank you for your support!]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="296" width="180" height="10" uuid="8af1c8d3-b813-4e2f-8e15-4ea14555056e"/>
+				<reportElement x="0" y="316" width="180" height="10" uuid="8af1c8d3-b813-4e2f-8e15-4ea14555056e"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -352,6 +353,26 @@
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CHANDI}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="247" width="53" height="20" uuid="bea8b4b6-e2b3-41f3-b801-af63c2b15503"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="247" width="53" height="20" uuid="1fb74087-b5b5-4756-b4ff-95a030f2fa53"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KAAT %]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="53" y="247" width="127" height="20" uuid="121ee1ee-e5e5-48ee-88d5-b6327aad8070"/>
+			</rectangle>
+			<textField>
+				<reportElement x="53" y="247" width="127" height="20" uuid="1e16baea-76e2-4195-a529-0c65e7e33757"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
