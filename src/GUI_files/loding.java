@@ -207,7 +207,7 @@ public class loding extends javax.swing.JFrame {
                        if (i==10){
                           s.msg.setText("PLEASE WAIT CONNECTING");
                           try{
-                               Process process = Runtime.getRuntime().exec("\\xampp\\mysql\\bin\\mysqld.exe");
+                               Process process = Runtime.getRuntime().exec("\\C:\\xampp\\mysql\\bin\\mysqld.exe");
                           }catch(Exception e)
                           {
                                s.msg.setText("DATABASE NOT FOUND");

@@ -259,7 +259,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[GOLD   WEIGHT]]></text>
+				<text><![CDATA[WEIGHT]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="53" y="187" width="127" height="20" uuid="5f161b46-c4ce-45f5-bd6a-c038205b2bc0"/>
@@ -273,7 +273,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PURE GOLD]]></text>
+				<text><![CDATA[PURE WEIGHT]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="53" y="227" width="127" height="20" uuid="1e95e58e-80de-4e6e-8843-1bbc39ba2a38"/>

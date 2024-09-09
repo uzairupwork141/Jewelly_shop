@@ -14,12 +14,12 @@ import java.awt.RenderingHints;
  *
  * @author SHABBIR TRADERS
  */
-public class bgpanal extends javax.swing.JPanel {
+public class bgpanal2 extends javax.swing.JPanel {
 
     /**
      * Creates new form bgpanal
      */
-    public bgpanal() {
+    public bgpanal2() {
         initComponents();
         setOpaque(false);
     }
@@ -48,7 +48,7 @@ public class bgpanal extends javax.swing.JPanel {
     protected void paintComponent(Graphics grphcs){
          Graphics2D g2 = (Graphics2D) grphcs;
          g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-         g2.setColor(new Color(240,240,240));
+         g2.setColor(new Color(30,30,30));
          g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
          super.paintComponent(grphcs);
      }

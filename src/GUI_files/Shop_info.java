@@ -61,7 +61,7 @@ public class Shop_info extends javax.swing.JFrame {
 
     
     
-     public boolean update(String field,String data,String id){
+    public boolean update(String field,String data,String id){
         try{      
             str=con.prepareStatement ("UPDATE `shop_details` SET `"+field+"`='"+data+"' WHERE SHOP_ID="+id);
             str.execute();

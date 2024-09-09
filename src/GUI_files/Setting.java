@@ -42,6 +42,7 @@ public class Setting extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
 
@@ -71,7 +72,7 @@ public class Setting extends javax.swing.JFrame {
                 jLabel3MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 230, 70));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 200, 70));
 
         jLabel4.setBackground(new java.awt.Color(255, 204, 204));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -91,7 +92,7 @@ public class Setting extends javax.swing.JFrame {
                 jLabel4MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 230, 70));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 200, 70));
 
         jLabel6.setBackground(new java.awt.Color(255, 204, 204));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -111,7 +112,7 @@ public class Setting extends javax.swing.JFrame {
                 jLabel6MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 230, 70));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 410, 70));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-setting-64.png"))); // NOI18N
@@ -135,7 +136,27 @@ public class Setting extends javax.swing.JFrame {
                 jLabel7MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 230, 70));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 200, 70));
+
+        jLabel8.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-books-65.png"))); // NOI18N
+        jLabel8.setText("ADD BOOKS");
+        jLabel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel8.setOpaque(true);
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel8MouseExited(evt);
+            }
+        });
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 200, 70));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 450, 430));
 
@@ -199,7 +220,7 @@ public class Setting extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         if(Skye>0){
-            JOptionPane.showMessageDialog(this, "A window is already Open");
+            
             return;
         }
         HOME.kye=0;
@@ -245,7 +266,7 @@ public class Setting extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "A window is already Open");
             return;
         }
-       Skye++;
+        Skye++;
         
         new Account_info().setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
@@ -296,6 +317,27 @@ public class Setting extends javax.swing.JFrame {
          jLabel7.setBackground(new java.awt.Color(255, 204, 204));
     }//GEN-LAST:event_jLabel7MouseExited
 
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+       if(Skye>0){
+            JOptionPane.showMessageDialog(this, "A window is already Open");
+            return;
+        }
+        Skye=1;
+        
+        new BOOKS().setVisible(true);
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
+        // TODO add your handling code here:
+         jLabel8.setBackground(Color.red);
+    }//GEN-LAST:event_jLabel8MouseEntered
+
+    private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
+        // TODO add your handling code here:
+        jLabel8.setBackground(new java.awt.Color(255, 204, 204));
+    }//GEN-LAST:event_jLabel8MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -340,6 +382,7 @@ public class Setting extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

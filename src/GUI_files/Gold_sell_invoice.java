@@ -924,6 +924,9 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     public void delete(String id) throws SQLException{
         str = con.prepareStatement("DELETE FROM `sell_gold` WHERE ID="+id);
         str.executeUpdate();
+        str = con.prepareStatement("DELETE FROM `sell_gold_details` WHERE ID="+id);
+        str.executeUpdate();
+        
         JOptionPane.showMessageDialog(this, "Record Deleted","Deleted",2);
         refresh();
     }
