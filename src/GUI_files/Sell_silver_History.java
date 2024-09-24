@@ -5,14 +5,19 @@
 package GUI_files;
 
 import CODE_files.ConnectDB;
+import CODE_files.GetShopInfo;
 import java.awt.*;
 import java.awt.print.PrinterException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import static java.lang.String.format;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +27,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -375,8 +387,6 @@ public class Sell_silver_History extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         salesmantxt = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        PrintArea = new javax.swing.JTextArea();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -384,6 +394,8 @@ public class Sell_silver_History extends javax.swing.JFrame {
         search_txt = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        PrintArea = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -688,16 +700,6 @@ public class Sell_silver_History extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 440, 520));
 
-        PrintArea.setEditable(false);
-        PrintArea.setBackground(new java.awt.Color(204, 255, 255));
-        PrintArea.setColumns(20);
-        PrintArea.setFont(new java.awt.Font("Segoe UI", 0, 9)); // NOI18N
-        PrintArea.setRows(5);
-        PrintArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jScrollPane2.setViewportView(PrintArea);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 50, 230, 520));
-
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("PRINT");
@@ -759,6 +761,11 @@ public class Sell_silver_History extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 70, 30));
+
+        PrintArea.setFont(new java.awt.Font("Segoe UI", 0, 9)); // NOI18N
+        jScrollPane4.setViewportView(PrintArea);
+
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 50, 230, 520));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1240, 590));
 
@@ -880,8 +887,34 @@ public class Sell_silver_History extends javax.swing.JFrame {
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
         // TODO add your handling code here:
+            String[]shopinfo=new GetShopInfo().getData();
+
+        try{
+            
+            
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/SellSilver.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            para.put("SHOP_NAME", shopinfo[1]);
+            para.put("PHONE", shopinfo[2]);
+            para.put("ADDRESS", shopinfo[3]);
+            
+           
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+           
+            JasperViewer.viewReport(j, false);
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex);
+        }
         
-        print();
+//        print();
         
         
     }//GEN-LAST:event_jLabel15MouseClicked
@@ -930,7 +963,7 @@ public class Sell_silver_History extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DATElbl;
     private javax.swing.JTextField IDtxt;
-    private javax.swing.JTextArea PrintArea;
+    private javax.swing.JTextPane PrintArea;
     private javax.swing.JTable Table1;
     private javax.swing.JTable Table2;
     private javax.swing.JTextField customer_cnic;
@@ -961,8 +994,8 @@ public class Sell_silver_History extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField price;
     private javax.swing.JTextField salesmantxt;
     private javax.swing.JTextField search_txt;

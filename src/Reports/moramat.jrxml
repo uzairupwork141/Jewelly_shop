@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="200" pageHeight="842" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="110ba446-d8b0-45ad-9b01-f907923766cb">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.6500000000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="ID" class="java.lang.String"/>
@@ -262,6 +262,12 @@ FROM moramat JOIN moramat_details ON moramat.ID =moramat_details.MID where moram
 				</textElement>
 				<text><![CDATA[NOTE]]></text>
 			</staticText>
+			<componentElement>
+				<reportElement x="8" y="64" width="187" height="24" uuid="49ff8ca4-d817-4b04-abe3-3c494fbfef12"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$F{ID}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
 		</band>
 	</summary>
 </jasperReport>

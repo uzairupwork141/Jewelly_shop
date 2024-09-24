@@ -29,6 +29,9 @@ public class usermodel {
     private static String username;
     private static String password;
     private static String code;
+    private static String email;
+    private static String App_pass;
+    
 
     public static String getID() {
         return ID;
@@ -71,6 +74,22 @@ public class usermodel {
     }
         
     
+     public static String getEmail() {
+        return email;
+    }
+
+    public static void getEmail(String email) {
+        usermodel.email = email;
+    }
+    
+    public static String getAppPass() {
+        return App_pass;
+    }
+
+    public static void getAppPass(String app_pass) {
+        usermodel.App_pass = app_pass;
+    }
+    
     
     
     public void setuser(String id){
@@ -83,6 +102,9 @@ public class usermodel {
                 username=rs.getString("username");
                 password=rs.getString("password");
                 code=rs.getString("code");
+                email=rs.getString("EMAIL");
+                App_pass=rs.getString("APP_PASSWORD");
+                
             }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());

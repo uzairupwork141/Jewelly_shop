@@ -58,6 +58,9 @@ public class Gold_managing extends javax.swing.JFrame {
     int yMouse;
     static int kye=0; 
     
+    
+    
+    
     public Gold_managing() {
         try{
             Process process = Runtime.getRuntime().exec("C:\\xampp\\mysql\\bin\\mysqld.exe");
@@ -201,7 +204,7 @@ public class Gold_managing extends javax.swing.JFrame {
     
     
     
-        public boolean Check_Id(String id){
+    public boolean Check_Id(String id){
 //        
          try{
                     

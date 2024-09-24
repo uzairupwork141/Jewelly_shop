@@ -5,14 +5,19 @@
 package GUI_files;
 
 import CODE_files.ConnectDB;
+import CODE_files.GetShopInfo;
 import java.awt.*;
 import java.awt.print.PrinterException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import static java.lang.String.format;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +27,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -284,7 +296,7 @@ public class Sell_gold_History extends javax.swing.JFrame {
         PrintArea.setText(PrintArea.getText()+"\n|-----------------");
      
         PrintArea.setText(PrintArea.getText()+"\n------------------------------------------------------");
-       PrintArea.setText(PrintArea.getText()+"\n       NO RETURN WITHOUT THIS INVOICE"
+        PrintArea.setText(PrintArea.getText()+"\n       NO RETURN WITHOUT THIS INVOICE"
                                              +"\n               THAKYOU SO MUCH");
         PrintArea.setText(PrintArea.getText()+"\n               Developed by M.UZAIR"
                                             + "\n               Whatsapp:-03476442712");
@@ -978,8 +990,37 @@ public class Sell_gold_History extends javax.swing.JFrame {
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
         // TODO add your handling code here:
+         String[]shopinfo=new GetShopInfo().getData();
+
+        try{
+            
+            
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/SellGold.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            para.put("SHOP_NAME", shopinfo[1]);
+            para.put("PHONE", shopinfo[2]);
+            para.put("ADDRESS", shopinfo[3]);
+            
+           
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+           
+            JasperViewer.viewReport(j, false);
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex);
+        }
         
-        print();
+        
+        
+        
+//        print();
         
         
     }//GEN-LAST:event_jLabel15MouseClicked

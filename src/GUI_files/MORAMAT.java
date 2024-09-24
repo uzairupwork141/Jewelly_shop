@@ -800,6 +800,11 @@ public class MORAMAT extends javax.swing.JFrame {
         search.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
         jPanel3.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 160, 30));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -1063,6 +1068,18 @@ public class MORAMAT extends javax.swing.JFrame {
         xMouse = evt.getX();
         yMouse= evt.getY();
     }//GEN-LAST:event_jLabel13MousePressed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+         try {
+            // TODO add your handling code here:
+            getDataFromMainTbl(search.getText());
+            search.setText("");
+            search.requestFocus();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERROR:-"+ex.getMessage());
+        }
+    }//GEN-LAST:event_searchActionPerformed
 
     /**
      * @param args the command line arguments

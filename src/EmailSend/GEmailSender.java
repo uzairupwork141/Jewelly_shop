@@ -4,6 +4,7 @@
 
 package EmailSend;
 
+import CODE_files.usermodel;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -23,10 +24,16 @@ public class GEmailSender {
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.host", "smtp.gmail.com");
 
-        String username = "hskemails1";
-        String password = "msczhycelsdbkigt";
+        usermodel user=new usermodel();
+        String [] em = user.getEmail().split("@");
+        String username = em[0];
+        String password = user.getAppPass();
 
 
+//        String username = "hskemails1";
+//        String password = "msczhycelsdbkigt";
+        
+        
         //session
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override

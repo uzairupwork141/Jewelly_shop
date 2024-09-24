@@ -7,6 +7,7 @@ package GUI_files;
 import CODE_files.ConnectDB;
 import CODE_files.FieldSetting;
 import CODE_files.GetShopInfo;
+import CODE_files.usermodel;
 import EmailSend.EmailSend;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -1007,7 +1008,7 @@ public class OrderSystem extends javax.swing.JFrame {
     //----------------------------------------------------------------------------
     
     public void sendEmail(){
-        
+        usermodel user = new usermodel();
         
         if(EMAILtxt.getText().equals("")){
             return;
@@ -1015,7 +1016,7 @@ public class OrderSystem extends javax.swing.JFrame {
         
         int varify = JOptionPane.showConfirmDialog(this, "Do you want to send EMAIL to ( "+EMAILtxt.getText()+" )","confirmation", JOptionPane.YES_NO_OPTION);
         if(varify==0){
-            new EmailSend().SendEmail("ORDER INVOICE", CreateEmailText(), EMAILtxt.getText(),"hskemails1@gmail.com",this);
+            new EmailSend().SendEmail("ORDER INVOICE", CreateEmailText(), EMAILtxt.getText(),user.getEmail(),this);
         }
         
         

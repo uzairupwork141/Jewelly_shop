@@ -35,7 +35,8 @@ public class moramathistory extends javax.swing.JFrame {
         ImageIcon img = new ImageIcon("src\\ASSETS_files\\icons8-database-syncing-complete-local-drive-and-connected-with-other-pc-48.png");
         this.setIconImage(img.getImage());
         con= new ConnectDB().Connect();       
-        DBconnect();
+        searchtxt.requestFocus();
+//        DBconnect();
     }
     
    
@@ -97,11 +98,9 @@ public class moramathistory extends javax.swing.JFrame {
     public void refresh (){
         
         DefaultTableModel df=(DefaultTableModel)jTable1.getModel();
-            df.setRowCount(0);
-            DefaultTableModel df1=(DefaultTableModel)jTable3.getModel();
-            df1.setRowCount(0);
-            DBconnect();
-        
+        df.setRowCount(0);
+        DefaultTableModel df1=(DefaultTableModel)jTable3.getModel();
+        df1.setRowCount(0);
         
     }
     
@@ -270,6 +269,11 @@ public class moramathistory extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 100, 60));
 
         searchtxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        searchtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchtxtActionPerformed(evt);
+            }
+        });
         searchtxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 searchtxtKeyReleased(evt);
@@ -437,10 +441,7 @@ public class moramathistory extends javax.swing.JFrame {
 
     private void searchtxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchtxtKeyReleased
         // TODO add your handling code here:
-         if (searchtxt.getText().equals("")){
-            refresh();
-            
-        }
+        
     }//GEN-LAST:event_searchtxtKeyReleased
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -477,8 +478,15 @@ public class moramathistory extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void SearchCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCBActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_SearchCBActionPerformed
+
+    private void searchtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchtxtActionPerformed
+        // TODO add your handling code here:
+         SearchForMainTable(SearchCB.getSelectedItem().toString(), searchtxt.getText());
+         searchtxt.setText("");
+         
+    }//GEN-LAST:event_searchtxtActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,6 +6,7 @@ package GUI_files;
 
 import CODE_files.ConnectDB;
 import CODE_files.GetShopInfo;
+import CODE_files.usermodel;
 import EmailSend.EmailSend;
 import com.jhlabs.vecmath.Color4f;
 import java.awt.Color;
@@ -732,12 +733,12 @@ public class Order_history extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "ORDER STILL PENDING\n","Action not completed",3);
             return;
         }
-        
+        usermodel user = new usermodel();
         
         String id=tab1.getValueAt(srow,0).toString();
         String email=tab1.getValueAt(srow,3).toString();
         
-        sendEmail(email, id,"ORDER READY",CreateDoneEmailText(id),"hskemails1@gmail.coms");
+        sendEmail(email, id,"ORDER READY",CreateDoneEmailText(id),user.getEmail());
         
     }//GEN-LAST:event_button7ActionPerformed
 
