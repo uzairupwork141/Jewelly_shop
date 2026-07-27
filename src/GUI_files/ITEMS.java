@@ -21,6 +21,7 @@ public class ITEMS extends javax.swing.JFrame {
      */
     public ITEMS() {
         initComponents();
+        setBackground(new Color(0,0,0,0));
         ImageIcon img = new ImageIcon("src/ASSETS_files/pngwing.com.png");
         this.setIconImage(img.getImage());
         con= new ConnectDB(). Connect();
@@ -155,69 +156,46 @@ public class ITEMS extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        bgpanal1 = new panal.bgpanal();
+        bgpanal21 = new panal.bgpanal2();
+        pane21 = new panal.pane2();
         jLabel29 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        button2 = new ALL_UI_1.Button();
+        button1 = new ALL_UI_1.Button();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        IDtxt = new javax.swing.JTextField();
-        ITEMtxt = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        bgpanal2 = new panal.bgpanal();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        saveBtn = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        ITEMtxt = new ALL_UI_1.TextField();
+        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        IDtxt = new ALL_UI_1.TextField();
         Type_cb = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        button3 = new ALL_UI_1.Button();
+        saveBtn = new ALL_UI_1.Button();
+        button5 = new ALL_UI_1.Button();
+
+        javax.swing.GroupLayout bgpanal1Layout = new javax.swing.GroupLayout(bgpanal1);
+        bgpanal1.setLayout(bgpanal1Layout);
+        bgpanal1Layout.setHorizontalGroup(
+            bgpanal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        bgpanal1Layout.setVerticalGroup(
+            bgpanal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setBackground(new java.awt.Color(204, 255, 204));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("-");
-        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel2.setOpaque(true);
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel2MouseExited(evt);
-            }
-        });
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, 30, 30));
-
-        jLabel1.setBackground(new java.awt.Color(255, 204, 204));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("X");
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel1.setOpaque(true);
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1MouseExited(evt);
-            }
-        });
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 30, 30));
+        bgpanal21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel29.setBackground(new java.awt.Color(102, 102, 102));
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel29.setText("ITEMS");
-        jLabel29.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel29.setOpaque(true);
+        jLabel29.setText("  ITEMS");
         jLabel29.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jLabel29MouseDragged(evt);
@@ -228,53 +206,38 @@ public class ITEMS extends javax.swing.JFrame {
                 jLabel29MousePressed(evt);
             }
         });
-        getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 30));
+        pane21.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 40));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        button2.setText("X");
+        button2.setFont(new java.awt.Font("Agency FB", 1, 18)); // NOI18N
+        button2.setRippleColor(new java.awt.Color(255, 51, 51));
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        pane21.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 40, 40));
+
+        button1.setText("-");
+        button1.setFont(new java.awt.Font("Agency FB", 1, 18)); // NOI18N
+        button1.setRippleColor(new java.awt.Color(204, 255, 204));
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        pane21.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, 40, 40));
+
+        bgpanal21.add(pane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 40));
 
         jLabel3.setBackground(new java.awt.Color(221, 217, 217));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("ADD ITEMS");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 660, 60));
+        bgpanal21.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 660, 60));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("ID");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 120, 50));
-
-        IDtxt.setEditable(false);
-        IDtxt.setBackground(new java.awt.Color(255, 204, 204));
-        IDtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        IDtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        IDtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 210, 50));
-
-        ITEMtxt.setBackground(new java.awt.Color(204, 255, 255));
-        ITEMtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        ITEMtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ITEMtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        ITEMtxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ITEMtxtActionPerformed(evt);
-            }
-        });
-        ITEMtxt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                ITEMtxtKeyTyped(evt);
-            }
-        });
-        jPanel1.add(ITEMtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 210, 50));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("TYPE");
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 120, 50));
+        bgpanal2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -304,58 +267,74 @@ public class ITEMS extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 320, 340));
+        bgpanal2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 320, 340));
 
-        saveBtn.setBackground(new java.awt.Color(153, 255, 153));
-        saveBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        saveBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        saveBtn.setText("SAVE");
-        saveBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        saveBtn.setOpaque(true);
-        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveBtnMouseClicked(evt);
-            }
-        });
-        jPanel1.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 270, 40));
+        ITEMtxt.setBackground(new java.awt.Color(204, 255, 255));
+        ITEMtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ITEMtxt.setShadowColor(new java.awt.Color(0, 0, 0));
+        bgpanal2.add(ITEMtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 230, 50));
 
-        jLabel8.setBackground(new java.awt.Color(255, 204, 204));
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("NEW");
-        jLabel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel8.setOpaque(true);
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 130, 40));
-
-        jLabel9.setBackground(new java.awt.Color(255, 102, 102));
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("DELETE");
-        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel9.setOpaque(true);
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 130, 40));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setText("ID");
+        bgpanal2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 100, 50));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("ITEM");
-        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 120, 50));
+        bgpanal2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 100, 50));
+
+        IDtxt.setEditable(false);
+        IDtxt.setBackground(new java.awt.Color(255, 204, 204));
+        IDtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        IDtxt.setShadowColor(new java.awt.Color(0, 0, 0));
+        bgpanal2.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 230, 50));
 
         Type_cb.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Type_cb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SILVER", "GOLD" }));
-        jPanel1.add(Type_cb, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 210, 50));
+        bgpanal2.add(Type_cb, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 230, 50));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 680, 440));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("TYPE");
+        bgpanal2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 100, 50));
+
+        button3.setBackground(new java.awt.Color(255, 204, 204));
+        button3.setText("DELETE");
+        button3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        button3.setShadowColor(new java.awt.Color(0, 0, 0));
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+        bgpanal2.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 130, 50));
+
+        saveBtn.setBackground(new java.awt.Color(204, 255, 204));
+        saveBtn.setText("SAVE");
+        saveBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        saveBtn.setShadowColor(new java.awt.Color(0, 0, 0));
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+        bgpanal2.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 320, 50));
+
+        button5.setBackground(new java.awt.Color(204, 255, 255));
+        button5.setText("NEW");
+        button5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        button5.setShadowColor(new java.awt.Color(0, 0, 0));
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
+        bgpanal2.add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 130, 50));
+
+        bgpanal21.add(bgpanal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 680, 380));
+
+        getContentPane().add(bgpanal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
 
         pack();
         setLocationRelativeTo(null);
@@ -376,46 +355,49 @@ public class ITEMS extends javax.swing.JFrame {
         yMouse= evt.getY();
     }//GEN-LAST:event_jLabel29MousePressed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        tblClick();
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        Setting.Skye=0;
+
+        dispose();
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
 
         this.setState(ICONIFIED);
+    }//GEN-LAST:event_button1ActionPerformed
 
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
         // TODO add your handling code here:
-        jLabel2.setBackground(Color.GREEN);
-    }//GEN-LAST:event_jLabel2MouseEntered
+         Newbtn();
+    }//GEN-LAST:event_button5ActionPerformed
 
-    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
-        // TODO add your handling code here:
-        jLabel2.setBackground(new java.awt.Color(204,255,204));
-
-    }//GEN-LAST:event_jLabel2MouseExited
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
         // TODO add your handling code here:
         
-        Setting.Skye=0;
-        
-        dispose();
+        if(checkSideCase()==true){
+            JOptionPane.showMessageDialog(this, "empty fields","ERROR",2);
+            return;
+        }
+        if(saveBtn.getText().equals("SAVE")){
+            JOptionPane.showMessageDialog(this, "Unable to delete","ERROR",2);
+            return;
+        }
+        int check = JOptionPane.showConfirmDialog(this, "Are you sure", "Deleting item", JOptionPane.YES_NO_OPTION);
+        if(check==0){
+            delete();
+            Newbtn();
+        }
+    }//GEN-LAST:event_button3ActionPerformed
 
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
-        // TODO add your handling code here:
-        jLabel1.setBackground(Color.red);
-    }//GEN-LAST:event_jLabel1MouseEntered
-
-    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
-        // TODO add your handling code here:
-        jLabel1.setBackground(new java.awt.Color(255, 204, 204));
-
-    }//GEN-LAST:event_jLabel1MouseExited
-
-    private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
-        // TODO add your handling code here:
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here: 
         if(checkSideCase()==true){
             JOptionPane.showMessageDialog(this, "empty fields","ERROR",2);
             return;
@@ -430,49 +412,7 @@ public class ITEMS extends javax.swing.JFrame {
             Newbtn();
         }
         
-    }//GEN-LAST:event_saveBtnMouseClicked
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-        tblClick();
-    }//GEN-LAST:event_jTable1MouseClicked
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        // TODO add your handling code here:
-        Newbtn();
-    }//GEN-LAST:event_jLabel8MouseClicked
-
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
-        if(checkSideCase()==true){
-            JOptionPane.showMessageDialog(this, "empty fields","ERROR",2);
-            return;
-        }
-        if(saveBtn.getText().equals("SAVE")){
-            JOptionPane.showMessageDialog(this, "Unable to delete","ERROR",2);
-            return;
-        }
-        int check = JOptionPane.showConfirmDialog(this, "Are you sure", "Deleting item", JOptionPane.YES_NO_OPTION);
-        if(check==0){
-            delete();
-            Newbtn();
-        }
-        
-    }//GEN-LAST:event_jLabel9MouseClicked
-
-    private void ITEMtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ITEMtxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ITEMtxtActionPerformed
-
-    private void ITEMtxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ITEMtxtKeyTyped
-        // TODO add your handling code here:
-        
-        String v = ITEMtxt.getText();
-        if(v.length()>10){
-            JOptionPane.showMessageDialog(this, "TOO LONG ENTRY");
-            ITEMtxt.setText("");
-        }
-    }//GEN-LAST:event_ITEMtxtKeyTyped
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -510,21 +450,24 @@ public class ITEMS extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField IDtxt;
-    private javax.swing.JTextField ITEMtxt;
+    private ALL_UI_1.TextField IDtxt;
+    private ALL_UI_1.TextField ITEMtxt;
     private javax.swing.JComboBox<String> Type_cb;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private panal.bgpanal bgpanal1;
+    private panal.bgpanal bgpanal2;
+    private panal.bgpanal2 bgpanal21;
+    private ALL_UI_1.Button button1;
+    private ALL_UI_1.Button button2;
+    private ALL_UI_1.Button button3;
+    private ALL_UI_1.Button button5;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel saveBtn;
+    private panal.pane2 pane21;
+    private ALL_UI_1.Button saveBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -97,6 +97,8 @@ public class moramathistory extends javax.swing.JFrame {
     
     public void refresh (){
         
+        
+        
         DefaultTableModel df=(DefaultTableModel)jTable1.getModel();
         df.setRowCount(0);
         DefaultTableModel df1=(DefaultTableModel)jTable3.getModel();
@@ -151,7 +153,7 @@ public class moramathistory extends javax.swing.JFrame {
         try {
 
             if(Search_by.equals("ID")){
-                str = con.prepareStatement ("SELECT * FROM `moramat` where ID="+search);
+                str = con.prepareStatement ("SELECT * FROM `moramat` where ID='"+search+"'");
             }else{
                 str=con.prepareStatement ("SELECT * FROM `moramat` where "+Search_by+" LIKE '%"+search+"%'");
             }
@@ -186,8 +188,57 @@ public class moramathistory extends javax.swing.JFrame {
     
     
     
+     
+     
+     public void done_Btn(){
+         if(jTable1.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(this,"NO DATA SELECTED");
+            return;
+        }
+        
+        if(jTable1.getSelectedRowCount()>1){
+            JOptionPane.showMessageDialog(this,"PLEASE SELECT ONLY ONE( 1 ) DATA ROW");
+            return;
+        }
+        
+        
+        
+         try
+        {
+            DefaultTableModel df=(DefaultTableModel)jTable1.getModel();
+            int row=jTable1.getSelectedRow();
+            String id = (jTable1.getModel().getValueAt(row, 0).toString());
+            String nna = (jTable1.getModel().getValueAt(row, 1).toString()) + " INVOICE ";
+            int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to UPDATE " + nna + " STATUS?","Completed",JOptionPane.YES_NO_OPTION);
+            if (p==0){
+                
+                String Str="update moramat set STATUS='DONE' WHERE ID= '" + id + "'";
+                str=con.prepareStatement(Str);
+                str.execute();
+                JOptionPane.showMessageDialog(null,"Sucessfully UPDATED!");
+                refresh();
+                
+            }
+        }
+        catch(Exception e)
+        {
+                JOptionPane.showMessageDialog(rootPane, e);
+        }
+     }
+     
+     
     
 
+     
+     public void get_Btn(){
+        if(searchtxt.getText().startsWith(" ") || searchtxt.getText().equals("") || searchtxt == null){
+            refresh();
+            return;
+        }
+         SearchForMainTable(SearchCB.getSelectedItem().toString(), searchtxt.getText());
+         searchtxt.setText("");
+     }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -429,8 +480,7 @@ public class moramathistory extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-        SearchForMainTable(SearchCB.getSelectedItem().toString(), searchtxt.getText());
-        
+       get_Btn();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -447,27 +497,7 @@ public class moramathistory extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         
-         try
-        {
-            DefaultTableModel df=(DefaultTableModel)jTable1.getModel();
-            int row=jTable1.getSelectedRow();
-            String id = (jTable1.getModel().getValueAt(row, 0).toString());
-            String nna = (jTable1.getModel().getValueAt(row, 1).toString()) + " INVOICE ";
-            int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to UPDATE " + nna + " STATUS?","Completed",JOptionPane.YES_NO_OPTION);
-            if (p==0){
-                
-                String Str="update moramat set STATUS='DONE' WHERE ID= '" + id + "'";
-                str=con.prepareStatement(Str);
-                str.execute();
-                JOptionPane.showMessageDialog(null,"Sucessfully UPDATED!");
-                refresh();
-                
-            }
-        }
-        catch(Exception e)
-        {
-                JOptionPane.showMessageDialog(rootPane, e);
-        }
+        done_Btn();
         
         
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -483,8 +513,8 @@ public class moramathistory extends javax.swing.JFrame {
 
     private void searchtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchtxtActionPerformed
         // TODO add your handling code here:
-         SearchForMainTable(SearchCB.getSelectedItem().toString(), searchtxt.getText());
-         searchtxt.setText("");
+        get_Btn();
+       
          
     }//GEN-LAST:event_searchtxtActionPerformed
 

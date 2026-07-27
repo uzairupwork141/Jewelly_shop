@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -1012,6 +1013,7 @@ public class Sell_gold_History extends javax.swing.JFrame {
             JasperPrint j = JasperFillManager.fillReport(jr, para,con);
            
             JasperViewer.viewReport(j, false);
+            JasperPrintManager.printPage(j, 0, true);
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(this, ex);

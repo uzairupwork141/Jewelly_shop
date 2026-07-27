@@ -5,6 +5,7 @@
 package zakat.calculator;
 
 import CODE_files.ConnectDB;
+import CODE_files.Thermal_Printer;
 import GUI_files.Gold_managing;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
@@ -17,17 +18,28 @@ import java.sql.Connection;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintService;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -40,6 +52,8 @@ public class calculator extends javax.swing.JFrame {
     /**
      * Creates new form calculator
      */
+    
+    boolean loop=true;
     Connection con;
     public calculator() {
         initComponents();
@@ -131,6 +145,70 @@ public class calculator extends javax.swing.JFrame {
      
      
      
+     public void print_btn (){
+         
+         String p_name = Thermal_Printer.getPrinter_name();
+         if(p_name==null || "".equals(p_name)){
+             JOptionPane.showMessageDialog(this,"Printer not configured" );
+             return;
+         }
+             
+         
+          if(cb1.getSelectedItem().toString().equals("<NONE>"))
+          {
+                return;
+          }
+
+         try{
+             
+            // TODO Auto-generated method stub
+            
+    
+    
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/ZakatReport.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("NAME", n.getText());
+            para.put("WAZAN", w.getText());
+            para.put("RATE", r.getText());
+            para.put("RAKAM", tp.getText());
+            para.put("ZAKAT", z.getText());
+            
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            
+            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            // printRequestAttributeSet.add(MediaSizeName.ISO_A4); //setting page size
+            printRequestAttributeSet.add(new Copies(1));
+
+            PrinterName printerName = new PrinterName(p_name, null); //gets printer 
+
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            printServiceAttributeSet.add(printerName);
+
+            JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, j);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+            exporter.exportReport();
+            
+//            JasperViewer.viewReport(j, false);
+//            
+//            
+//            JasperPrintManager.printReport(j, true);
+            
+        }catch(Exception ex){
+            Logger.getLogger(Gold_managing.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
+     
      
 //     public void printit(){
 //        try {
@@ -216,7 +294,6 @@ public class calculator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         n = new javax.swing.JTextField();
@@ -237,9 +314,6 @@ public class calculator extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jPanel6.setBackground(new java.awt.Color(239, 237, 237));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -255,6 +329,14 @@ public class calculator extends javax.swing.JFrame {
         n.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         n.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         n.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        n.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nFocusLost(evt);
+            }
+        });
         n.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nKeyPressed(evt);
@@ -371,11 +453,9 @@ public class calculator extends javax.swing.JFrame {
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 160, 70));
+        jPanel6.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 320, 70));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 570));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 570));
+        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 590));
 
         pack();
         setLocationRelativeTo(null);
@@ -446,32 +526,21 @@ public class calculator extends javax.swing.JFrame {
 //            Logger.getLogger(calculator.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
-            if(cb1.getSelectedItem().toString().equals("<NONE>")){
-                return;
-            }
-
-         try{
-            File currentDir = new File(".");
-	    String basePath = currentDir.getCanonicalPath();
-	    // Define file path
-	    String filePath = basePath + "/src/Reports/ZakatReport.jrxml";
-            InputStream in = new FileInputStream(filePath);
-            JasperDesign jd = JRXmlLoader.load(in);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            HashMap para = new HashMap();
-            para.put("NAME", n.getText());
-            para.put("WAZAN", w.getText());
-            para.put("RATE", r.getText());
-            para.put("RAKAM", tp.getText());
-            para.put("ZAKAT", z.getText());
-            
-            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
-            JasperViewer.viewReport(j, false);
-            
-        }catch(Exception ex){
-            Logger.getLogger(Gold_managing.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        print_btn();
+           
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void nFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nFocusGained
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_nFocusGained
+
+    private void nFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nFocusLost
+        // TODO add your handling code here:
+        
+        loop=false;
+    }//GEN-LAST:event_nFocusLost
 
     /**
      * @param args the command line arguments
@@ -519,7 +588,6 @@ public class calculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField n;
     private javax.swing.JTextField r;

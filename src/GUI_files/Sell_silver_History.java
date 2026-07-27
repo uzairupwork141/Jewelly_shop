@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -119,42 +120,112 @@ public class Sell_silver_History extends javax.swing.JFrame {
     
     
     
-    
-     public void SearchForMainTable(String Search_by,String search){
-        int c;
-        try {
+    public void searchForMainTable(String searchBy, String search) {
 
-            if(Search_by.equals("ID")){
-                str = con.prepareStatement ("SELECT * FROM `sell_silver` where SID="+search);
-            }else{
-                str=con.prepareStatement ("SELECT * FROM `sell_silver` where "+Search_by+" LIKE '%"+search+"%'");
+        String sql = "";
+
+        switch (searchBy) {
+            case "ID":
+                sql = "SELECT * FROM sell_silver WHERE SID = ?";
+                break;
+
+            case "NAME":
+                sql = "SELECT * FROM sell_silver WHERE NAME LIKE ?";
+                break;
+
+            case "PHONE":
+                sql = "SELECT * FROM sell_silver WHERE PHONE LIKE ?";
+                break;
+
+            case "CNIC":
+                sql = "SELECT * FROM sell_silver WHERE CNIC LIKE ?";
+                break;
+
+            case "WEIGHT":
+                sql = "SELECT * FROM sell_silver WHERE TOTAL_WEIGHT = ?";
+                break;
+
+            case "TOTAL_PRICE":
+                sql = "SELECT * FROM sell_silver WHERE TOTAL_PRICE = ?";
+                break;
+
+            default:
+                JOptionPane.showMessageDialog(this, "Invalid search type");
+                return;
+        }
+
+        try (PreparedStatement pst = con.prepareStatement(sql)) {
+
+            if (searchBy.equals("ID")) {
+                pst.setInt(1, Integer.parseInt(search));
             }
-            
-            ResultSet rs=str.executeQuery();
-            ResultSetMetaData rss=rs.getMetaData();
-            c=rss.getColumnCount();
-            DefaultTableModel df=(DefaultTableModel)Table1.getModel();
+            else if (searchBy.equals("WEIGHT") || searchBy.equals("TOTAL_PRICE")) {
+                pst.setDouble(1, Double.parseDouble(search));
+            }
+            else {
+                pst.setString(1, "%" + search + "%");
+            }
+
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel df = (DefaultTableModel) Table1.getModel();
             df.setRowCount(0);
-                    
-            while (rs.next()){
-                
-                String ID = rs.getString("SID");
-                String name = rs.getString("NAME");
-                String phone = rs.getString("PHONE");
-                String cnic = rs.getString("CNIC");
-                String weight = rs.getString("TOTAL_WEIGHT");
-                String tol_price = rs.getString("TOTAL_PRICE");
-                
-                String [] row = {ID,name,phone,cnic,weight,tol_price};
-               
+
+            while (rs.next()) {
+
+                String[] row = {
+                    rs.getString("SID"),
+                    rs.getString("NAME"),
+                    rs.getString("PHONE"),
+                    rs.getString("CNIC"),
+                    rs.getString("TOTAL_WEIGHT"),
+                    rs.getString("TOTAL_PRICE")
+                };
+
                 df.addRow(row);
-                
-                        
             }
-        } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(this,ex,"CONNECTION ",3);
+
+        } catch (SQLException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
+//     public void SearchForMainTable(String Search_by,String search){
+//        int c;
+//        try {
+//
+//            if(Search_by.equals("ID")){
+//                str = con.prepareStatement ("SELECT * FROM `sell_silver` where SID="+search);
+//            }else{
+//                str=con.prepareStatement ("SELECT * FROM `sell_silver` where "+Search_by+" LIKE '%"+search+"%'");
+//            }
+//            
+//            ResultSet rs=str.executeQuery();
+//            ResultSetMetaData rss=rs.getMetaData();
+//            c=rss.getColumnCount();
+//            DefaultTableModel df=(DefaultTableModel)Table1.getModel();
+//            df.setRowCount(0);
+//                    
+//            while (rs.next()){
+//                
+//                String ID = rs.getString("SID");
+//                String name = rs.getString("NAME");
+//                String phone = rs.getString("PHONE");
+//                String cnic = rs.getString("CNIC");
+//                String weight = rs.getString("TOTAL_WEIGHT");
+//                String tol_price = rs.getString("TOTAL_PRICE");
+//                
+//                String [] row = {ID,name,phone,cnic,weight,tol_price};
+//               
+//                df.addRow(row);
+//                
+//                        
+//            }
+//        } catch (SQLException ex) {
+//           JOptionPane.showMessageDialog(this,ex,"CONNECTION ",3);
+//        }
+//    }
     
      
      
@@ -838,7 +909,7 @@ public class Sell_silver_History extends javax.swing.JFrame {
             return;
         }
         
-        SearchForMainTable(searchby_cb.getSelectedItem().toString(), search_txt.getText());
+        searchForMainTable(searchby_cb.getSelectedItem().toString(), search_txt.getText());
         
         
         
@@ -909,7 +980,7 @@ public class Sell_silver_History extends javax.swing.JFrame {
             JasperPrint j = JasperFillManager.fillReport(jr, para,con);
            
             JasperViewer.viewReport(j, false);
-            
+            JasperPrintManager.printPage(j, 0, true);
         }catch(Exception ex){
             JOptionPane.showMessageDialog(this, ex);
         }

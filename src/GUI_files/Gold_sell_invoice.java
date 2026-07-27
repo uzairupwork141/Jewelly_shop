@@ -6,8 +6,12 @@ package GUI_files;
 
 import CODE_files.ConnectDB;
 import CODE_files.GetShopInfo;
+import CODE_files.Laser_Printer;
 import CODE_files.OnlyNumbers;
+import CODE_files.Scale_config_model;
+import CODE_files.Thermal_Printer;
 import CODE_files.usermodel;
+import com.fazecast.jSerialComm.SerialPort;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -25,16 +29,24 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -54,7 +66,12 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     PreparedStatement str;
     ResultSet rs;
     ArrayList<String> items = new ArrayList();
+    SerialPort scalePort;
+    boolean running=false;
     
+    
+    
+     
     //----------------------------------------------------------------------------
     //----------------------------------------------------------------------------
     //-----------------------------Constructor------------------------------------
@@ -69,7 +86,31 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         getCurrentSalesnam();
         getItem();
         DATElbl.setText(currentdate());
+        
+        Scale_config_model scale = new Scale_config_model();
+        scalePort=SerialPort.getCommPort(scale.getCom());
+        scalePort.setBaudRate(scale.getBaud_rate());
+        scalePort.setNumStopBits(scale.getStop_bits());
+        scalePort.setNumDataBits(scale.getBits());
+        scalePort.setParity(SerialPort.NO_PARITY);
+        scalePort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 5000, 0);
     }
+    
+    
+    public void get_btn(){
+        String ID=search_id.getText();
+        try {
+            
+            getDataFromMainTbl(ID);
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(this,"ERROR: can not get data\n","Error",2);
+        }
+    }
+    
+    
+   
     
     
     
@@ -292,11 +333,11 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
             double pgram_rate=Double.parseDouble(pgram_ratetxt.getText());
             double nag=Double.parseDouble(Item_nag.getText());
             double weight=Double.parseDouble(item_wazan.getText());
-            
+
             double safi_wazan=weight-nag;
             double pure_gold=(karat/24)*safi_wazan;
             double item_price=pure_gold*pgram_rate;
-
+            
             item_safiwazan.setText(""+format("%.3f", safi_wazan));
             item_pasa.setText(""+format("%.3f", pure_gold));
             item_rakam.setText(""+format("%.0f", item_price));
@@ -401,40 +442,30 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     
     
     public void calTableData(){
-        
         try{
             double tol_weight = 0.0;
             double tol_safi   = 0.0;
             double tol_nag  = 0.0;
             double price      = 0.0;
-
             DefaultTableModel df = (DefaultTableModel)jTable1.getModel();
-            
             System.out.println(df.getRowCount());
-            
             for (int i=0;i<df.getRowCount();i++){
                 tol_weight  +=Double.parseDouble(df.getValueAt(i, 1).toString());
                 tol_nag     +=Double.parseDouble(df.getValueAt(i, 2).toString());
                 tol_safi    +=Double.parseDouble(df.getValueAt(i, 3).toString());
                 price       +=Double.parseDouble(df.getValueAt(i, 5).toString());
-                
-                        
             }
             total_wazan.setText(""+format("%.3f", tol_weight));
             total_nag.setText(""+format("%.3f", tol_nag));
             total_safiwazan.setText(""+format("%.3f", tol_safi));
             rakam.setText(""+format("%.0f", price));
-            
-            
         }catch(Exception ex){
-            
             total_wazan.setText("0.00");
             total_safiwazan.setText("0.00");
             rakam.setText("0");
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(this,ex );
         }
-        
     }
     
     
@@ -1008,66 +1039,66 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     //----------------------------------------------------------------------------
     
     
-    public void print(){
-        
-        if(submitSideCase()==false)
-        {
-            return;
-        }
-        
-        
-        DefaultTableModel df = (DefaultTableModel)jTable1.getModel();
-                
-        PrintArea.setText("");
-        PrintArea.setText("|______________________________________________________");
-        PrintArea.setText(PrintArea.getText()+"\n| SALESMAN\t:- "+SALESMAN_NAME.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| DATE\t:-  "+DATElbl.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| ID\t:-  "+IDtxt.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| NAME\t:-  "+customer_name.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| PHONE\t:-  "+customer_phone.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| CNIC\t:-  "+customer_cnic.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|____________________item details______________________");
-        PrintArea.setText(PrintArea.getText()+"\n| ITEM\t| SAFI WAZAN\t| PRICE");
-        PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
-        for(int i =0 ;i<df.getRowCount();i++){
-            String item = df.getValueAt(i,0).toString();
-            String wazan = df.getValueAt(i,1).toString();
-            String nag = df.getValueAt(i,2).toString();
-            String safi = df.getValueAt(i,3).toString();
-            Double price = Double.valueOf(df.getValueAt(i,5).toString());
-           
-            
-            
-            PrintArea.setText(PrintArea.getText()+"\n| ("+item+")\t| "+safi+"_G\t| "+price+"/- ");
-            PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
-        }
-         PrintArea.setText(PrintArea.getText()+"\n|______________________________________________________");
-        
-        
-        
-        
-        PrintArea.setText(PrintArea.getText()+"\n| TATAL WEIGHT     :- "+total_wazan.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
-        PrintArea.setText(PrintArea.getText()+"\n| TATAL NAG          :- "+total_nag.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
-        PrintArea.setText(PrintArea.getText()+"\n| SAFI WAZAN        :- "+total_safiwazan.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
-        PrintArea.setText(PrintArea.getText()+"\n| TOTAL MAZDORI :- "+mzdory.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
-        PrintArea.setText(PrintArea.getText()+"\n| TOTAL PRICE       :- "+total_rakam.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
-        PrintArea.setText(PrintArea.getText()+"\n| TOTAL RECIVED   :- "+total_wasul.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
-     
-        PrintArea.setText(PrintArea.getText()+"\n------------------------------------------------------");
-        PrintArea.setText(PrintArea.getText()+"\n       NO RETURN WITHOUT THIS INVOICE"
-                                             +"\n               THAK YOU SO MUCH");
-        PrintArea.setText(PrintArea.getText()+"\n               Developed by M.UZAIR"
-                                            + "\n               Whatsapp:-03476442712");
-        printit(PrintArea);
-        
-        
-    }    
+//    public void print(){
+//        
+//        if(submitSideCase()==false)
+//        {
+//            return;
+//        }
+//        
+//        
+//        DefaultTableModel df = (DefaultTableModel)jTable1.getModel();
+//                
+//        PrintArea.setText("");
+//        PrintArea.setText("|______________________________________________________");
+//        PrintArea.setText(PrintArea.getText()+"\n| SALESMAN\t:- "+SALESMAN_NAME.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| DATE\t:-  "+DATElbl.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| ID\t:-  "+IDtxt.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| NAME\t:-  "+customer_name.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| PHONE\t:-  "+customer_phone.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| CNIC\t:-  "+customer_cnic.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|____________________item details______________________");
+//        PrintArea.setText(PrintArea.getText()+"\n| ITEM\t| SAFI WAZAN\t| PRICE");
+//        PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
+//        for(int i =0 ;i<df.getRowCount();i++){
+//            String item = df.getValueAt(i,0).toString();
+//            String wazan = df.getValueAt(i,1).toString();
+//            String nag = df.getValueAt(i,2).toString();
+//            String safi = df.getValueAt(i,3).toString();
+//            Double price = Double.valueOf(df.getValueAt(i,5).toString());
+//           
+//            
+//            
+//            PrintArea.setText(PrintArea.getText()+"\n| ("+item+")\t| "+safi+"_G\t| "+price+"/- ");
+//            PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
+//        }
+//         PrintArea.setText(PrintArea.getText()+"\n|______________________________________________________");
+//        
+//        
+//        
+//        
+//        PrintArea.setText(PrintArea.getText()+"\n| TATAL WEIGHT     :- "+total_wazan.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| TATAL NAG          :- "+total_nag.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| SAFI WAZAN        :- "+total_safiwazan.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| TOTAL MAZDORI :- "+mzdory.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| TOTAL PRICE       :- "+total_rakam.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| TOTAL RECIVED   :- "+total_wasul.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|-----------------");
+//     
+//        PrintArea.setText(PrintArea.getText()+"\n------------------------------------------------------");
+//        PrintArea.setText(PrintArea.getText()+"\n       NO RETURN WITHOUT THIS INVOICE"
+//                                             +"\n               THAK YOU SO MUCH");
+//        PrintArea.setText(PrintArea.getText()+"\n               Developed by M.UZAIR"
+//                                            + "\n               Whatsapp:-03476442712");
+//        printit(PrintArea);
+//        
+//        
+//    }    
     
     
     
@@ -1128,6 +1159,235 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     //----------------------------------------------------------------------------
     
     
+    public void printing(){
+        try{
+            String[]shopinfo=new GetShopInfo().getData();
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/SellGold.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            para.put("SHOP_NAME", shopinfo[1]);
+            para.put("PHONE", shopinfo[2]);
+            para.put("ADDRESS", shopinfo[3]);
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            
+            String p_name = Laser_Printer.getPrinter_name();
+            if(p_name==null || "".equals(p_name)){
+                JOptionPane.showMessageDialog(this,"Printer not configured" );
+                return;
+            }
+            
+            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            
+            printRequestAttributeSet.add(new Copies(1));
+
+            PrinterName printerName = new PrinterName(p_name, null); //gets printer 
+            
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            printServiceAttributeSet.add(printerName);
+
+            JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, j);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+            exporter.exportReport();
+            JasperViewer.viewReport(j, false);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void addtolist_btn(){
+         jLabel5.requestFocus();
+        try{
+            String item  = select_item.getSelectedItem().toString();
+            String wazan = item_wazan.getText();
+            String nag   = Item_nag.getText();
+            String safi  = item_safiwazan.getText();
+            String pasa  = item_pasa.getText();
+            String price = item_rakam.getText();
+            String prate = pgram_ratetxt.getText();
+            String karat = Karattxt.getText();
+            
+
+            if(item.equals("Select")){
+                JOptionPane.showMessageDialog(this, "ITEM NOT SELECTED\nPLEASE SELECT AN ITEM","ERROR",2);
+                return;
+            }
+
+            if(Double.parseDouble(wazan)<=0 || wazan == null){
+                JOptionPane.showMessageDialog(this, "PLEASE ENTER WEIGHT(wazan = 0)","ERROR",2);
+                return;
+            }
+
+            if(Double.parseDouble(prate)<=0 || prate == null){
+                JOptionPane.showMessageDialog(this, "PLEASE ENTER P/GRAM RATE(RATE = 0)","ERROR",2);
+                return;
+            }
+
+            if(Double.parseDouble(karat)<=0 || karat == null){
+                JOptionPane.showMessageDialog(this, "PLEASE ENTER KARAT(KARAT = 0)","ERROR",2);
+                return;
+            }
+            
+            if("".equals(nag)){
+                JOptionPane.showMessageDialog(this, "Nag Invalid","ERROR",2);
+                return;
+            }
+
+            itemCal();
+
+
+
+            String [] row={item,wazan,nag,safi,pasa,price};
+            addRowToTable(row, jTable1);
+
+            clearItemSection();
+
+            mainCalculation();
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "error in data entry","ERROR",2);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     //-------------------------------------------------------------
+    //------------ SERIAL PORT CODE -------------------------------
+    //-------------------------------------------------------------
+    //-------------------------------------------------------------
+    
+    private String extractWeight(String input) {
+        return input.replaceAll("[^0-9.]", "").trim();
+    }
+
+    private void updateWeightField(String weight,JTextField txt) {
+        SwingUtilities.invokeLater(() -> txt.setText(weight));
+    }
+
+    
+    
+    //--------------------------------------
+    
+    
+    private void reconnectToScale(String comport ,JTextField txt) {
+        connectToScale(comport ,txt); // Reopen the port
+    }
+
+
+    private void closePortSafely() {
+        if (scalePort != null && scalePort.isOpen()) {
+            try {
+                scalePort.getOutputStream().flush();
+                scalePort.getInputStream().close();
+                scalePort.closePort();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private boolean isPortAvailable(String portName) {
+        for (SerialPort port : SerialPort.getCommPorts()) {
+            if (port.getSystemPortName().equals(portName)) {
+                return true; // Port is still available
+            }
+        }
+        return false; // Port is gone
+    }
+    
+    
+    
+    public void connectToScale( String comport,JTextField txt ) {
+        
+       
+        if (!isPortAvailable(comport)) {
+            JOptionPane.showMessageDialog(null, comport+" is not available. Try unplugging and reconnecting.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (scalePort.openPort()) {
+            System.out.println("Connected to scale...");
+            running = true;
+            readScaleData(txt);
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to connect to scale!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
+    private void readScaleData(JTextField txt) {
+        new Thread(() -> {
+            try (InputStream in = scalePort.getInputStream()) {
+                StringBuilder dataBuffer = new StringBuilder();
+                int byteRead;
+
+                while (running && scalePort.isOpen()) { // Check port state
+                    if (scalePort.bytesAvailable() > 0) {
+                        byteRead = in.read();
+                        if (byteRead != -1) {
+                            char receivedChar = (char) byteRead;
+                            if (receivedChar == '\n') {
+                                String weight = extractWeight(dataBuffer.toString());
+                                updateWeightField(weight,txt);
+                                dataBuffer.setLength(0);
+                            } else {
+                                dataBuffer.append(receivedChar);
+                            }
+                        }
+                    } else {
+                        Thread.sleep(500);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+    
+    
+    
+    public void closeport(){
+       
+        if(scalePort.isOpen()){
+            scalePort.closePort();
+        }
+    }
+    //-------------------------------------------------------------
+    //------------ SERIAL PORT CODE -------------------------------
+    //-------------------------------------------------------------
+    //-------------------------------------------------------------
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1166,6 +1426,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         jLabel41 = new javax.swing.JLabel();
         item_pasa = new javax.swing.JTextField();
         jLabel43 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         customer_name = new javax.swing.JTextField();
@@ -1184,7 +1445,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         total_wazan = new javax.swing.JTextField();
         jLabel53 = new javax.swing.JLabel();
@@ -1204,21 +1465,21 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         total_nag = new javax.swing.JTextField();
         jLabel61 = new javax.swing.JLabel();
         Rghayat_txt = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        PrintArea = new javax.swing.JTextPane();
+        jPanel7 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         saveBtn = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1261,7 +1522,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         jLabel29.setBackground(new java.awt.Color(102, 102, 102));
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel29.setText("SELL GOLD");
+        jLabel29.setText("  SELL GOLD");
         jLabel29.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel29.setOpaque(true);
         jLabel29.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -1276,7 +1537,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 30));
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1313,11 +1574,12 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 search_idActionPerformed(evt);
             }
         });
-        jPanel2.add(search_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 170, 40));
+        jPanel2.add(search_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 160, 40));
 
         jLabel4.setBackground(new java.awt.Color(204, 255, 204));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-search-20.png"))); // NOI18N
         jLabel4.setText("get");
         jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel4.setOpaque(true);
@@ -1332,7 +1594,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel4MouseExited(evt);
             }
         });
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 40));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 40));
 
         DATElbl.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         DATElbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1380,7 +1642,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 960, 60));
 
-        jPanel3.setBackground(new java.awt.Color(220, 217, 217));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1422,7 +1684,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 item_wazanKeyTyped(evt);
             }
         });
-        jPanel3.add(item_wazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 190, 40));
+        jPanel3.add(item_wazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 130, 40));
 
         jLabel49.setBackground(new java.awt.Color(204, 204, 204));
         jLabel49.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
@@ -1444,7 +1706,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 item_rakamActionPerformed(evt);
             }
         });
-        jPanel3.add(item_rakam, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 190, 60));
+        jPanel3.add(item_rakam, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 200, 60));
 
         jLabel5.setBackground(new java.awt.Color(204, 255, 204));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1469,6 +1731,11 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         select_item.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
         select_item.setBorder(null);
         select_item.setNextFocusableComponent(item_wazan);
+        select_item.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                select_itemKeyPressed(evt);
+            }
+        });
         jPanel3.add(select_item, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, 270, 40));
 
         jLabel13.setBackground(new java.awt.Color(255, 204, 204));
@@ -1584,9 +1851,18 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         jLabel43.setOpaque(true);
         jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 60, 130, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 960, 130));
+        jToggleButton1.setBackground(new java.awt.Color(255, 204, 204));
+        jToggleButton1.setText("OPEN");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(361, 10, 70, 40));
 
-        jPanel4.setBackground(new java.awt.Color(220, 217, 217));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 960, 130));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1602,6 +1878,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         customer_name.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         customer_name.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         customer_name.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        customer_name.setNextFocusableComponent(customer_phone);
         customer_name.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 customer_nameKeyReleased(evt);
@@ -1621,6 +1898,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         customer_phone.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         customer_phone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         customer_phone.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        customer_phone.setNextFocusableComponent(customer_cnic);
         customer_phone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 customer_phoneKeyReleased(evt);
@@ -1644,7 +1922,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         customer_cnic.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         customer_cnic.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         customer_cnic.setName(""); // NOI18N
-        customer_cnic.setNextFocusableComponent(select_item);
+        customer_cnic.setNextFocusableComponent(ratetxt);
         customer_cnic.setOpaque(true);
         customer_cnic.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1776,7 +2054,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 960, 90));
 
-        jPanel5.setBackground(new java.awt.Color(222, 221, 221));
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1811,7 +2089,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 510, 260));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 510, 250));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1830,7 +2108,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel8MouseExited(evt);
             }
         });
-        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 120, 30));
+        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 120, 40));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1849,19 +2127,19 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel12MouseExited(evt);
             }
         });
-        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 110, 30));
+        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 110, 40));
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("ITEMS");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel3.setOpaque(true);
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 510, 30));
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("ITEMS");
+        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel6.setOpaque(true);
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 510, 30));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, 530, 340));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 370, 530, 340));
 
-        jPanel6.setBackground(new java.awt.Color(217, 216, 216));
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -2116,20 +2394,16 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         });
         jPanel6.add(Rghayat_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 260, 40));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 430, 340));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 430, 340));
 
-        PrintArea.setEditable(false);
-        PrintArea.setBackground(new java.awt.Color(204, 255, 255));
-        PrintArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        PrintArea.setFont(new java.awt.Font("Segoe UI", 0, 9)); // NOI18N
-        PrintArea.setToolTipText("");
-        jScrollPane3.setViewportView(PrintArea);
-
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 230, 620));
+        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setBackground(new java.awt.Color(204, 255, 204));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-calculate-50.png"))); // NOI18N
         jLabel11.setText("CALCULATE");
         jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel11.setOpaque(true);
@@ -2144,11 +2418,19 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel11MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 670, 120, 40));
+        jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 190, 60));
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("ACTIONS");
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 190, 30));
 
         jLabel9.setBackground(new java.awt.Color(204, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-36.png"))); // NOI18N
         jLabel9.setText("PRINT");
         jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel9.setOpaque(true);
@@ -2163,11 +2445,12 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel9MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 670, 120, 40));
+        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 190, 60));
 
         saveBtn.setBackground(new java.awt.Color(255, 255, 255));
         saveBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         saveBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-submit-48.png"))); // NOI18N
         saveBtn.setText("SAVE");
         saveBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saveBtn.setOpaque(true);
@@ -2182,11 +2465,12 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 saveBtnMouseExited(evt);
             }
         });
-        jPanel1.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 670, 120, 40));
+        jPanel7.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 190, 100));
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 51));
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-database-syncing-complete-local-drive-and-connected-with-other-pc-48.png"))); // NOI18N
         jLabel16.setText("HISTORY");
         jLabel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel16.setOpaque(true);
@@ -2201,7 +2485,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel16MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 670, 120, 40));
+        jPanel7.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 190, 70));
 
         jLabel14.setBackground(new java.awt.Color(255, 204, 204));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -2220,7 +2504,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel14MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 670, 120, 40));
+        jPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 190, 40));
 
         jLabel7.setBackground(new java.awt.Color(255, 102, 102));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -2239,20 +2523,10 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
                 jLabel7MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 670, 120, 40));
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 190, 40));
+        jPanel7.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 230, 10));
 
-        jLabel15.setBackground(new java.awt.Color(255, 102, 102));
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("CLEAR");
-        jLabel15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel15.setOpaque(true);
-        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel15MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, 230, 40));
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 230, 670));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 720));
 
@@ -2386,9 +2660,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
     private void item_wazanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_wazanKeyReleased
         // TODO add your handling code here:
-        enterPress(evt, Item_nag);
         
-        itemCal();
     }//GEN-LAST:event_item_wazanKeyReleased
 
     private void ratetxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ratetxtKeyReleased
@@ -2481,57 +2753,8 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     }//GEN-LAST:event_total_wasulFocusLost
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        jLabel5.requestFocus();
-        try{
-            String item  = select_item.getSelectedItem().toString();
-            String wazan = item_wazan.getText();
-            String nag   = Item_nag.getText();
-            String safi  = item_safiwazan.getText();
-            String pasa  = item_pasa.getText();
-            String price = item_rakam.getText();
-            String prate = pgram_ratetxt.getText();
-            String karat = Karattxt.getText();
-            
-
-            if(item.equals("Select")){
-                JOptionPane.showMessageDialog(this, "ITEM NOT SELECTED\nPLEASE SELECT AN ITEM","ERROR",2);
-                return;
-            }
-
-            if(Double.parseDouble(wazan)<=0 || wazan == null){
-                JOptionPane.showMessageDialog(this, "PLEASE ENTER WEIGHT(wazan = 0)","ERROR",2);
-                return;
-            }
-
-            if(Double.parseDouble(prate)<=0 || prate == null){
-                JOptionPane.showMessageDialog(this, "PLEASE ENTER P/GRAM RATE(RATE = 0)","ERROR",2);
-                return;
-            }
-
-            if(Double.parseDouble(karat)<=0 || karat == null){
-                JOptionPane.showMessageDialog(this, "PLEASE ENTER KARAT(KARAT = 0)","ERROR",2);
-                return;
-            }
-            
-            if("".equals(nag)){
-                JOptionPane.showMessageDialog(this, "Nag Invalid","ERROR",2);
-                return;
-            }
-
-            itemCal();
-
-
-
-            String [] row={item,wazan,nag,safi,pasa,price};
-            addRowToTable(row, jTable1);
-
-            clearItemSection();
-
-            mainCalculation();
-            
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, "error in data entry","ERROR",2);
-        }
+       
+        addtolist_btn();
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
@@ -2610,6 +2833,8 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
     private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
         // TODO add your handling code here:
+        
+        
         mainCalculation();
         if(saveBtn.getText().equals("SAVE")){
             submit();
@@ -2645,16 +2870,8 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        String ID=search_id.getText();
-        try {
-            
-            getDataFromMainTbl(ID);
-            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-            JOptionPane.showMessageDialog(this,"ERROR: can not get data\n","Error",2);
-        }
         
+        get_btn();
         
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -2687,45 +2904,23 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        print();
 
-        String[]shopinfo=new GetShopInfo().getData();
         
         mainCalculation();
         if(saveBtn.getText().equals("SAVE")){
             submit();
             
+            printing();
+            return;
         }
 
         if(saveBtn.getText().equals("UPDATE")){
-
+            
             update();
+            printing();
         }
         
 
-        try{
-            
-            
-            
-            File currentDir = new File(".");
-	    String basePath = currentDir.getCanonicalPath();
-	    // Define file path
-	    String filePath = basePath + "/src/Reports/SellGold.jrxml";
-            InputStream in = new FileInputStream(filePath);
-            JasperDesign jd = JRXmlLoader.load(in);
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            HashMap para = new HashMap();
-            para.put("ID", IDtxt.getText());
-            para.put("SHOP_NAME", shopinfo[1]);
-            para.put("PHONE", shopinfo[2]);
-            para.put("ADDRESS", shopinfo[3]);
-            
-           
-            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
-           
-            JasperViewer.viewReport(j, false);
-            
-        }catch(Exception ex){
-            
-        }
+        
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
@@ -2850,11 +3045,18 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
     private void KarattxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KarattxtKeyPressed
         // TODO add your handling code here:
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          select_item.showPopup();
+        }  
          
     }//GEN-LAST:event_KarattxtKeyPressed
 
     private void item_wazanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_wazanKeyPressed
         // TODO add your handling code here:
+        enterPress(evt, Item_nag);
+        
+        itemCal();
         
     }//GEN-LAST:event_item_wazanKeyPressed
 
@@ -2872,11 +3074,6 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_total_wasulKeyPressed
-
-    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
-        // TODO add your handling code here:
-        PrintArea.setText("");
-    }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
         // TODO add your handling code here:
@@ -2999,6 +3196,8 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
 
     private void search_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_idActionPerformed
         // TODO add your handling code here:
+        
+        get_btn();
     }//GEN-LAST:event_search_idActionPerformed
 
     private void Rghayat_txtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Rghayat_txtKeyReleased
@@ -3043,6 +3242,34 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
         jLabel58.requestFocus();
     }//GEN-LAST:event_Rghayat_txtActionPerformed
 
+    private void select_itemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_select_itemKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          item_wazan.requestFocus();
+        }  
+    }//GEN-LAST:event_select_itemKeyPressed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        if( jToggleButton1.isSelected()){
+            jToggleButton1.setText("CLOSE");
+            jToggleButton1.setBackground(new Color(204,255,204));
+            connectToScale(new Scale_config_model().getCom(),item_wazan);
+            System.out.println("opend");
+            item_wazan.setEditable(true);
+            item_wazan.setBackground(new Color(255,204,204));
+        }else if( !jToggleButton1.isSelected()){
+            jToggleButton1.setText("OPEN");
+            jToggleButton1.setBackground(new Color(255,204,204));
+            closeport();
+            item_wazan.requestFocus();
+            System.out.println("CLOSED");
+            item_wazan.setEditable(true);
+            item_wazan.setBackground(new Color(204,255,255));
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3086,7 +3313,6 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     private javax.swing.JTextField IDtxt;
     private javax.swing.JTextField Item_nag;
     private javax.swing.JTextField Karattxt;
-    private javax.swing.JTextPane PrintArea;
     private javax.swing.JTextField Rghayat_txt;
     private javax.swing.JTextField SALESMAN_ID;
     private javax.swing.JTextField SALESMAN_NAME;
@@ -3102,7 +3328,6 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
@@ -3131,6 +3356,7 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel7;
@@ -3142,9 +3368,11 @@ public class Gold_sell_invoice extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField mzdory;
     private javax.swing.JTextField pgram_ratetxt;
     private javax.swing.JTextField rakam;

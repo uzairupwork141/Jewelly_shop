@@ -7,7 +7,10 @@ package GUI_files;
 import CODE_files.ConnectDB;
 import CODE_files.GetShopInfo;
 import CODE_files.OnlyNumbers;
+import CODE_files.Scale_config_model;
+import CODE_files.Thermal_Printer;
 import CODE_files.usermodel;
+import com.fazecast.jSerialComm.SerialPort;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -25,14 +28,23 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -52,6 +64,8 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     PreparedStatement str;
     ResultSet rs;
     ArrayList<String> items = new ArrayList();
+    SerialPort scalePort;
+    boolean running=false;
     public Silver_sell_invoice() {
         initComponents();
         ImageIcon img = new ImageIcon("src/ASSETS_files/pngwing.com.png");
@@ -62,6 +76,16 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         getCurrentSalesnam();
         getItem();
         DATElbl.setText(currentdate());
+        
+        Scale_config_model scale = new Scale_config_model();
+        scalePort=SerialPort.getCommPort(scale.getCom());
+        scalePort.setBaudRate(scale.getBaud_rate());
+        scalePort.setNumStopBits(scale.getStop_bits());
+        scalePort.setNumDataBits(scale.getBits());
+        scalePort.setParity(SerialPort.NO_PARITY);
+        scalePort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 5000, 0);
+//        jMenuBar1.hide();
+        
     }
     
     
@@ -72,6 +96,20 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     }
     
     
+    
+    
+    
+    
+    public void get_btn(){
+        String ID=search_id.getText();
+        try {
+            
+            getDataFromMainTbl(ID);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,"ERROR: can not get data\n","Error",2);
+        }
+    }
     
     
     
@@ -158,7 +196,11 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     
     
     public void fieldFoucasGain(JTextField tx ,String equal ,String set){
-        if(tx.getText().equals(equal)){
+        float txtval = Float.parseFloat(tx.getText());
+        float val = Float.parseFloat(equal);
+        
+        
+        if(txtval == val){
             tx.setText(set);
         }
     }    
@@ -182,7 +224,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
          if(!from.getText().equals("")){
             double rate=Double.parseDouble(from.getText());
             double pg_rate=rate/12.150;
-            to.setText(""+format("%.3f",pg_rate));
+            to.setText(""+format("%.0f",pg_rate));
         }else{
             to.setText("0.00");
         }
@@ -372,7 +414,11 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     
     public void removeTableRow(JTable tbl){
         try{
+            
             DefaultTableModel  df = (DefaultTableModel)tbl.getModel();
+            if(tbl.getSelectedRowCount()<=0){
+                return;
+            }
             int row = tbl.getSelectedRow();
             df.removeRow(row);
         }catch(Exception ex){
@@ -766,85 +812,315 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     
     
     
-     public void printit(){
-        try {
+//     public void printit(){
+//        try {
+//            
+//            HashPrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
+//            attr.add(new MediaPrintableArea(0f, 0f,72f, 72f, MediaPrintableArea.MM)); 
+//            
+////            logo.print(null, null, false, service, attr, false);
+//           
+//            PrintArea.print(null, null, true, null, attr, false);
+//            
+//           
+//        } catch (PrinterException ex) {
+//            System.out.println(""+ex);
+//        }
+//    }
+//    
+    
+    
+//    
+//    public void print(){
+//        
+//        if(submitSideCase()==false)
+//        {
+//            return;
+//        }
+//        
+//        
+//        DefaultTableModel df = (DefaultTableModel)jTable1.getModel();
+//                
+//        PrintArea.setText("");
+//        
+//        PrintArea.setText("|______________________________________________________");
+//        PrintArea.setText(PrintArea.getText()+"\n| SALESMAN\t:- "+SALESMAN_NAME.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| DATE\t:- "+DATElbl.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| ID\t:- "+IDtxt.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| NAME\t:- "+customer_name.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| PHONE\t:- "+customer_phone.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n| CNIC\t:- "+customer_cnic.getText());
+//        PrintArea.setText(PrintArea.getText()+"\n|____________________item details______________________");
+//        PrintArea.setText(PrintArea.getText()+"\n| ITEM\t| WEIGHT\t| PRICE");
+//        PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
+//        for(int i =0 ;i<df.getRowCount();i++){
+//            String item = df.getValueAt(i,0).toString();
+//            String wazan = df.getValueAt(i,1).toString();
+//            Double price = Double.valueOf(df.getValueAt(i,7).toString());
+//           
+//     
+//            PrintArea.setText(PrintArea.getText()+"\n| ("+item+")\t| "+wazan+"_G\t| "+format("%.0f", price)+"/-");
+//            PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
+//            
+//           
+//        }
+//         PrintArea.setText(PrintArea.getText()+"\n|______________________________________________________");
+//        
+//        
+//        
+//        
+//        PrintArea.setText(PrintArea.getText()+"\n| NET WEIGHT\t:- "+total_wazan.getText()+"_g");
+//        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| NET MAZDORI\t:- "+mzdory.getText()+"/-");
+//        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| NET PRICE\t:- "+total_rakam.getText()+"/-");
+//        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
+//        PrintArea.setText(PrintArea.getText()+"\n| NET RECIVED\t:- "+total_wasul.getText()+"/-");
+//        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
+//     
+//        PrintArea.setText(PrintArea.getText()+"\n------------------------------------------------------");
+//       PrintArea.setText(PrintArea.getText()+"\n       NO RETURN WITHOUT THIS INVOICE"
+//                                             +"\n               THAK YOU SO MUCH");
+//        PrintArea.setText(PrintArea.getText()+"\n               Developed by M.UZAIR"
+//                                            + "\n               Whatsapp:-03476442712");
+//        
+//        printit();
+//        
+//        
+//    }    
+    
+    
+    
+    
+    
+    
+    public void addToList(){
+         try{
+            String item  = select_item.getSelectedItem().toString();
+            String wazan = item_wazan.getText();
+            String rate  = item_rate.getText();
+            String grate = item_pgram.getText();
+            String karat = item_karat.getText();
+            String kaat  = item_kaat.getText();
+            String pasa  = item_pasa.getText();
+            String rakam = item_rakam.getText();
+
+
+            if(item.equals("Select")){
+                JOptionPane.showMessageDialog(this, "ITEM NOT SELECTED\nPLEASE SELECT AN ITEM","ERROR",2);
+                return;
+            }
+
+            if(Double.parseDouble(wazan)<=0){
+                JOptionPane.showMessageDialog(this, "PLEASE ENTER WEIGHT(wazan = 0)","ERROR",2);
+                return;
+            }
+
+            if(Double.parseDouble(grate)<=0){
+                JOptionPane.showMessageDialog(this, "PLEASE ENTER P/GRAM RATE(RATE = 0)","ERROR",2);
+                return;
+            }
+
+            if(Double.parseDouble(karat)<=0){
+                JOptionPane.showMessageDialog(this, "PLEASE ENTER KARAT(KARAT = 0)","ERROR",2);
+                return;
+            }
+
+            itemCal();
+
+
+
+            String [] row={item,wazan,rate,grate,karat,kaat,pasa,rakam};
+            addRowToTable(row, jTable1);
+
+            clearItemSection();
+
+            mainCalculation();
             
-            HashPrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-            attr.add(new MediaPrintableArea(0f, 0f,72f, 72f, MediaPrintableArea.MM)); 
-            
-//            logo.print(null, null, false, service, attr, false);
-           
-            PrintArea.print(null, null, true, null, attr, false);
-            
-           
-        } catch (PrinterException ex) {
-            System.out.println(""+ex);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "error in data entry","ERROR",2);
         }
     }
     
     
     
     
-    public void print(){
+    //-------------------------------------------------------------
+    //------------ SERIAL PORT CODE -------------------------------
+    //-------------------------------------------------------------
+    //-------------------------------------------------------------
+    
+    private String extractWeight(String input) {
+        return input.replaceAll("[^0-9.]", "").trim();
+    }
+
+    private void updateWeightField(String weight,JTextField txt) {
+        SwingUtilities.invokeLater(() -> txt.setText(weight));
+    }
+
+    
+    
+    //--------------------------------------
+    
+    
+    private void reconnectToScale(String comport ,JTextField txt) {
+        connectToScale(comport ,txt); // Reopen the port
+    }
+
+
+    private void closePortSafely() {
+        if (scalePort != null && scalePort.isOpen()) {
+            try {
+                scalePort.getOutputStream().flush();
+                scalePort.getInputStream().close();
+                scalePort.closePort();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private boolean isPortAvailable(String portName) {
+        for (SerialPort port : SerialPort.getCommPorts()) {
+            if (port.getSystemPortName().equals(portName)) {
+                return true; // Port is still available
+            }
+        }
+        return false; // Port is gone
+    }
+    
+    
+    
+    public void connectToScale( String comport,JTextField txt ) {
         
-        if(submitSideCase()==false)
-        {
+       
+        if (!isPortAvailable(comport)) {
+            JOptionPane.showMessageDialog(null, comport+" is not available. Try unplugging and reconnecting.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        
-        DefaultTableModel df = (DefaultTableModel)jTable1.getModel();
-                
-        PrintArea.setText("");
-        
-        PrintArea.setText("|______________________________________________________");
-        PrintArea.setText(PrintArea.getText()+"\n| SALESMAN\t:- "+SALESMAN_NAME.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| DATE\t:- "+DATElbl.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| ID\t:- "+IDtxt.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| NAME\t:- "+customer_name.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| PHONE\t:- "+customer_phone.getText());
-        PrintArea.setText(PrintArea.getText()+"\n| CNIC\t:- "+customer_cnic.getText());
-        PrintArea.setText(PrintArea.getText()+"\n|____________________item details______________________");
-        PrintArea.setText(PrintArea.getText()+"\n| ITEM\t| WEIGHT\t| PRICE");
-        PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
-        for(int i =0 ;i<df.getRowCount();i++){
-            String item = df.getValueAt(i,0).toString();
-            String wazan = df.getValueAt(i,1).toString();
-            Double price = Double.valueOf(df.getValueAt(i,7).toString());
-           
-     
-            PrintArea.setText(PrintArea.getText()+"\n| ("+item+")\t| "+wazan+"_G\t| "+format("%.0f", price)+"/-");
-            PrintArea.setText(PrintArea.getText()+"\n|------------------------------------------------------");
-            
-           
+        if (scalePort.openPort()) {
+            System.out.println("Connected to scale...");
+            running = true;
+            readScaleData(txt);
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to connect to scale!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-         PrintArea.setText(PrintArea.getText()+"\n|______________________________________________________");
-        
-        
-        
-        
-        PrintArea.setText(PrintArea.getText()+"\n| NET WEIGHT\t:- "+total_wazan.getText()+"_g");
-        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
-        PrintArea.setText(PrintArea.getText()+"\n| NET MAZDORI\t:- "+mzdory.getText()+"/-");
-        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
-        PrintArea.setText(PrintArea.getText()+"\n| NET PRICE\t:- "+total_rakam.getText()+"/-");
-        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
-        PrintArea.setText(PrintArea.getText()+"\n| NET RECIVED\t:- "+total_wasul.getText()+"/-");
-        PrintArea.setText(PrintArea.getText()+"\n|-------------------");
-     
-        PrintArea.setText(PrintArea.getText()+"\n------------------------------------------------------");
-       PrintArea.setText(PrintArea.getText()+"\n       NO RETURN WITHOUT THIS INVOICE"
-                                             +"\n               THAK YOU SO MUCH");
-        PrintArea.setText(PrintArea.getText()+"\n               Developed by M.UZAIR"
-                                            + "\n               Whatsapp:-03476442712");
-        
-        printit();
-        
-        
-    }    
+    }
+    
+    
+    private void readScaleData(JTextField txt) {
+        new Thread(() -> {
+            try (InputStream in = scalePort.getInputStream()) {
+                StringBuilder dataBuffer = new StringBuilder();
+                int byteRead;
+
+                while (running && scalePort.isOpen()) { // Check port state
+                    if (scalePort.bytesAvailable() > 0) {
+                        byteRead = in.read();
+                        if (byteRead != -1) {
+                            char receivedChar = (char) byteRead;
+                            if (receivedChar == '\n') {
+                                String weight = extractWeight(dataBuffer.toString());
+                                updateWeightField(weight,txt);
+                                dataBuffer.setLength(0);
+                            } else {
+                                dataBuffer.append(receivedChar);
+                            }
+                        }
+                    } else {
+                        Thread.sleep(500);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
     
     
     
+    public void closeport(){
+       
+        if(scalePort.isOpen()){
+            scalePort.closePort();
+        }
+    }
+    //-------------------------------------------------------------
+    //------------ SERIAL PORT CODE -------------------------------
+    //-------------------------------------------------------------
+    //-------------------------------------------------------------
+    
+    
+    
+    
+    
+    public void printBtn(){
+         try{
+            
+            String p_name = Thermal_Printer.getPrinter_name();
+            if(p_name==null || "".equals(p_name)){
+                JOptionPane.showMessageDialog(this,"Printer not configured" );
+                return;
+            }
+            
+            mainCalculation();
+            if(saveBtn.getText().equals("SAVE")){
+                submit();
+
+            }
+
+            if(saveBtn.getText().equals("UPDATE")){
+
+                update();
+
+            }
+            
+            String []arr=new GetShopInfo().getData();
+            
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/SellSilver.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in); 
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            para.put("SHOP_NAME",arr[1]);
+            para.put("PHONE",arr[2]);
+            para.put("ADDRESS",arr[3]);
+            
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            
+            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            
+            printRequestAttributeSet.add(new Copies(1));
+
+            PrinterName printerName = new PrinterName(p_name, null); //gets printer 
+            
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            printServiceAttributeSet.add(printerName);
+
+            JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, j);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+            exporter.exportReport();
+            
+            
+//            JasperViewer.viewReport(j, false);
+//            JasperPrintManager.printPage(j, 0, true);
+//            print();
+            
+            
+        }catch(Exception ex){
+            System.out.println("Something went wrong error");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -854,6 +1130,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -866,9 +1143,9 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         DATElbl = new javax.swing.JLabel();
         SALESMAN_ID = new javax.swing.JTextField();
-        jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         SALESMAN_NAME = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
         item_wazan = new javax.swing.JTextField();
@@ -887,6 +1164,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         customer_name = new javax.swing.JTextField();
@@ -914,20 +1192,29 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel58 = new javax.swing.JLabel();
         total_pasa = new javax.swing.JTextField();
         jLabel59 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        PrintArea = new javax.swing.JTextPane();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        saveBtn = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        saveBtn = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -985,7 +1272,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 30));
 
-        jPanel2.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1016,6 +1303,11 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         search_id.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         search_id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search_id.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        search_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_idActionPerformed(evt);
+            }
+        });
         jPanel2.add(search_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 170, 40));
 
         jLabel4.setBackground(new java.awt.Color(204, 255, 204));
@@ -1054,14 +1346,6 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         });
         jPanel2.add(SALESMAN_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 160, -1));
 
-        jLabel39.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel39.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
-        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel39.setText("SALESMAN ID");
-        jLabel39.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel39.setOpaque(true);
-        jPanel2.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 160, 20));
-
         jLabel40.setBackground(new java.awt.Color(204, 204, 204));
         jLabel40.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1082,6 +1366,14 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         });
         jPanel2.add(SALESMAN_NAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 160, -1));
 
+        jLabel41.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel41.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel41.setText("SALESMAN ID");
+        jLabel41.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel41.setOpaque(true);
+        jPanel2.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 160, 20));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 960, 60));
 
         jPanel3.setBackground(new java.awt.Color(220, 217, 217));
@@ -1094,7 +1386,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel34.setText("وزن");
         jLabel34.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel34.setOpaque(true);
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 80, 30));
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, 70, 30));
 
         item_wazan.setBackground(new java.awt.Color(204, 255, 255));
         item_wazan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1116,6 +1408,9 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
             }
         });
         item_wazan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                item_wazanKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 item_wazanKeyReleased(evt);
             }
@@ -1123,7 +1418,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 item_wazanKeyTyped(evt);
             }
         });
-        jPanel3.add(item_wazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 190, 30));
+        jPanel3.add(item_wazan, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 140, 30));
 
         jLabel35.setBackground(new java.awt.Color(204, 204, 204));
         jLabel35.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
@@ -1153,6 +1448,9 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
             }
         });
         item_rate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                item_rateKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 item_rateKeyReleased(evt);
             }
@@ -1190,6 +1488,9 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
             }
         });
         item_pgram.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                item_pgramKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 item_pgramKeyReleased(evt);
             }
@@ -1205,7 +1506,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel43.setText("کیرات");
         jLabel43.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel43.setOpaque(true);
-        jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, 80, 30));
+        jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 70, 30));
 
         item_karat.setBackground(new java.awt.Color(204, 255, 255));
         item_karat.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1236,7 +1537,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 item_karatKeyTyped(evt);
             }
         });
-        jPanel3.add(item_karat, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, 190, 30));
+        jPanel3.add(item_karat, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, 200, 30));
 
         item_kaat.setEditable(false);
         item_kaat.setBackground(new java.awt.Color(255, 204, 204));
@@ -1262,7 +1563,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel49.setText("رقم");
         jLabel49.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel49.setOpaque(true);
-        jPanel3.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 80, 30));
+        jPanel3.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 70, 30));
 
         item_rakam.setEditable(false);
         item_rakam.setBackground(new java.awt.Color(255, 204, 204));
@@ -1276,7 +1577,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 item_rakamActionPerformed(evt);
             }
         });
-        jPanel3.add(item_rakam, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 190, 30));
+        jPanel3.add(item_rakam, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 200, 30));
 
         jLabel5.setBackground(new java.awt.Color(204, 255, 204));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1303,6 +1604,11 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         select_item.setBorder(null);
         select_item.setNextFocusableComponent(item_wazan);
         select_item.setOpaque(true);
+        select_item.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                select_itemKeyPressed(evt);
+            }
+        });
         jPanel3.add(select_item, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, 270, 30));
 
         jLabel48.setBackground(new java.awt.Color(204, 204, 204));
@@ -1340,7 +1646,17 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel45.setOpaque(true);
         jPanel3.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 120, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 960, 130));
+        jToggleButton1.setBackground(new java.awt.Color(255, 204, 204));
+        jToggleButton1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jToggleButton1.setText("OPEN");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(371, 10, 60, 30));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 960, 130));
 
         jPanel4.setBackground(new java.awt.Color(220, 217, 217));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1352,7 +1668,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel36.setText("نام");
         jLabel36.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel36.setOpaque(true);
-        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, 50, 30));
+        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 20, 50, 30));
 
         customer_name.setBackground(new java.awt.Color(204, 255, 255));
         customer_name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1363,7 +1679,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 customer_nameKeyReleased(evt);
             }
         });
-        jPanel4.add(customer_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 230, 30));
+        jPanel4.add(customer_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, 230, 30));
 
         jLabel37.setBackground(new java.awt.Color(204, 204, 204));
         jLabel37.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
@@ -1371,7 +1687,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel37.setText("ٖفون");
         jLabel37.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel37.setOpaque(true);
-        jPanel4.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, 90, 30));
+        jPanel4.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 90, 30));
 
         customer_phone.setBackground(new java.awt.Color(204, 255, 255));
         customer_phone.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1390,7 +1706,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 customer_phoneKeyTyped(evt);
             }
         });
-        jPanel4.add(customer_phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 230, 30));
+        jPanel4.add(customer_phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 230, 30));
 
         jLabel38.setBackground(new java.awt.Color(204, 204, 204));
         jLabel38.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
@@ -1398,7 +1714,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel38.setText("شناختی کارڈ");
         jLabel38.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel38.setOpaque(true);
-        jPanel4.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 90, 30));
+        jPanel4.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 90, 30));
 
         customer_cnic.setBackground(new java.awt.Color(204, 255, 255));
         customer_cnic.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1408,15 +1724,18 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         customer_cnic.setNextFocusableComponent(select_item);
         customer_cnic.setOpaque(true);
         customer_cnic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                customer_cnicKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 customer_cnicKeyTyped(evt);
             }
         });
-        jPanel4.add(customer_cnic, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 230, 30));
+        jPanel4.add(customer_cnic, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 230, 30));
         customer_cnic.getAccessibleContext().setAccessibleName("");
         customer_cnic.getAccessibleContext().setAccessibleDescription("");
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 960, 50));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 960, 70));
 
         jPanel5.setBackground(new java.awt.Color(222, 221, 221));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1489,7 +1808,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         });
         jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 110, 30));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 280, 530, 260));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, 530, 260));
 
         jPanel6.setBackground(new java.awt.Color(217, 216, 216));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1671,41 +1990,24 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         jLabel59.setOpaque(true);
         jPanel6.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 80, 40));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 430, 260));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, 430, 260));
 
-        PrintArea.setEditable(false);
-        PrintArea.setBackground(new java.awt.Color(204, 255, 255));
-        PrintArea.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        PrintArea.setFont(new java.awt.Font("Segoe UI", 0, 9)); // NOI18N
-        jScrollPane3.setViewportView(PrintArea);
+        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 230, 500));
-
-        jLabel11.setBackground(new java.awt.Color(102, 255, 153));
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("CALCULATE");
-        jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel11.setOpaque(true);
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel16.setBackground(new java.awt.Color(255, 204, 102));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("HISTORY");
+        jLabel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel16.setOpaque(true);
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
+                jLabel16MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 550, 160, 40));
-
-        jLabel9.setBackground(new java.awt.Color(102, 255, 255));
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("PRINT");
-        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel9.setOpaque(true);
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 230, 40));
+        jPanel7.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 180, 60));
 
         saveBtn.setBackground(new java.awt.Color(255, 255, 102));
         saveBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1721,20 +2023,36 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 saveBtnMouseEntered(evt);
             }
         });
-        jPanel1.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 550, 170, 40));
+        jPanel7.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 180, 90));
 
-        jLabel16.setBackground(new java.awt.Color(255, 204, 102));
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("HISTORY");
-        jLabel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel16.setOpaque(true);
-        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel11.setBackground(new java.awt.Color(102, 255, 153));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("CALCULATE");
+        jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel11.setOpaque(true);
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel16MouseClicked(evt);
+                jLabel11MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 550, 180, 40));
+        jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 180, 60));
+
+        jLabel9.setBackground(new java.awt.Color(102, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("PRINT");
+        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel9.setOpaque(true);
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel9MouseEntered(evt);
+            }
+        });
+        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 180, 60));
 
         jLabel14.setBackground(new java.awt.Color(255, 204, 204));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1747,7 +2065,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 jLabel14MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 550, 120, 40));
+        jPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 180, 40));
 
         jLabel7.setBackground(new java.awt.Color(255, 102, 102));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1760,9 +2078,64 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
                 jLabel7MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 550, 120, 40));
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 180, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 600));
+        jLabel39.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel39.setFont(new java.awt.Font("Arabic Typesetting", 1, 18)); // NOI18N
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel39.setText("ACTIONS");
+        jLabel39.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel39.setOpaque(true);
+        jPanel7.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 40));
+
+        jSeparator1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jPanel7.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 240, 20));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 240, 600));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 650));
+
+        jMenu1.setText("Actions");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setText("SAVE");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem3.setText("PRINT");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem4.setText("HISTORY");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem5.setText("EXIT");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -1892,13 +2265,12 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
 
     private void item_wazanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_wazanKeyReleased
         // TODO add your handling code here:
-        enterPress(evt,  item_rate);
-        itemCal();
+       itemCal();
     }//GEN-LAST:event_item_wazanKeyReleased
 
     private void item_rateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_rateKeyReleased
         // TODO add your handling code here:
-        enterPress(evt,  item_pgram);
+        
         
         calRate(item_rate, item_pgram);
         
@@ -1907,7 +2279,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
 
     private void item_pgramKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_pgramKeyReleased
         // TODO add your handling code here:
-        enterPress(evt,  item_karat);
+        
         
         calRate2(item_pgram, item_rate);
         
@@ -2011,55 +2383,18 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
         // TODO add your handling code here:
         checkKarat(item_karat);
         itemCal();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      
+          addToList();
+        }  
+        
+        
     }//GEN-LAST:event_item_karatKeyPressed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         
-        try{
-            String item  = select_item.getSelectedItem().toString();
-            String wazan = item_wazan.getText();
-            String rate  = item_rate.getText();
-            String grate = item_pgram.getText();
-            String karat = item_karat.getText();
-            String kaat  = item_kaat.getText();
-            String pasa  = item_pasa.getText();
-            String rakam = item_rakam.getText();
-
-
-            if(item.equals("Select")){
-                JOptionPane.showMessageDialog(this, "ITEM NOT SELECTED\nPLEASE SELECT AN ITEM","ERROR",2);
-                return;
-            }
-
-            if(Double.parseDouble(wazan)<=0){
-                JOptionPane.showMessageDialog(this, "PLEASE ENTER WEIGHT(wazan = 0)","ERROR",2);
-                return;
-            }
-
-            if(Double.parseDouble(grate)<=0){
-                JOptionPane.showMessageDialog(this, "PLEASE ENTER P/GRAM RATE(RATE = 0)","ERROR",2);
-                return;
-            }
-
-            if(Double.parseDouble(karat)<=0){
-                JOptionPane.showMessageDialog(this, "PLEASE ENTER KARAT(KARAT = 0)","ERROR",2);
-                return;
-            }
-
-            itemCal();
-
-
-
-            String [] row={item,wazan,rate,grate,karat,kaat,pasa,rakam};
-            addRowToTable(row, jTable1);
-
-            clearItemSection();
-
-            mainCalculation();
-            
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, "error in data entry","ERROR",2);
-        }
+        addToList();
+       
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
@@ -2129,7 +2464,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         // TODO add your handling code here:
-        removeTableRow(jTable1);
+       removeTableRow(jTable1);
        mainCalculation();
     }//GEN-LAST:event_jLabel12MouseClicked
 
@@ -2170,15 +2505,8 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        String ID=search_id.getText();
-        try {
-            
-            getDataFromMainTbl(ID);
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"ERROR: can not get data\n","Error",2);
-        }
         
+        get_btn();
         
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -2208,45 +2536,8 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
-        try{
-            
-            mainCalculation();
-            if(saveBtn.getText().equals("SAVE")){
-                submit();
-
-            }
-
-            if(saveBtn.getText().equals("UPDATE")){
-
-                update();
-
-            }
-            
-            String []arr=new GetShopInfo().getData();
-            
-            File currentDir = new File(".");
-	    String basePath = currentDir.getCanonicalPath();
-	    // Define file path
-	    String filePath = basePath + "/src/Reports/SellSilver.jrxml";
-            InputStream in = new FileInputStream(filePath);
-            JasperDesign jd = JRXmlLoader.load(in); 
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            HashMap para = new HashMap();
-            para.put("ID", IDtxt.getText());
-            para.put("SHOP_NAME",arr[1]);
-            para.put("PHONE",arr[2]);
-            para.put("ADDRESS",arr[3]);
-            
-            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
-            JasperViewer.viewReport(j, false);
-            
-//            print();
-            
-            
-        }catch(Exception ex){
-            System.out.println("Something went wrong error");
-        }
-        
+       
+        printBtn();
             
     }//GEN-LAST:event_jLabel9MouseClicked
 
@@ -2318,6 +2609,116 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
          new OnlyNumbers().only_numbers(evt);
     }//GEN-LAST:event_total_wasulKeyTyped
 
+    private void customer_cnicKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customer_cnicKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          
+          select_item.requestFocus();
+          select_item.showPopup();
+        }  
+    }//GEN-LAST:event_customer_cnicKeyPressed
+
+    private void select_itemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_select_itemKeyPressed
+        // TODO add your handling code here:
+        enterPress(evt,item_wazan);
+    }//GEN-LAST:event_select_itemKeyPressed
+
+    private void item_wazanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_wazanKeyPressed
+        // TODO add your handling code here:
+        enterPress(evt,  item_rate);
+        
+    }//GEN-LAST:event_item_wazanKeyPressed
+
+    private void item_rateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_rateKeyPressed
+        // TODO add your handling code here:
+        enterPress(evt,  item_pgram);
+    }//GEN-LAST:event_item_rateKeyPressed
+
+    private void item_pgramKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_pgramKeyPressed
+        // TODO add your handling code here:
+        
+        enterPress(evt,  item_karat);
+    }//GEN-LAST:event_item_pgramKeyPressed
+
+    private void search_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_idActionPerformed
+        // TODO add your handling code here:
+        get_btn();
+    }//GEN-LAST:event_search_idActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        if( jToggleButton1.isSelected()){
+            jToggleButton1.setText("CLOSE");
+            jToggleButton1.setBackground(new Color(204,255,204));
+            connectToScale(new Scale_config_model().getCom(),item_wazan);
+            System.out.println("opend");
+            item_wazan.setEditable(true);
+            item_wazan.setBackground(new Color(255,204,204));
+        }else if( !jToggleButton1.isSelected()){
+            jToggleButton1.setText("OPEN");
+            jToggleButton1.setBackground(new Color(255,204,204));
+            closeport();
+            item_wazan.requestFocus();
+            System.out.println("CLOSED");
+            item_wazan.setEditable(true);
+            item_wazan.setBackground(new Color(204,255,255));
+        }
+        
+        
+        
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseEntered
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        if(kye>0){
+            JOptionPane.showMessageDialog(this, "A window is already Open");
+            return;
+        }
+        
+        
+        
+        HOME.kye=0;
+        dispose();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        
+         mainCalculation();
+        if(saveBtn.getText().equals("SAVE")){
+            submit();
+            return;
+        }
+        
+        if(saveBtn.getText().equals("UPDATE")){
+            
+            update();
+            return;
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        printBtn();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+         if(kye>0){
+            JOptionPane.showMessageDialog(this, "A window is already Open\nClose it");
+            return;
+        }
+        kye++;
+        new Sell_silver_History().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2357,7 +2758,6 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DATElbl;
     private javax.swing.JTextField IDtxt;
-    private javax.swing.JTextPane PrintArea;
     private javax.swing.JTextField SALESMAN_ID;
     private javax.swing.JTextField SALESMAN_NAME;
     private javax.swing.JTextField customer_cnic;
@@ -2388,6 +2788,7 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel45;
@@ -2404,15 +2805,24 @@ public class Silver_sell_invoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField mzdory;
     private javax.swing.JTextField rakam;
     private javax.swing.JLabel saveBtn;

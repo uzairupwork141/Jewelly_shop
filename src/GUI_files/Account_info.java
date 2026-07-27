@@ -6,6 +6,7 @@ package GUI_files;
 
 import CODE_files.OnlyNumbers;
 import CODE_files.usermodel;
+import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -22,7 +23,9 @@ public class Account_info extends javax.swing.JFrame {
     int xMouse;
     int yMouse;
     public Account_info() {
+        
         initComponents();
+        this.setBackground(new Color(0,0,0,0));
         ImageIcon img = new ImageIcon("src/ASSETS_files/pngwing.com.png");
         this.setIconImage(img.getImage());
         getData();
@@ -77,8 +80,12 @@ public class Account_info extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        bgpanal1 = new panal.bgpanal();
+        bgpanal21 = new panal.bgpanal2();
+        jLabel9 = new javax.swing.JLabel();
+        button1 = new ALL_UI_1.Button();
+        jLabel2 = new javax.swing.JLabel();
+        pane21 = new panal.pane2();
         jLabel1 = new javax.swing.JLabel();
         IDtxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -103,59 +110,86 @@ public class Account_info extends javax.swing.JFrame {
         APP_PASS = new javax.swing.JPasswordField();
         jButton6 = new javax.swing.JButton();
         jCheckBox4 = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        bgpanal1.setBackground(new java.awt.Color(255, 255, 255));
+        bgpanal1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        bgpanal21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("  USER INFO");
+        jLabel9.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel9MouseDragged(evt);
+            }
+        });
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel9MousePressed(evt);
+            }
+        });
+        bgpanal21.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 40));
+
+        button1.setText("X");
+        button1.setRippleColor(new java.awt.Color(255, 51, 51));
+        button1.setShadowColor(new java.awt.Color(255, 0, 51));
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        bgpanal21.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 40, 40));
+
+        bgpanal1.add(bgpanal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 40));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-admin-64.png"))); // NOI18N
+        jLabel2.setText("USER INFORMATION");
+        bgpanal1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 580, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("SECURITY CODE");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 170, 30));
+        pane21.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 170, 30));
 
         IDtxt.setEditable(false);
         IDtxt.setBackground(new java.awt.Color(255, 204, 204));
         IDtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         IDtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         IDtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 340, 30));
+        pane21.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 340, 30));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("NAME");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 170, 30));
+        pane21.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 170, 30));
 
         NAMEtxt.setEditable(false);
         NAMEtxt.setBackground(new java.awt.Color(204, 255, 255));
         NAMEtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         NAMEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NAMEtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(NAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 340, 30));
+        pane21.add(NAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 340, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("USERNAME");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 170, 30));
+        pane21.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 170, 30));
 
         USERNAMEtxt.setEditable(false);
         USERNAMEtxt.setBackground(new java.awt.Color(204, 255, 255));
         USERNAMEtxt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         USERNAMEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         USERNAMEtxt.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(USERNAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 340, 30));
+        pane21.add(USERNAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 340, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("PASSWORD");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 170, 30));
+        pane21.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 170, 30));
 
         CODEtxt.setEditable(false);
         CODEtxt.setBackground(new java.awt.Color(204, 255, 255));
@@ -172,7 +206,7 @@ public class Account_info extends javax.swing.JFrame {
                 CODEtxtKeyTyped(evt);
             }
         });
-        jPanel3.add(CODEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 270, 30));
+        pane21.add(CODEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 270, 30));
 
         PASSWORDtxt.setEditable(false);
         PASSWORDtxt.setBackground(new java.awt.Color(204, 255, 255));
@@ -184,7 +218,7 @@ public class Account_info extends javax.swing.JFrame {
                 PASSWORDtxtActionPerformed(evt);
             }
         });
-        jPanel3.add(PASSWORDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 270, 30));
+        pane21.add(PASSWORDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 270, 30));
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0,0));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-edit-30.png"))); // NOI18N
@@ -193,7 +227,7 @@ public class Account_info extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 40, 30));
+        pane21.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 40, 30));
 
         jButton3.setBackground(new java.awt.Color(0, 0, 0,0));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-edit-30.png"))); // NOI18N
@@ -202,7 +236,7 @@ public class Account_info extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 40, 30));
+        pane21.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 40, 30));
 
         jButton4.setBackground(new java.awt.Color(0, 0, 0,0));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-edit-30.png"))); // NOI18N
@@ -211,7 +245,7 @@ public class Account_info extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 40, 30));
+        pane21.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 40, 30));
 
         jButton5.setBackground(new java.awt.Color(0, 0, 0,0));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-edit-30.png"))); // NOI18N
@@ -220,7 +254,7 @@ public class Account_info extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 40, 30));
+        pane21.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 40, 30));
 
         jCheckBox1.setText("SHOW");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -228,7 +262,7 @@ public class Account_info extends javax.swing.JFrame {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 70, 30));
+        pane21.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 70, 30));
 
         jCheckBox2.setText("SHOW");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -236,15 +270,15 @@ public class Account_info extends javax.swing.JFrame {
                 jCheckBox2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 70, 30));
+        pane21.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 70, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("ID");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 30));
+        pane21.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 170, 30));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("EMAIL");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 170, 30));
+        pane21.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, 30));
 
         EMAIL.setEditable(false);
         EMAIL.setBackground(new java.awt.Color(204, 255, 255));
@@ -261,7 +295,7 @@ public class Account_info extends javax.swing.JFrame {
                 EMAILKeyTyped(evt);
             }
         });
-        jPanel3.add(EMAIL, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 270, 30));
+        pane21.add(EMAIL, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 270, 30));
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0,0));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-edit-30.png"))); // NOI18N
@@ -270,7 +304,7 @@ public class Account_info extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 220, 40, 30));
+        pane21.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, 40, 30));
 
         jCheckBox3.setText("SHOW");
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -278,11 +312,11 @@ public class Account_info extends javax.swing.JFrame {
                 jCheckBox3ActionPerformed(evt);
             }
         });
-        jPanel3.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 70, 30));
+        pane21.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 70, 30));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("APP PASSWORD KEY");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, 30));
+        pane21.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 170, 30));
 
         APP_PASS.setEditable(false);
         APP_PASS.setBackground(new java.awt.Color(204, 255, 255));
@@ -299,7 +333,7 @@ public class Account_info extends javax.swing.JFrame {
                 APP_PASSKeyTyped(evt);
             }
         });
-        jPanel3.add(APP_PASS, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, 270, 30));
+        pane21.add(APP_PASS, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 270, 30));
 
         jButton6.setBackground(new java.awt.Color(0, 0, 0,0));
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-edit-30.png"))); // NOI18N
@@ -308,7 +342,7 @@ public class Account_info extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 260, 40, 30));
+        pane21.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 40, 30));
 
         jCheckBox4.setText("SHOW");
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
@@ -316,49 +350,11 @@ public class Account_info extends javax.swing.JFrame {
                 jCheckBox4ActionPerformed(evt);
             }
         });
-        jPanel3.add(jCheckBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 70, 30));
+        pane21.add(jCheckBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 70, 30));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 600, 310));
+        bgpanal1.add(pane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 600, 340));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-admin-64.png"))); // NOI18N
-        jLabel2.setText("USER INFORMATION");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 80));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 620, 460));
-
-        jLabel6.setBackground(new java.awt.Color(255, 204, 204));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("X");
-        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel6.setOpaque(true);
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 30, 30));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setText("USER INFO");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 30));
-
-        jLabel9.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel9.setOpaque(true);
-        jLabel9.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jLabel9MouseDragged(evt);
-            }
-        });
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel9MousePressed(evt);
-            }
-        });
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 30));
+        getContentPane().add(bgpanal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 490));
 
         pack();
         setLocationRelativeTo(null);
@@ -401,12 +397,6 @@ public class Account_info extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        // TODO add your handling code here:
-        Setting.Skye=0;
-        dispose();
-    }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -481,6 +471,13 @@ public class Account_info extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        Setting.Skye=0;
+        
+        dispose();
+    }//GEN-LAST:event_button1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -525,6 +522,9 @@ public class Account_info extends javax.swing.JFrame {
     private javax.swing.JTextField NAMEtxt;
     private javax.swing.JPasswordField PASSWORDtxt;
     private javax.swing.JTextField USERNAMEtxt;
+    private panal.bgpanal bgpanal1;
+    private panal.bgpanal2 bgpanal21;
+    private ALL_UI_1.Button button1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -542,11 +542,8 @@ public class Account_info extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private panal.pane2 pane21;
     // End of variables declaration//GEN-END:variables
 }

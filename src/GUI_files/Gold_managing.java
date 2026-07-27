@@ -8,38 +8,41 @@ package GUI_files;
 
 import CODE_files.ConnectDB;
 import CODE_files.OnlyNumbers;
+import CODE_files.Thermal_Printer;
 import java.sql.Connection;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import static java.lang.String.format;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.PrintService;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaPrintableArea;
-import javax.print.attribute.standard.MediaSize;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -539,6 +542,7 @@ public class Gold_managing extends javax.swing.JFrame {
         jTextArea11.setText(jTextArea11.getText()+"MAZDORI\t= "+mzdori.getText()+"\n");        
         jTextArea11.setText(jTextArea11.getText()+"TOTAL\t= "+tpr.getText()+"\n");        
         jTextArea11.setText(jTextArea11.getText()+"__________________________\n");
+        
         printit();
      }
      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1470,7 +1474,33 @@ public class Gold_managing extends javax.swing.JFrame {
             para.put("ID", IDtxt.getText());
             para.put("PER", String.format("%.1f", per)+"%");
             JasperPrint j = JasperFillManager.fillReport(jr, para,con);
-            JasperViewer.viewReport(j, false);
+            
+            String p_name = Thermal_Printer.getPrinter_name();
+            if(p_name==null || "".equals(p_name)){
+                JOptionPane.showMessageDialog(this,"Printer not configured" );
+                return;
+            }
+            
+            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            
+            printRequestAttributeSet.add(new Copies(1));
+
+            PrinterName printerName = new PrinterName(p_name, null); //gets printer 
+            
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            printServiceAttributeSet.add(printerName);
+
+            JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, j);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+            exporter.exportReport();
+            
+            
+//            JasperViewer.viewReport(j, false);
             
         }catch(Exception ex){
             Logger.getLogger(Gold_managing.class.getName()).log(Level.SEVERE, null, ex);

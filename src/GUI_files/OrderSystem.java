@@ -7,12 +7,16 @@ package GUI_files;
 import CODE_files.ConnectDB;
 import CODE_files.FieldSetting;
 import CODE_files.GetShopInfo;
+import CODE_files.Laser_Printer;
+import CODE_files.Thermal_Printer;
 import CODE_files.usermodel;
 import EmailSend.EmailSend;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -25,16 +29,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -1124,11 +1141,10 @@ public class OrderSystem extends javax.swing.JFrame {
         button8 = new ALL_UI_1.Button();
         button9 = new ALL_UI_1.Button();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
         button12 = new ALL_UI_1.Button();
-        jSeparator5 = new javax.swing.JSeparator();
         button6 = new ALL_UI_1.Button();
         jSeparator6 = new javax.swing.JSeparator();
+        button13 = new ALL_UI_1.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1142,43 +1158,43 @@ public class OrderSystem extends javax.swing.JFrame {
         jLabel2.setText("ORDER INVOICE");
         jLabel2.setToolTipText("");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        pane11.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 10, 400, 60));
+        pane11.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 10, 400, 50));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("ID#");
-        pane11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 110, 30));
+        pane11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 60, 110, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("NAME");
-        pane11.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, 280, 30));
+        pane11.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 280, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PHONE");
-        pane11.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 170, 30));
+        pane11.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 170, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("EMAIL");
-        pane11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 160, 30));
+        pane11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 160, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("RATE");
-        pane11.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 130, 30));
+        pane11.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 130, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("RETURN DATE");
-        pane11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 130, 30));
+        pane11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 130, 30));
 
         RDATEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         RDATEtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1195,7 +1211,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 RDATEtxtKeyReleased(evt);
             }
         });
-        pane11.add(RDATEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, 50));
+        pane11.add(RDATEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, 50));
 
         IDtxt.setEditable(false);
         IDtxt.setBackground(new java.awt.Color(255, 204, 204));
@@ -1208,7 +1224,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 IDtxtActionPerformed(evt);
             }
         });
-        pane11.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 110, 110, 50));
+        pane11.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 90, 110, 50));
 
         NAMEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NAMEtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1228,7 +1244,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 NAMEtxtKeyTyped(evt);
             }
         });
-        pane11.add(NAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 110, 280, 50));
+        pane11.add(NAMEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, 280, 50));
 
         PHONEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         PHONEtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1245,7 +1261,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 PHONEtxtKeyReleased(evt);
             }
         });
-        pane11.add(PHONEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 170, 50));
+        pane11.add(PHONEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 170, 50));
 
         EMAILtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         EMAILtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1265,7 +1281,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 EMAILtxtKeyTyped(evt);
             }
         });
-        pane11.add(EMAILtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 160, 50));
+        pane11.add(EMAILtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 160, 50));
 
         RATEtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         RATEtxt.setText("0");
@@ -1294,14 +1310,14 @@ public class OrderSystem extends javax.swing.JFrame {
                 RATEtxtKeyTyped(evt);
             }
         });
-        pane11.add(RATEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 130, 50));
-        pane11.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1010, 10));
+        pane11.add(RATEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 130, 50));
+        pane11.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1010, 10));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("current date");
-        pane11.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 210, -1));
+        pane11.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 210, -1));
 
         SEARCHtxt.setBackground(new java.awt.Color(204, 255, 255));
         SEARCHtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1313,7 +1329,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 SEARCHtxtActionPerformed(evt);
             }
         });
-        pane11.add(SEARCHtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 150, 40));
+        pane11.add(SEARCHtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, 40));
 
         button10.setBackground(new java.awt.Color(204, 255, 204));
         button10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-search-20.png"))); // NOI18N
@@ -1327,7 +1343,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 button10ActionPerformed(evt);
             }
         });
-        pane11.add(button10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 90, 40));
+        pane11.add(button10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 90, 40));
 
         DATE.setEditable(false);
         DATE.setBackground(new java.awt.Color(204, 255, 255));
@@ -1340,21 +1356,21 @@ public class OrderSystem extends javax.swing.JFrame {
                 DATEActionPerformed(evt);
             }
         });
-        pane11.add(DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 210, 40));
+        pane11.add(DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 210, 40));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("example@gmail.com");
-        pane11.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 160, -1));
+        pane11.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 160, -1));
 
         jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("Search by ID");
-        pane11.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
+        pane11.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 150, -1));
 
-        MainPanel.add(pane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1010, 180));
+        MainPanel.add(pane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1010, 150));
 
         jLabel29.setBackground(new java.awt.Color(102, 102, 102));
         jLabel29.setText("  ORDER INVOICE");
@@ -1663,7 +1679,7 @@ public class OrderSystem extends javax.swing.JFrame {
         jLabel31.setText("QTY");
         pane12.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 80, -1));
 
-        MainPanel.add(pane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 1010, 190));
+        MainPanel.add(pane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 1010, 190));
 
         advanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1705,7 +1721,7 @@ public class OrderSystem extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(advanceTable);
 
-        pane13.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 240, 200));
+        pane13.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 240, 150));
 
         button3.setBackground(new java.awt.Color(255, 204, 204));
         button3.setText("REMOVE PAYMET");
@@ -1718,7 +1734,7 @@ public class OrderSystem extends javax.swing.JFrame {
                 button3ActionPerformed(evt);
             }
         });
-        pane13.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 240, 40));
+        pane13.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 240, 40));
 
         button11.setBackground(new java.awt.Color(204, 255, 204));
         button11.setText("ADD NEW PAYMENT");
@@ -1731,13 +1747,13 @@ public class OrderSystem extends javax.swing.JFrame {
                 button11ActionPerformed(evt);
             }
         });
-        pane13.add(button11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 240, -1));
+        pane13.add(button11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 240, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Press ( ENTER )  after every PAYMENT entry");
-        pane13.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 60, 259, -1));
+        pane13.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 259, -1));
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -1749,10 +1765,10 @@ public class OrderSystem extends javax.swing.JFrame {
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setText("Note");
-        pane13.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 240, 20));
+        pane13.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 240, 20));
         pane13.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 200, 10));
 
-        MainPanel.add(pane13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 50, 260, 380));
+        MainPanel.add(pane13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 50, 260, 290));
 
         detailTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1800,7 +1816,7 @@ public class OrderSystem extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(detailTable);
 
-        MainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 1010, 230));
+        MainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 1010, 200));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -1819,7 +1835,7 @@ public class OrderSystem extends javax.swing.JFrame {
         RECIVED_GOLD_WEIGHTtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         RECIVED_GOLD_WEIGHTtxt.setRound(40);
         RECIVED_GOLD_WEIGHTtxt.setSelectedTextColor(new java.awt.Color(51, 51, 51));
-        RECIVED_GOLD_WEIGHTtxt.setShadowColor(new java.awt.Color(255, 255, 0));
+        RECIVED_GOLD_WEIGHTtxt.setShadowColor(new java.awt.Color(0, 0, 0));
         RECIVED_GOLD_WEIGHTtxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 RECIVED_GOLD_WEIGHTtxtFocusGained(evt);
@@ -1842,14 +1858,14 @@ public class OrderSystem extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("KARAT");
-        pane14.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 240, -1));
+        pane14.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 240, -1));
 
         RECIVED_GOLD_KARATtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         RECIVED_GOLD_KARATtxt.setText("0");
         RECIVED_GOLD_KARATtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         RECIVED_GOLD_KARATtxt.setRound(40);
         RECIVED_GOLD_KARATtxt.setSelectedTextColor(new java.awt.Color(51, 51, 51));
-        RECIVED_GOLD_KARATtxt.setShadowColor(new java.awt.Color(255, 255, 0));
+        RECIVED_GOLD_KARATtxt.setShadowColor(new java.awt.Color(0, 0, 0));
         RECIVED_GOLD_KARATtxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 RECIVED_GOLD_KARATtxtFocusGained(evt);
@@ -1866,13 +1882,13 @@ public class OrderSystem extends javax.swing.JFrame {
                 RECIVED_GOLD_KARATtxtKeyTyped(evt);
             }
         });
-        pane14.add(RECIVED_GOLD_KARATtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 240, 50));
+        pane14.add(RECIVED_GOLD_KARATtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 240, 50));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("CUT");
-        pane14.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 240, 20));
+        pane14.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 240, 20));
 
         RECIVED_GOLD_KAATtxt.setEditable(false);
         RECIVED_GOLD_KAATtxt.setBackground(new java.awt.Color(204, 204, 204));
@@ -1881,14 +1897,14 @@ public class OrderSystem extends javax.swing.JFrame {
         RECIVED_GOLD_KAATtxt.setFocusable(false);
         RECIVED_GOLD_KAATtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         RECIVED_GOLD_KAATtxt.setRound(40);
-        RECIVED_GOLD_KAATtxt.setShadowColor(new java.awt.Color(255, 255, 0));
-        pane14.add(RECIVED_GOLD_KAATtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 240, 50));
+        RECIVED_GOLD_KAATtxt.setShadowColor(new java.awt.Color(0, 0, 0));
+        pane14.add(RECIVED_GOLD_KAATtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 240, 50));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("PURE GOLD");
-        pane14.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 240, 20));
+        pane14.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 240, 20));
 
         RECIVED_GOLD_PASAtxt.setEditable(false);
         RECIVED_GOLD_PASAtxt.setBackground(new java.awt.Color(204, 204, 204));
@@ -1897,16 +1913,16 @@ public class OrderSystem extends javax.swing.JFrame {
         RECIVED_GOLD_PASAtxt.setFocusable(false);
         RECIVED_GOLD_PASAtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         RECIVED_GOLD_PASAtxt.setRound(40);
-        RECIVED_GOLD_PASAtxt.setShadowColor(new java.awt.Color(255, 255, 0));
-        pane14.add(RECIVED_GOLD_PASAtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 240, 50));
+        RECIVED_GOLD_PASAtxt.setShadowColor(new java.awt.Color(0, 0, 0));
+        pane14.add(RECIVED_GOLD_PASAtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 240, 50));
         pane14.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 200, 10));
 
-        MainPanel.add(pane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 440, 260, 300));
+        MainPanel.add(pane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 340, 260, 270));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("REQUIRED WEIGHT");
-        MainPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, 160, 20));
+        MainPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 160, 20));
 
         TOTAL_REQUIRED_WEIGHTtxt.setEditable(false);
         TOTAL_REQUIRED_WEIGHTtxt.setBackground(new java.awt.Color(255, 204, 204));
@@ -1921,12 +1937,12 @@ public class OrderSystem extends javax.swing.JFrame {
                 TOTAL_REQUIRED_WEIGHTtxtActionPerformed(evt);
             }
         });
-        MainPanel.add(TOTAL_REQUIRED_WEIGHTtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 700, 160, 50));
+        MainPanel.add(TOTAL_REQUIRED_WEIGHTtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 630, 160, 50));
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("ADVANCE GOLD WEIGHT");
-        MainPanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 750, 160, 20));
+        MainPanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, 160, 20));
 
         TOTAL_ADVANCE_GOLD_WEIGHTtxt.setEditable(false);
         TOTAL_ADVANCE_GOLD_WEIGHTtxt.setBackground(new java.awt.Color(255, 204, 204));
@@ -1936,12 +1952,12 @@ public class OrderSystem extends javax.swing.JFrame {
         TOTAL_ADVANCE_GOLD_WEIGHTtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TOTAL_ADVANCE_GOLD_WEIGHTtxt.setRound(40);
         TOTAL_ADVANCE_GOLD_WEIGHTtxt.setShadowColor(new java.awt.Color(0, 0, 0));
-        MainPanel.add(TOTAL_ADVANCE_GOLD_WEIGHTtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 770, 160, 50));
+        MainPanel.add(TOTAL_ADVANCE_GOLD_WEIGHTtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 700, 160, 50));
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("ADVANCE PAYMENT");
-        MainPanel.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 680, 160, 20));
+        MainPanel.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 610, 160, 20));
 
         TOTAL_ADVANCE_PAYEDtxt.setEditable(false);
         TOTAL_ADVANCE_PAYEDtxt.setBackground(new java.awt.Color(255, 204, 204));
@@ -1956,12 +1972,12 @@ public class OrderSystem extends javax.swing.JFrame {
                 TOTAL_ADVANCE_PAYEDtxtActionPerformed(evt);
             }
         });
-        MainPanel.add(TOTAL_ADVANCE_PAYEDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 700, 160, 50));
+        MainPanel.add(TOTAL_ADVANCE_PAYEDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 630, 160, 50));
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("ADVANCE PURE GOLD");
-        MainPanel.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 760, 160, 10));
+        MainPanel.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 690, 160, 10));
 
         TOTAL_ADVANCE_GOLD_PASAtxt.setEditable(false);
         TOTAL_ADVANCE_GOLD_PASAtxt.setBackground(new java.awt.Color(255, 204, 204));
@@ -1971,7 +1987,7 @@ public class OrderSystem extends javax.swing.JFrame {
         TOTAL_ADVANCE_GOLD_PASAtxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TOTAL_ADVANCE_GOLD_PASAtxt.setRound(40);
         TOTAL_ADVANCE_GOLD_PASAtxt.setShadowColor(new java.awt.Color(0, 0, 0));
-        MainPanel.add(TOTAL_ADVANCE_GOLD_PASAtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 770, 160, 50));
+        MainPanel.add(TOTAL_ADVANCE_GOLD_PASAtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 700, 160, 50));
 
         savebtn.setBackground(new java.awt.Color(204, 255, 204));
         savebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-submit-48.png"))); // NOI18N
@@ -1987,12 +2003,13 @@ public class OrderSystem extends javax.swing.JFrame {
                 savebtnActionPerformed(evt);
             }
         });
-        MainPanel.add(savebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 700, 130, 120));
+        MainPanel.add(savebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 620, 130, 120));
 
         button7.setBackground(new java.awt.Color(204, 255, 204));
-        button7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-64.png"))); // NOI18N
-        button7.setText("PRINT");
-        button7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button7.setForeground(new java.awt.Color(0, 0, 0));
+        button7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-36.png"))); // NOI18N
+        button7.setText("WORKSHOP PRINT");
+        button7.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         button7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         button7.setRippleColor(new java.awt.Color(51, 51, 255));
         button7.setRound(40);
@@ -2003,9 +2020,10 @@ public class OrderSystem extends javax.swing.JFrame {
                 button7ActionPerformed(evt);
             }
         });
-        MainPanel.add(button7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 700, 130, 120));
+        MainPanel.add(button7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 620, 130, 120));
 
         button8.setBackground(new java.awt.Color(204, 255, 204));
+        button8.setForeground(new java.awt.Color(102, 102, 102));
         button8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-refresh-60.png"))); // NOI18N
         button8.setText("NEW");
         button8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -2019,9 +2037,10 @@ public class OrderSystem extends javax.swing.JFrame {
                 button8ActionPerformed(evt);
             }
         });
-        MainPanel.add(button8, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 700, 130, 120));
+        MainPanel.add(button8, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 620, 130, 120));
 
         button9.setBackground(new java.awt.Color(204, 255, 204));
+        button9.setForeground(new java.awt.Color(102, 102, 102));
         button9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-calculate-50.png"))); // NOI18N
         button9.setText("CALCULATE");
         button9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -2035,14 +2054,13 @@ public class OrderSystem extends javax.swing.JFrame {
                 button9ActionPerformed(evt);
             }
         });
-        MainPanel.add(button9, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 700, 130, 120));
+        MainPanel.add(button9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 620, 130, 120));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        MainPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 680, 10, 150));
-        MainPanel.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 687, 650, 10));
+        MainPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 610, 10, 150));
 
         button12.setBackground(new java.awt.Color(255, 204, 204));
-        button12.setForeground(new java.awt.Color(0, 0, 0));
+        button12.setForeground(new java.awt.Color(102, 102, 102));
         button12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-trash-can-50.png"))); // NOI18N
         button12.setText("DELETE");
         button12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -2056,25 +2074,43 @@ public class OrderSystem extends javax.swing.JFrame {
                 button12ActionPerformed(evt);
             }
         });
-        MainPanel.add(button12, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 700, 130, 120));
-        MainPanel.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 820, 920, 10));
+        MainPanel.add(button12, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 620, 130, 120));
 
-        button6.setBackground(new java.awt.Color(236, 233, 233));
-        button6.setForeground(new java.awt.Color(0, 0, 0));
+        button6.setBackground(new java.awt.Color(204, 255, 204));
+        button6.setForeground(new java.awt.Color(102, 102, 102));
         button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-database-syncing-complete-local-drive-and-connected-with-other-pc-48.png"))); // NOI18N
         button6.setText("HISTORY");
         button6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         button6.setRippleColor(new java.awt.Color(102, 102, 102));
+        button6.setRound(40);
         button6.setShadowColor(new java.awt.Color(0, 0, 0));
+        button6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         button6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button6ActionPerformed(evt);
             }
         });
-        MainPanel.add(button6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 750, 260, 70));
-        MainPanel.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 750, 340, 10));
+        MainPanel.add(button6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 620, 130, 120));
+        MainPanel.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, 340, 10));
 
-        getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 840));
+        button13.setBackground(new java.awt.Color(204, 255, 204));
+        button13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-36.png"))); // NOI18N
+        button13.setText("PRINT");
+        button13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        button13.setRippleColor(new java.awt.Color(51, 51, 255));
+        button13.setRound(40);
+        button13.setShadowColor(new java.awt.Color(0, 0, 0));
+        button13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        button13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button13ActionPerformed(evt);
+            }
+        });
+        MainPanel.add(button13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 620, 130, 120));
+
+        getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -2476,43 +2512,53 @@ public class OrderSystem extends javax.swing.JFrame {
 
     private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
         // TODO add your handling code here:
-        String[]shopinfo=new GetShopInfo().getData();
+//       
+        
+        
+        
 
-        try{
-            
+
+
+
+    try{
+            DefaultTableModel df=(DefaultTableModel)detailTable.getModel();
+            JRTableModelDataSource DS =new JRTableModelDataSource(df);
             
             File currentDir = new File(".");
 	    String basePath = currentDir.getCanonicalPath();
 	    // Define file path
-	    String filePath = basePath + "/src/Reports/OrderInvoice.jrxml";
+	    String filePath = basePath + "/src/Reports/Karigar_Invoice.jrxml";
             InputStream in = new FileInputStream(filePath);
             JasperDesign jd = JRXmlLoader.load(in);
             JasperReport jr = JasperCompileManager.compileReport(jd);
-            HashMap para = new HashMap();
-            para.put("ID", IDtxt.getText());
-            para.put("SHOP_NAME", shopinfo[1]);
-            para.put("PHONE", shopinfo[2]);
-            para.put("ADDRESS", shopinfo[3]);
+            
+            
+            Map<String ,Object> para = new HashMap<>();
+            
             
            
-            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            para.put("Invoice",IDtxt.getText());
+            para.put("name",NAMEtxt.getText());
+            para.put("phone",PHONEtxt.getText());
+            para.put("date",DATE.getText());
+            para.put("rdate",RDATEtxt.getText());
+            para.put("rweight",TOTAL_REQUIRED_WEIGHTtxt.getText());
+            
+            
            
+            
+            JasperPrint j = JasperFillManager.fillReport(jr, para,DS);
             JasperViewer.viewReport(j, false);
             
         }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this,"ERROR :- "+ex);
         }
+
+
+    
         
         
-        
-        
-        
-//SELECT order_table.*, order_details.*, order_advance_money.*, order_advance_gold.*
-//FROM order_table JOIN order_details JOIN order_advance_money JOIN order_advance_gold
-//ON order_table.OID=order_details.OID =order_advance_money.OID =order_advance_gold.OID 
-//where order_table.OID=3;  
-//        
-        
+
         
     }//GEN-LAST:event_button7ActionPerformed
 
@@ -2649,6 +2695,60 @@ public class OrderSystem extends javax.swing.JFrame {
        
     }//GEN-LAST:event_button2KeyReleased
 
+    private void button13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button13ActionPerformed
+        // TODO add your handling code here:
+         String[]shopinfo=new GetShopInfo().getData();
+
+        try{
+            
+            
+            File currentDir = new File(".");
+	    String basePath = currentDir.getCanonicalPath();
+	    // Define file path
+	    String filePath = basePath + "/src/Reports/OrderInvoice.jrxml";
+            InputStream in = new FileInputStream(filePath);
+            JasperDesign jd = JRXmlLoader.load(in);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            HashMap para = new HashMap();
+            para.put("ID", IDtxt.getText());
+            para.put("SHOP_NAME", shopinfo[1]);
+            para.put("PHONE", shopinfo[2]);
+            para.put("ADDRESS", shopinfo[3]);
+            JasperPrint j = JasperFillManager.fillReport(jr, para,con);
+            
+            
+            String p_name = Thermal_Printer.getPrinter_name();
+            if(p_name==null || "".equals(p_name)){
+                JOptionPane.showMessageDialog(this,"Printer not configured" );
+                return;
+            }
+            
+            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            
+            printRequestAttributeSet.add(new Copies(1));
+
+            PrinterName printerName = new PrinterName(p_name, null); //gets printer 
+            
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            printServiceAttributeSet.add(printerName);
+
+            JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, j);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+            exporter.exportReport();
+//            JasperViewer.viewReport(j, false);
+//            JasperPrintManager.printPage(j, 0, true);
+            
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }//GEN-LAST:event_button13ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2713,6 +2813,7 @@ public class OrderSystem extends javax.swing.JFrame {
     private ALL_UI_1.Button button10;
     private ALL_UI_1.Button button11;
     private ALL_UI_1.Button button12;
+    private ALL_UI_1.Button button13;
     private ALL_UI_1.Button button2;
     private ALL_UI_1.Button button3;
     private ALL_UI_1.Button button4;
@@ -2758,8 +2859,6 @@ public class OrderSystem extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private panal.pane1 pane11;

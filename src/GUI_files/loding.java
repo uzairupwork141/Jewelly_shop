@@ -29,6 +29,7 @@ public class loding extends javax.swing.JFrame {
         initComponents();
         ImageIcon img = new ImageIcon("src\\ASSETS_files\\pngwing.com.png");
         this.setIconImage(img.getImage());
+        this.setBackground(new Color(0,0,0,0));
         
     }
 
@@ -100,66 +101,74 @@ public class loding extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        bgpanal2 = new panal.bgpanal();
+        bgpanal21 = new panal.bgpanal2();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lodingbar = new javax.swing.JProgressBar();
         lodevalue = new javax.swing.JLabel();
         msg = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(227, 225, 225));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        bgpanal2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        bgpanal21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("WELCOME");
+        bgpanal21.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 550, 40));
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Jewelery Shop Management System");
+        bgpanal21.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 550, 40));
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/pngwing.com.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 550, 250));
+        bgpanal21.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 550, 250));
 
         lodingbar.setBackground(new java.awt.Color(204, 255, 255));
         lodingbar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lodingbar.setForeground(new java.awt.Color(51, 51, 255));
-        lodingbar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lodingbar.setBorder(null);
         lodingbar.setFocusable(false);
-        jPanel1.add(lodingbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 550, 20));
+        bgpanal21.add(lodingbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 550, 20));
 
         lodevalue.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lodevalue.setForeground(new java.awt.Color(255, 0, 102));
         lodevalue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lodevalue.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(lodevalue, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 400, 50, 30));
+        bgpanal21.add(lodevalue, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, 50, 30));
 
         msg.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        msg.setForeground(new java.awt.Color(0, 51, 255));
+        msg.setForeground(new java.awt.Color(204, 255, 255));
         msg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        msg.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 500, 30));
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("WELCOME");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 550, 40));
+        bgpanal21.add(msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 500, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PLEASE WAIT.....");
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 230, -1));
+        bgpanal21.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 230, -1));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Jewelery Shop Management System");
-        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 550, 40));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("V 2.0");
+        bgpanal21.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 440, 30, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 462));
+        bgpanal2.add(bgpanal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 570, 460));
+
+        getContentPane().add(bgpanal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 500));
 
         pack();
         setLocationRelativeTo(null);
@@ -269,11 +278,13 @@ public class loding extends javax.swing.JFrame {
             }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private panal.bgpanal bgpanal2;
+    private panal.bgpanal2 bgpanal21;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lodevalue;
     private javax.swing.JProgressBar lodingbar;
     private javax.swing.JLabel msg;

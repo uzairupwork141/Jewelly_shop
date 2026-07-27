@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 
@@ -17,9 +18,9 @@ import javax.swing.JOptionPane;
  */
 
 public class ConnectDB {
-Connection con ;
-PreparedStatement insert;
-ResultSet rs;
+    private static Connection con ;
+    PreparedStatement insert;
+    ResultSet rs;
     public Connection Connect(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -29,6 +30,16 @@ ResultSet rs;
             JOptionPane.showMessageDialog(null,"DATABASE ERROR\n"+e.getMessage(),"ERROR",2);
         }
         return con;
+    }
+    
+    public static void closeConnection() {
+        try {
+            if (con != null && !con.isClosed()) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

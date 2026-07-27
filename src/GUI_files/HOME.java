@@ -3,9 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI_files;
+import CODE_files.ConnectDB;
 import CODE_files.GetShopInfo;
+import CODE_files.Laser_Printer;
+import CODE_files.Scale_config_model;
+import CODE_files.Thermal_Printer;
 import CODE_files.usermodel;
 import java.awt.Color;
+import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,6 +33,13 @@ public class HOME extends javax.swing.JFrame {
         this.setIconImage(img.getImage());
         setAccInfo();
         setShopInfo();
+        Scale_config_model scale = new Scale_config_model();
+        scale.setScaleDate("1");
+        Thermal_Printer tp = new Thermal_Printer();
+        tp.setPrinterDate();
+        Laser_Printer lp = new Laser_Printer();
+        lp.setPinterDate();
+        
     }
     
     static int  kye=0;
@@ -62,6 +74,40 @@ public class HOME extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(jf,"A Form is Already open");
     }
     
+    
+    
+    public boolean getAccess(){
+        String newdata=JOptionPane.showInputDialog(this, """
+                                                         This Section is locked
+                                                         ENTER PASSWORD""");
+        
+        
+        if(newdata.equals("") ||newdata==null || !newdata.equals("Khankhan123?") ){
+            JOptionPane.showMessageDialog(this, "WRONG PASSWORD");
+            return false;
+        }else{
+         return true;
+        }
+//        return true;
+    }
+    
+    
+    
+    public void windowClosing() {
+
+                int confirm = JOptionPane.showConfirmDialog(
+                        null,
+                        "Are you sure you want to exit?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    ConnectDB.closeConnection();   // Close DB safely
+                    System.exit(0);
+                }
+    }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,21 +124,16 @@ public class HOME extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         pane11 = new panal.pane1();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
-        pane22 = new panal.pane2();
         jLabel7 = new javax.swing.JLabel();
-        pane23 = new panal.pane2();
         jLabel8 = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
         pane12 = new panal.pane1();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -112,6 +153,9 @@ public class HOME extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        button1 = new ALL_UI_1.Button();
+        button2 = new ALL_UI_1.Button();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -152,24 +196,6 @@ public class HOME extends javax.swing.JFrame {
 
         bgpanal1.add(pane21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 40));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-hammer-64.png"))); // NOI18N
-        jLabel1.setText("MORAMMAT INVOICE");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1MouseExited(evt);
-            }
-        });
-        pane11.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 270, 60));
-
         jLabel2.setBackground(new Color(255,255,255,80));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -180,10 +206,10 @@ public class HOME extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0,0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-sell-64.png"))); // NOI18N
-        jLabel3.setText("SELL GOLD INVOICE");
+        jLabel3.setText("SELL GOLD");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
@@ -195,13 +221,13 @@ public class HOME extends javax.swing.JFrame {
                 jLabel3MouseExited(evt);
             }
         });
-        pane11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 270, 60));
+        pane11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 270, 60));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 51));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-purchases-64.png"))); // NOI18N
-        jLabel4.setText("RETURN GOLD INVOICE");
+        jLabel4.setText("RETURN GOLD");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -213,13 +239,13 @@ public class HOME extends javax.swing.JFrame {
                 jLabel4MouseExited(evt);
             }
         });
-        pane11.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 270, 60));
+        pane11.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 270, 60));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-sell-64.png"))); // NOI18N
-        jLabel5.setText("SELL SILVER INVOICE");
+        jLabel5.setText("SELL SILVER");
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
@@ -231,13 +257,13 @@ public class HOME extends javax.swing.JFrame {
                 jLabel5MouseExited(evt);
             }
         });
-        pane11.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 270, 60));
+        pane11.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 270, 60));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-purchases-64.png"))); // NOI18N
-        jLabel6.setText("RETURN SILVER INVOICE");
+        jLabel6.setText("RETURN SILVER");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
@@ -249,60 +275,48 @@ public class HOME extends javax.swing.JFrame {
                 jLabel6MouseExited(evt);
             }
         });
-        pane11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 270, 60));
-        pane11.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 270, 10));
-
-        jSeparator2.setToolTipText("");
-        pane11.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 270, 10));
-        pane11.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 270, 10));
-
-        jLabel11.setBackground(new java.awt.Color(0, 0, 0,0));
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-order1-64.png"))); // NOI18N
-        jLabel11.setText("ORDER INVOICE");
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel11MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel11MouseExited(evt);
-            }
-        });
-        pane11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 270, 60));
+        pane11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 270, 60));
+        pane11.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 270, 10));
         pane11.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 270, 10));
 
-        bgpanal1.add(pane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 290, 590));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-setting-64.png"))); // NOI18N
-        jLabel7.setText("Setting");
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-hammer-64.png"))); // NOI18N
+        jLabel7.setText("REPAIR INVOICE");
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel7MouseExited(evt);
+            }
         });
-        pane22.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 70));
+        pane11.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 270, 60));
 
-        bgpanal1.add(pane22, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 570, 240, 70));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-logout-30.png"))); // NOI18N
-        jLabel8.setText("Logout");
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-order1-64.png"))); // NOI18N
+        jLabel8.setText("ORDER INVOICE");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel8MouseExited(evt);
+            }
         });
-        pane23.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 70));
+        pane11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 270, 60));
+        pane11.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 270, 10));
 
-        bgpanal1.add(pane23, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 570, 240, 70));
+        bgpanal1.add(pane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 290, 590));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setText("SHOP DETAIL");
@@ -401,6 +415,40 @@ public class HOME extends javax.swing.JFrame {
 
         bgpanal1.add(pane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 810, 290));
 
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-about-20.png"))); // NOI18N
+        jLabel18.setText("About Dev");
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel18MouseClicked(evt);
+            }
+        });
+        bgpanal1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 610, 90, 20));
+
+        button1.setBackground(new java.awt.Color(204, 255, 255));
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-setting-64.png"))); // NOI18N
+        button1.setText("Setting");
+        button1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        button1.setShadowColor(new java.awt.Color(0, 0, 0));
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        bgpanal1.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 450, 230, 80));
+
+        button2.setBackground(new java.awt.Color(204, 255, 255));
+        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-logout-30.png"))); // NOI18N
+        button2.setText("Logout");
+        button2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        button2.setShadowColor(new java.awt.Color(0, 0, 0));
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        bgpanal1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 550, 230, 80));
+
         getContentPane().add(bgpanal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 650));
 
         pack();
@@ -477,21 +525,11 @@ public class HOME extends javax.swing.JFrame {
         jLabel6.setBackground(new Color(0,0,0,0));
     }//GEN-LAST:event_jLabel6MouseExited
 
-    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
-        // TODO add your handling code here:
-            jLabel1.setOpaque(true);
-        jLabel1.setBackground(new Color(242,242,242,100));
-        
-    }//GEN-LAST:event_jLabel1MouseEntered
-
-    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
-        // TODO add your handling code here:
-        jLabel1.setOpaque(false);
-        jLabel1.setBackground(new Color(0,0,0,0));
-    }//GEN-LAST:event_jLabel1MouseExited
-
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
+        
+   
+        
         if(kye==0){
             new Gold_sell_invoice().setVisible(true);
             kye=1;
@@ -505,6 +543,7 @@ public class HOME extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
+       
         if(kye==0){
             new Gold_managing().setVisible(true);
             kye=1;
@@ -541,47 +580,10 @@ public class HOME extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel6MouseClicked
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
-        
-        if(kye==0){
-            new MORAMAT().setVisible(true);
-            kye=1;
-            
-        }else{
-            showmasseg();
-                 
-        }
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        // TODO add your handling code here:
-        if(kye==0){
-            new Setting().setVisible(true);
-            kye=1;
-            
-        }else{
-            showmasseg();
-                 
-        }
-    }//GEN-LAST:event_jLabel7MouseClicked
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        // TODO add your handling code here:
-        if(kye==0){
-            dispose();
-            new LOGIN().setVisible(true);
-            
-        }else{
-            showmasseg();
-                 
-        }
-    }//GEN-LAST:event_jLabel8MouseClicked
-
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
         
-        System.exit(0);
+        windowClosing();
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
@@ -602,30 +604,93 @@ public class HOME extends javax.swing.JFrame {
         jLabel10.setBackground(new Color(0,0,0,0));
     }//GEN-LAST:event_jLabel10MouseExited
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
         if(kye==0){
-            
-            new OrderSystem().setVisible(true);
+            new Setting().setVisible(true);
             kye=1;
+            
         }else{
             showmasseg();
                  
         }
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        if(kye==0){
+            dispose();
+            new LOGIN().setVisible(true);
+            
+        }else{
+            showmasseg();
+                 
+        }
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        // TODO add your handling code here:
+
+        JOptionPane.showMessageDialog(this, """
+            About Development Team:
+
+            ----------------------------------------
+            1)
+        Developer  :  Muhammad Uzair.
+
+        Phone No  :  03476442712  (whatsapp only).
+
+        Email          :  iammuhammaduzair5@gmail.com.
+        ----------------------------------------
+        """,
+        "ABOUT DEV",
+        JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_jLabel18MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        if(kye==0){
+            new MORAMAT().setVisible(true);
+            kye=1;
+            
+        }else{
+            showmasseg();
+                 
+        }
+
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseEntered
+
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseExited
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
         
-    }//GEN-LAST:event_jLabel11MouseClicked
+        if(kye==0){
+            new OrderSystem().setVisible(true);
+            kye=1;
+            
+        }else{
+            showmasseg();
+                 
+        }
 
-    private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
-        // TODO add your handling code here:
-         jLabel11.setOpaque(true);
-        jLabel11.setBackground(new Color(242,242,242,100));
-    }//GEN-LAST:event_jLabel11MouseEntered
+        
+    }//GEN-LAST:event_jLabel8MouseClicked
 
-    private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
+    private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
         // TODO add your handling code here:
-         jLabel11.setOpaque(false);
-        jLabel11.setBackground(new Color(0,0,0,0));
-    }//GEN-LAST:event_jLabel11MouseExited
+    }//GEN-LAST:event_jLabel8MouseEntered
+
+    private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MouseExited
 
     /**
      * @param args the command line arguments
@@ -670,14 +735,15 @@ public class HOME extends javax.swing.JFrame {
     private javax.swing.JLabel PHONElbl;
     private javax.swing.JLabel SHOPlbl;
     private panal.bgpanal bgpanal1;
-    private javax.swing.JLabel jLabel1;
+    private ALL_UI_1.Button button1;
+    private ALL_UI_1.Button button2;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -691,17 +757,14 @@ public class HOME extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private panal.pane1 pane11;
     private panal.pane1 pane12;
     private panal.pane2 pane21;
-    private panal.pane2 pane22;
-    private panal.pane2 pane23;
     // End of variables declaration//GEN-END:variables
 }

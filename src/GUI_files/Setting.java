@@ -5,7 +5,19 @@
 package GUI_files;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import zakat.calculator.*;
 
@@ -27,6 +39,97 @@ public class Setting extends javax.swing.JFrame {
     static int Skye=0; 
     int xMouse;
     int yMouse;
+    
+    
+    public String currentdate(){
+        Calendar cal=new GregorianCalendar();
+        int month=cal.get(Calendar.MONTH);
+        int year =cal.get(Calendar.YEAR);
+        int day=cal.get(Calendar.DAY_OF_MONTH);
+        if(month==12){
+            month=1;
+        }else{
+            month++;
+        }
+        return String.valueOf(day+"_"+month+"_"+year);
+    }
+    
+    
+    
+    public static boolean exportDatabase(String host, String port, String dbName, String user, String password, String outputFile, String mysqldumpPath) {
+      try {
+          // Normalize output path
+          outputFile = outputFile.replace("\\", "/");
+
+          // Build the full command as an array (recommended)
+          List<String> command = new ArrayList<>();
+          command.add(mysqldumpPath);
+          command.add("-h");
+          command.add(host);
+          command.add("-P");
+          command.add(port);
+          command.add("-u");
+          command.add(user);
+          if (!password.isEmpty()) {
+              command.add("-p" + password);  // Note: no space!
+          }
+          command.add(dbName);
+          command.add("-r");
+          command.add(outputFile);
+
+          System.out.println("Running command: " + String.join(" ", command));
+
+          ProcessBuilder pb = new ProcessBuilder(command);
+          pb.redirectErrorStream(true);
+
+          Process process = pb.start();
+
+          BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+          String line;
+          while ((line = reader.readLine()) != null) {
+              System.out.println(line);
+          }
+
+          int exitCode = process.waitFor();
+          if (exitCode == 0) {
+              System.out.println("✅ Backup successful: " + outputFile);
+              return true;
+          } else {
+              System.out.println("❌ Backup failed with exit code: " + exitCode);
+          }
+
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return false;
+    }
+    
+    public void backup(String dbname,String path){
+         
+        String dbHost = "localhost";
+        String dbPort = "3306";
+        String dbName = dbname;  // Replace with your database name
+        String dbUser = "root"; // XAMPP default user is 'root'
+        String dbPassword = ""; // XAMPP default password for root is empty
+        String outputFile = path+"\\backup_"+currentdate()+".sql";  // Path where you want to store the SQL file
+
+        // Specify the path to the mysqldump executable in XAMPP
+        String mysqldumpPath = "C:/xampp/mysql/bin/mysqldump.exe";
+
+        if(exportDatabase(dbHost, dbPort, dbName, dbUser, dbPassword, outputFile, mysqldumpPath)){
+            JOptionPane.showMessageDialog(this, "BackUp saved under \n"+outputFile,"Backup saved",1);
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Error While taking backup","Backup saved",2);
+    }
+    
+    
+    
+    
+    
+    
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,6 +146,10 @@ public class Setting extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
 
@@ -112,11 +219,11 @@ public class Setting extends javax.swing.JFrame {
                 jLabel6MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 410, 70));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 200, 70));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-setting-64.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 70));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 450, 50));
 
         jLabel7.setBackground(new java.awt.Color(255, 204, 204));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -158,7 +265,77 @@ public class Setting extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 200, 70));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 450, 430));
+        jLabel5.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-database-syncing-complete-local-drive-and-connected-with-other-pc-48.png"))); // NOI18N
+        jLabel5.setText("BACKUP DATABASE");
+        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel5.setOpaque(true);
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel5MouseExited(evt);
+            }
+        });
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 200, 70));
+
+        jLabel9.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-weight-light-50.png"))); // NOI18N
+        jLabel9.setText("CONNECT SCALE");
+        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel9.setOpaque(true);
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel9MouseExited(evt);
+            }
+        });
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 200, 70));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-about-20.png"))); // NOI18N
+        jLabel10.setText("About Dev");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, 90, 20));
+
+        jLabel11.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ASSETS_files/icons8-print-36.png"))); // NOI18N
+        jLabel11.setText("CONNECT PRINTER");
+        jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel11.setOpaque(true);
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel11MouseExited(evt);
+            }
+        });
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 200, 70));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 450, 540));
 
         jLabel2.setBackground(new java.awt.Color(255, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -338,6 +515,105 @@ public class Setting extends javax.swing.JFrame {
         jLabel8.setBackground(new java.awt.Color(255, 204, 204));
     }//GEN-LAST:event_jLabel8MouseExited
 
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        JFileChooser chooser;
+        String choosertitle="select folder for backup";
+        chooser = new JFileChooser(); 
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle(choosertitle);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+          System.out.println("getCurrentDirectory(): " 
+             +  chooser.getCurrentDirectory());
+          System.out.println("getSelectedFile() : " 
+             +  chooser.getSelectedFile());
+          }
+        else {
+          System.out.println("No Selection ");
+        }
+     
+        String path = chooser.getSelectedFile().toString();
+        System.out.println(path);
+//        dbBackup(path);
+//        backup1(path);
+       
+
+
+        
+//        JFileChooser fc =new JFileChooser();
+//        fc.showOpenDialog(this);
+//        File f = fc.getSelectedFile();
+//        String path = f.getAbsolutePath();
+        
+        backup("yasir_db",chooser.getSelectedFile().toString());
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
+        // TODO add your handling code here:
+        jLabel5.setBackground(Color.red);
+    }//GEN-LAST:event_jLabel5MouseEntered
+
+    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
+        // TODO add your handling code here:
+        jLabel5.setBackground(new java.awt.Color(255, 204, 204));
+    }//GEN-LAST:event_jLabel5MouseExited
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+        new Scale_Config().setVisible(true);
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
+        // TODO add your handling code here:
+        jLabel9.setBackground(Color.red);
+    }//GEN-LAST:event_jLabel9MouseEntered
+
+    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
+        // TODO add your handling code here:
+        jLabel9.setBackground(new java.awt.Color(255, 204, 204));
+    }//GEN-LAST:event_jLabel9MouseExited
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+        
+        JOptionPane.showMessageDialog(this, """
+                                            About Development Team:
+                                            
+                                            ----------------------------------------
+                                            1)
+                                            Developer  :  Muhammad Uzair.
+                                            
+                                            Phone No  :  03476442712  (whatsapp only).
+                                            
+                                            Email          :  iammuhammaduzair5@gmail.com.
+                                            ----------------------------------------
+                                            """,
+                                            "ABOUT DEV",
+                                            JOptionPane.INFORMATION_MESSAGE);
+        
+        
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        new Printer_config().setVisible(true);
+        
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MouseEntered
+
+    private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -376,13 +652,17 @@ public class Setting extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

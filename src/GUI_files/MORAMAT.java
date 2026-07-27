@@ -6,7 +6,10 @@ package GUI_files;
 
 import CODE_files.ConnectDB;
 import CODE_files.GetShopInfo;
+import CODE_files.Laser_Printer;
 import CODE_files.OnlyNumbers;
+import CODE_files.Thermal_Printer;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,16 +26,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -556,6 +569,11 @@ public class MORAMAT extends javax.swing.JFrame {
         NAME.setFont(new java.awt.Font("Arabic Typesetting", 0, 18)); // NOI18N
         NAME.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NAME.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        NAME.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NAMEKeyPressed(evt);
+            }
+        });
         jPanel4.add(NAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 180, 40));
 
         PHONE.setBackground(new java.awt.Color(204, 255, 255));
@@ -568,6 +586,9 @@ public class MORAMAT extends javax.swing.JFrame {
             }
         });
         PHONE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PHONEKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 PHONEKeyTyped(evt);
             }
@@ -605,6 +626,11 @@ public class MORAMAT extends javax.swing.JFrame {
         RDATE.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         RDATE.setDateFormatString("dd/MM/yyyy");
         RDATE.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        RDATE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                RDATEKeyPressed(evt);
+            }
+        });
         jPanel4.add(RDATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 260, 40));
 
         jLabel11.setFont(new java.awt.Font("Arabic Typesetting", 0, 24)); // NOI18N
@@ -630,6 +656,11 @@ public class MORAMAT extends javax.swing.JFrame {
                 select_itemActionPerformed(evt);
             }
         });
+        select_item.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                select_itemKeyPressed(evt);
+            }
+        });
         jPanel6.add(select_item, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 200, 40));
 
         item_weight.setBackground(new java.awt.Color(204, 255, 255));
@@ -639,6 +670,9 @@ public class MORAMAT extends javax.swing.JFrame {
         item_weight.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         item_weight.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         item_weight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                item_weightKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 item_weightKeyTyped(evt);
             }
@@ -968,7 +1002,34 @@ public class MORAMAT extends javax.swing.JFrame {
             para.put("SHOP_NAME", arr[1]);
             para.put("PHONE", arr[2]);
             JasperPrint j = JasperFillManager.fillReport(jr, para,con);
-            JasperViewer.viewReport(j, false);
+            
+            
+            String p_name = Thermal_Printer.getPrinter_name();
+            if(p_name==null || "".equals(p_name)){
+                JOptionPane.showMessageDialog(this,"Printer not configured" );
+                return;
+            }
+            
+            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            
+            printRequestAttributeSet.add(new Copies(1));
+
+            PrinterName printerName = new PrinterName(p_name, null); //gets printer 
+            
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            printServiceAttributeSet.add(printerName);
+
+            JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, j);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+            exporter.exportReport();
+            
+//            JasperViewer.viewReport(j, false);
+//             JasperPrintManager.printPage(j, 0, true);
             
         }catch(Exception ex){
             
@@ -1080,6 +1141,45 @@ public class MORAMAT extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "ERROR:-"+ex.getMessage());
         }
     }//GEN-LAST:event_searchActionPerformed
+
+    private void item_weightKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_item_weightKeyPressed
+        // TODO add your handling code here:
+        
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          discription.requestFocus();
+          discription.showPopup();
+        }  
+    }//GEN-LAST:event_item_weightKeyPressed
+
+    private void NAMEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NAMEKeyPressed
+        // TODO add your handling code here:
+          if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          PHONE.requestFocus();
+        }  
+    }//GEN-LAST:event_NAMEKeyPressed
+
+    private void PHONEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PHONEKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          select_item.requestFocus();
+          select_item.showPopup();
+        }  
+    }//GEN-LAST:event_PHONEKeyPressed
+
+    private void RDATEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RDATEKeyPressed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_RDATEKeyPressed
+
+    private void select_itemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_select_itemKeyPressed
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      // Enter was pressed. Your code goes here.
+          item_weight.requestFocus();
+        }  
+    }//GEN-LAST:event_select_itemKeyPressed
 
     /**
      * @param args the command line arguments
